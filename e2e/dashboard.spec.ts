@@ -7,7 +7,9 @@ const view = (id: string) => getCaseView(bundle, id)!;
 
 test("1-2. inicia y dibuja el mapa base LOCAL sin solicitudes externas", async ({ page, guard }) => {
   await openApp(page);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Monitoreo de Cuencas");
+  await expect(page).toHaveTitle("Demo — Monitoreo Hídrico Jujuy");
+  await expect(page.getByRole("banner")).toContainText("Monitoreo Hídrico Jujuy");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Superficie de agua visible");
   await expect(page.getByTestId("map")).toHaveAttribute("data-basemap", "local");
   await expect(page.getByTestId("map")).toHaveAttribute("data-base-features", "17"); // provincia + 16 departamentos (IGN)
   expect(await page.locator(".leaflet-base-pane canvas, .leaflet-overlay-pane canvas").count()).toBeGreaterThan(0);
@@ -116,7 +118,7 @@ test("11-12. error de carga no rompe la interfaz y Reintentar recupera", async (
   guard.allowConsoleErrors.push(/Failed to load resource|ERR_FAILED|net::/);
   let blocked = true;
   await page.route("**/data/water_metrics.json", (route) => (blocked ? route.abort("failed") : route.continue()));
-  await page.goto("./");
+  await page.goto("demo");
   const alert = page.getByTestId("data-status"); // (Next.js agrega su propio role="alert" de anuncio de rutas)
   await expect(alert).toContainText("No se pudieron cargar los datos");
   await expect(alert).toContainText("water_metrics.json");

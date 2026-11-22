@@ -94,6 +94,16 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 
 ---
 
+## Fase 7 — Identidad de marca y landing (2026-11-22)
+- [x] 7.1 Lineamientos de marca: `docs/BRAND_GUIDELINES.md` (nombre, posicionamiento, propuesta de valor, públicos, mensajes, paleta accesible, estilo y tono).
+- [x] 7.2 Especificación de la landing: `docs/LANDING_SPEC.md`.
+- [x] 7.3 Landing en `/` con datos reales leídos de `data/derived`; dashboard movido a `/demo` sin cambios de lógica (D-25).
+- [x] 7.4 Navegación landing ↔ demo y corrección de 404 (D-26).
+- [x] 7.5 QA: lint, typecheck, build, unitarias, Python, E2E (landing en escritorio y móvil; suite completa con `/demo`).
+- [ ] 7.6 Aprobación de la marca y la landing antes de publicar.
+
+---
+
 ## Fase 6 — Demo
 Depende de: Fase 5.
 - [ ] 6.1 README con cómo correr, fuentes y limitaciones.

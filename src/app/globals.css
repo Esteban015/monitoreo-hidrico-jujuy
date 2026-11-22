@@ -1,7 +1,25 @@
 @import "tailwindcss";
 
+/* Identidad Monitoreo Hídrico Jujuy (docs/BRAND_GUIDELINES.md). Tokens -> utilidades Tailwind: bg-brand-primary, text-brand-ink, etc. */
+@theme {
+  --color-brand-primary: #0f4c5c; /* petróleo profundo: marca, encabezados, botones (contraste 8,9 sobre fondo) */
+  --color-brand-secondary: #2c7da0; /* azul agua: rellenos, gráficos, detalles (4,3: no usar para texto chico) */
+  --color-brand-secondary-ink: #24708f; /* variante accesible para enlaces y texto (5,2) */
+  --color-brand-support: #61a5a2; /* verde agua: decorativo (2,6: nunca texto) */
+  --color-brand-bg: #f5f7f8; /* fondo claro */
+  --color-brand-ink: #1f2d3a; /* texto principal (13,1) */
+  --color-brand-sand: #d9c7a3; /* acento territorial: fondos/separadores (decorativo) */
+  --color-brand-sand-soft: #f3ece0; /* superficie cálida derivada de sand */
+  --color-brand-warning: #d98e04; /* advertencia: bordes e íconos */
+  --color-brand-warning-ink: #a16207; /* texto de advertencia accesible (4,6) */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--color-brand-bg);
+  color: var(--color-brand-ink);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }

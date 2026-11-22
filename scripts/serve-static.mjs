@@ -32,8 +32,11 @@ createServer((req, res) => {
     res.writeHead(403).end("Prohibido");
     return;
   }
-  if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
-  if (!existsSync(file) && existsSync(`${file}.html`)) file = `${file}.html`;
+  // Next export genera /demo.html y además una carpeta /demo/ (payloads RSC): la página .html tiene prioridad.
+  const isDir = existsSync(file) && statSync(file).isDirectory();
+  if (isDir && existsSync(`${file.replace(/[\\/]$/, "")}.html`)) file = `${file.replace(/[\\/]$/, "")}.html`;
+  else if (isDir) file = join(file, "index.html");
+  else if (!existsSync(file) && existsSync(`${file}.html`)) file = `${file}.html`;
   if (!existsSync(file)) {
     res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
     createReadStream(join(ROOT, "404.html")).pipe(res);
