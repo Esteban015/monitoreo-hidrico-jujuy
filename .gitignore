@@ -1,0 +1,29 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+__pycache__/
+.venv/
+# Datos crudos grandes (solo se versiona el manifiesto)
+data/raw/*
+!data/raw/MANIFEST.md
+
+# Next.js / TypeScript
+/build
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+*.pem
+npm-debug.log*
+.DS_Store
+.env*
+!.env.example
+
+# Datos publicados: artefacto generado por scripts/publish-data.mjs desde data/derived/
+/public/data/
+
+# Resultados de Playwright
+/test-results/
+/playwright-report/

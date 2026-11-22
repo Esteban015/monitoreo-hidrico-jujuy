@@ -1,0 +1,10 @@
+Prueba real escenario A — 2026-11-22T19:00:03Z
+Servidor: node scripts/serve-static.mjs 3000 (127.0.0.1, sin descargas)
+Chrome 139 headless con --host-resolver-rules='MAP * ~NOTFOUND, EXCLUDE 127.0.0.1' (sin intercepción de pedidos)
+Sonda https://example.com/: falla (sin internet real)
+ESCENARIO A REAL � cargado True | mapa base local listo | paths base 17 | teselas 0 | sonda internet inaccesible
+   laguna-pozuelos −53,9 % Rango entre métodos y umbrales: −26,3 % a −68,5 % geo listo paths A+B/A/B 280 71 241 quicklooks [True, True]
+   dique-las-maderas −18,1 % Rango entre métodos y umbrales: −13,0 % a −18,9 % geo listo paths A+B/A/B 7 4 5 quicklooks [True, True]
+  consola []
+  hosts externos intentados ['example.com']
+  solicitudes fallidas ['net::ERR_NAME_NOT_RESOLVED ']

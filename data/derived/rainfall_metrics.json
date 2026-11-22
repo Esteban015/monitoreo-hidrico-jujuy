@@ -1,0 +1,649 @@
+{
+  "generated_at": "2026-11-22T17:17:38Z",
+  "generator": "scripts/process/12_rainfall_chirps.py",
+  "source": "CHIRPS v3.0 mensual (Climate Hazards Center, UCSB)",
+  "unit": "mm/mes",
+  "resolution_deg": [
+    0.05000000074505806,
+    0.05000000074505806
+  ],
+  "unit_evidence": "atributo units='mm/month', _FillValue=-9999, time_step='month' de la variable precip en v3.0/monthly/global/netcdf/chirps-v3.0.monthly.nc (leído 2026-11-22; los COG no declaran unidad)",
+  "budget": {
+    "max_reads": 93,
+    "max_seconds": 1500,
+    "retries_per_read": 1,
+    "used_reads": 0,
+    "elapsed_s": 0.1,
+    "exhausted": false
+  },
+  "status": "completo",
+  "reads": [
+    {
+      "file": "chirps-v3.0.2025.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2025.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2025.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2024.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2024.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2024.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2023.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2023.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2023.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2022.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2022.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2022.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2021.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2021.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2021.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2020.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2020.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2020.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2019.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2019.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2019.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2018.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2018.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2018.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2017.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2017.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2017.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2016.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2016.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2016.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2015.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2015.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2015.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2014.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2014.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2014.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2013.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2013.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2013.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2012.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2012.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2012.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2011.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2011.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2011.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2010.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2010.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2010.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2009.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2009.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2009.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2008.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2008.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2008.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2007.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2007.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2007.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2006.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2006.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2006.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2005.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2005.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2005.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2004.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2004.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2004.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2003.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2003.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2003.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2002.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2002.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2002.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2001.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2001.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2001.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2000.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2000.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.2000.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1999.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1999.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1999.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1998.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1998.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1998.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1997.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1997.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1997.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1996.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1996.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1996.09.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1995.04.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1995.08.cog",
+      "status": "cache"
+    },
+    {
+      "file": "chirps-v3.0.1995.09.cog",
+      "status": "cache"
+    }
+  ],
+  "observations": [
+    {
+      "case_id": "laguna-pozuelos",
+      "image_date": "2025-05-04",
+      "month": "2025-04",
+      "period": "2025-04-01 / fin de mes",
+      "unit": "mm/mes",
+      "kind": "estimacion",
+      "method": "media areal ponderada (fracción de celda × cos φ) sobre la cuenca de aporte modelada",
+      "basin_cells_with_weight": 173,
+      "basin_cells_equivalent": 137.6,
+      "value_mm": 14.67,
+      "reference": {
+        "years": [
+          1995,
+          1996,
+          1997,
+          1998,
+          1999,
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "n_years": 30,
+        "first_year": 1995,
+        "last_year": 2024,
+        "mean_mm": 9.49,
+        "median_mm": 9.79,
+        "min_mm": 0.05,
+        "max_mm": 24.17
+      },
+      "anomaly_pct": 54.6,
+      "percentile_in_reference": 83.3,
+      "status": "completo",
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "Cuenca endorreica: se agregaron todas las unidades que drenan al sumidero HydroBASINS (ENDO=2)."
+      ]
+    },
+    {
+      "case_id": "laguna-pozuelos",
+      "image_date": "2025-09-13",
+      "month": "2025-08",
+      "period": "2025-08-01 / fin de mes",
+      "unit": "mm/mes",
+      "kind": "estimacion",
+      "method": "media areal ponderada (fracción de celda × cos φ) sobre la cuenca de aporte modelada",
+      "basin_cells_with_weight": 173,
+      "basin_cells_equivalent": 137.6,
+      "value_mm": 0.19,
+      "reference": {
+        "years": [
+          1995,
+          1996,
+          1997,
+          1998,
+          1999,
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "n_years": 30,
+        "first_year": 1995,
+        "last_year": 2024,
+        "mean_mm": 0.48,
+        "median_mm": 0.34,
+        "min_mm": 0.0,
+        "max_mm": 2.42
+      },
+      "anomaly_pct": -60.3,
+      "percentile_in_reference": 43.3,
+      "status": "completo",
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "Cuenca endorreica: se agregaron todas las unidades que drenan al sumidero HydroBASINS (ENDO=2).",
+        "Mes de estación seca con lluvia media muy baja: la anomalía porcentual es inestable y poco informativa."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "image_date": "2025-05-29",
+      "month": "2025-04",
+      "period": "2025-04-01 / fin de mes",
+      "unit": "mm/mes",
+      "kind": "estimacion",
+      "method": "media areal ponderada (fracción de celda × cos φ) sobre la cuenca de aporte modelada",
+      "basin_cells_with_weight": 19,
+      "basin_cells_equivalent": 8.24,
+      "value_mm": 46.18,
+      "reference": {
+        "years": [
+          1995,
+          1996,
+          1997,
+          1998,
+          1999,
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "n_years": 30,
+        "first_year": 1995,
+        "last_year": 2024,
+        "mean_mm": 50.46,
+        "median_mm": 41.32,
+        "min_mm": 7.29,
+        "max_mm": 183.73
+      },
+      "anomaly_pct": -8.5,
+      "percentile_in_reference": 60.0,
+      "status": "completo",
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "La unidad HydroBASINS incluye territorio aguas abajo del muro; la cuenca de aporte real del embalse es menor. La precipitación areal es aproximada y no debe usarse para conclusiones hidrológicas definitivas."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "image_date": "2025-10-03",
+      "month": "2025-09",
+      "period": "2025-09-01 / fin de mes",
+      "unit": "mm/mes",
+      "kind": "estimacion",
+      "method": "media areal ponderada (fracción de celda × cos φ) sobre la cuenca de aporte modelada",
+      "basin_cells_with_weight": 19,
+      "basin_cells_equivalent": 8.24,
+      "value_mm": 6.18,
+      "reference": {
+        "years": [
+          1995,
+          1996,
+          1997,
+          1998,
+          1999,
+          2000,
+          2001,
+          2002,
+          2003,
+          2004,
+          2005,
+          2006,
+          2007,
+          2008,
+          2009,
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "n_years": 30,
+        "first_year": 1995,
+        "last_year": 2024,
+        "mean_mm": 7.65,
+        "median_mm": 5.93,
+        "min_mm": 0.0,
+        "max_mm": 32.43
+      },
+      "anomaly_pct": -19.1,
+      "percentile_in_reference": 50.0,
+      "status": "completo",
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "La unidad HydroBASINS incluye territorio aguas abajo del muro; la cuenca de aporte real del embalse es menor. La precipitación areal es aproximada y no debe usarse para conclusiones hidrológicas definitivas.",
+        "Mes de estación seca con lluvia media muy baja: la anomalía porcentual es inestable y poco informativa."
+      ]
+    }
+  ],
+  "warnings": [
+    "CHIRPS es un producto ESTIMADO (satélite + estaciones), no una medición de pluviómetro.",
+    "Se usa el último mes calendario completo antes de cada imagen; no equivale a un acumulado móvil de 30, 60 o 90 días."
+  ],
+  "listing": {
+    "base": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/cogs/",
+    "n_files": 550,
+    "first": "chirps-v3.0.1981.01.cog",
+    "last": "chirps-v3.0.2026.10.cog",
+    "listed_at": "2026-11-22T17:06:48Z"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-11-22T17:03:17Z",
+  "generator": "scripts/process/10_geometries.py",
+  "cases": [
+    {
+      "case_id": "laguna-pozuelos",
+      "name": "Laguna de los Pozuelos",
+      "ecoregion": "Puna",
+      "kind": "Laguna altoandina (endorreica)",
+      "aoi": {
+        "file": "geometries/laguna-pozuelos_aoi_osm.geojson",
+        "source": "OpenStreetMap",
+        "ref": "way/117694382",
+        "role": "región cartográfica de referencia (no medición)"
+      },
+      "basin": {
+        "file": "geometries/laguna-pozuelos_basin_hydrobasins_l10.geojson",
+        "label": "Cuenca de aporte modelada",
+        "source": "HydroBASINS v1c nivel 10",
+        "outlet_hybas_id": 6100040870,
+        "area_km2": 3922.4,
+        "area_method": "Lambert acimutal de igual área (LAEA)",
+        "official": false,
+        "geometry_valid": true
+      },
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "Cuenca endorreica: se agregaron todas las unidades que drenan al sumidero HydroBASINS (ENDO=2)."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "name": "Dique Las Maderas",
+      "ecoregion": "Valles (Perico)",
+      "kind": "Embalse",
+      "aoi": {
+        "file": "geometries/dique-las-maderas_aoi_osm.geojson",
+        "source": "OpenStreetMap",
+        "ref": "way/509257795",
+        "role": "región cartográfica de referencia (no medición)"
+      },
+      "basin": {
+        "file": "geometries/dique-las-maderas_basin_hydrobasins_l10.geojson",
+        "label": "Cuenca de aporte modelada",
+        "source": "HydroBASINS v1c nivel 10",
+        "outlet_hybas_id": 6100781080,
+        "area_km2": 232.9,
+        "area_method": "Lambert acimutal de igual área (LAEA)",
+        "official": false,
+        "geometry_valid": true
+      },
+      "warnings": [
+        "Cuenca de aporte modelada (HydroBASINS, DEM ~15″): no es una delimitación oficial ni validada en campo.",
+        "La unidad HydroBASINS incluye territorio aguas abajo del muro; la cuenca de aporte real del embalse es menor. La precipitación areal es aproximada y no debe usarse para conclusiones hidrológicas definitivas."
+      ]
+    }
+  ]
+}

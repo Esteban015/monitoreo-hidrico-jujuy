@@ -1,0 +1,39 @@
+{
+  "name": "monitoreo-cuencas-jujuy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "predev": "node scripts/publish-data.mjs",
+    "data:publish": "node scripts/publish-data.mjs",
+    "build": "next build",
+    "prebuild": "node scripts/publish-data.mjs",
+    "start": "node scripts/serve-static.mjs 3000",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.ts",
+    "test:unit": "node --test tests/*.test.ts",
+    "test:py": "scripts/.venv/Scripts/python -m unittest discover -s tests/python",
+    "test:e2e": "playwright test",
+    "validate:data": "scripts/.venv/Scripts/python -m unittest tests/python/test_outputs.py && node --test tests/publish.test.ts",
+    "verify": "npm run lint && npm run typecheck && npm run test:py && npm run build && npm run test:unit && npm run test:e2e"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5"
+  }
+}

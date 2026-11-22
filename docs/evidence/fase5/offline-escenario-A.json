@@ -1,0 +1,30 @@
+{
+  "scenario": "A: servida en 127.0.0.1, DNS bloqueado para todo otro host",
+  "probe": "inaccesible",
+  "cases": {
+    "laguna-pozuelos": {
+      "pct": -53.89,
+      "overlayPaths": {
+        "Antes": 39,
+        "Después": 209,
+        "Comparar": 248
+      }
+    },
+    "dique-las-maderas": {
+      "pct": -18.08,
+      "overlayPaths": {
+        "Antes": 2,
+        "Después": 3,
+        "Comparar": 5
+      }
+    }
+  },
+  "externalRequests": [],
+  "failedRequests": [
+    "https://example.com/ :: net::ERR_INTERNET_DISCONNECTED"
+  ],
+  "guardExternal": [
+    "https://example.com/"
+  ],
+  "probeUrl": "https://example.com/"
+}

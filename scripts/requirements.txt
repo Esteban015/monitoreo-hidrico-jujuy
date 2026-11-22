@@ -1,0 +1,6 @@
+# Entorno de preprocesamiento (independiente de la app web). Ver DECISIONS.md D-03 y D-16.
+# Instalar en un venv aislado:  python -m venv scripts/.venv && scripts/.venv/Scripts/python -m pip install -r scripts/requirements.txt
+# rasterio: lectura por ventana de COGs remotos (Sentinel-2, CHIRPS) sin descargar archivos completos. Incluye GDAL y numpy.
+rasterio==1.4.3
+# pyshp: lectura de shapefiles de HydroBASINS (Python puro, sin GDAL/OGR para vectores).
+pyshp==2.3.1

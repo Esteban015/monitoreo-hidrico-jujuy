@@ -1,0 +1,573 @@
+{
+  "generated_at": "2026-11-22T17:17:06Z",
+  "generator": "scripts/process/11_water.py",
+  "method": {
+    "grid_m": 20.0,
+    "resampling": "B03 y B08: reflectancia 10 m promediada en bloques 2x2 alineados -> 20 m; B11 y SCL nativos 20 m",
+    "reflectance": "(DN + BOA_ADD_OFFSET) / BOA_QUANTIFICATION_VALUE según MTD_MSIL2A.xml",
+    "scl_excluded": {
+      "0": "sin_dato",
+      "1": "saturado_o_defectuoso",
+      "3": "sombra_de_nube",
+      "8": "nube_prob_media",
+      "9": "nube_prob_alta",
+      "10": "cirro"
+    },
+    "cloud_effective_classes": {
+      "3": "sombra_de_nube",
+      "8": "nube_prob_media",
+      "9": "nube_prob_alta",
+      "10": "cirro"
+    },
+    "indices": {
+      "NDWI": "(B03 - B08) / (B03 + B08) — McFeeters 1996",
+      "MNDWI": "(B03 - B11) / (B03 + B11) — Xu 2006"
+    },
+    "water_rule": "índice > 0.0 (umbral fijo; MNDWI principal, NDWI secundario)",
+    "sensitivity_thresholds": [
+      -0.1,
+      0.0,
+      0.1
+    ],
+    "region": "polígono OSM dilatado 500 m menos otros cuerpos de agua OSM",
+    "area": "n_px × 400 m² / k², k = factor de escala UTM en el centro de la región",
+    "qa_gates": {
+      "coverage_min_pct": 99.5,
+      "cloud_max_pct": 1.0,
+      "common_valid_min_pct": 98.0,
+      "edge_water_max_pct": 1.0
+    }
+  },
+  "scenes": [
+    {
+      "case_id": "laguna-pozuelos",
+      "date": "2025-05-04",
+      "datetime": "2025-05-04T14:28:11.025000Z",
+      "scene_id": "S2C_MSIL2A_20250504T142811_R053_T19KHR_20250504T193719",
+      "source": "Copernicus Sentinel-2 L2A vía Microsoft Planetary Computer",
+      "stac_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2C_MSIL2A_20250504T142811_R053_T19KHR_20250504T193719",
+      "mgrs_tile": "19KHR",
+      "crs": "EPSG:32719",
+      "processing_baseline": "05.11",
+      "radiometry": {
+        "quantification": 10000.0,
+        "offsets": {
+          "B03": -1000.0,
+          "B08": -1000.0,
+          "B11": -1000.0
+        },
+        "nodata": 0,
+        "saturated": 65535,
+        "source": "MTD_MSIL2A.xml"
+      },
+      "cloud_cover_scene_pct": 0.000494,
+      "region": {
+        "pixels": 326713,
+        "area_km2": 130.483,
+        "buffer_m": 500,
+        "excluded_other_osm_water": [
+          {
+            "osm": "way/263950840",
+            "name": null,
+            "px_removed": 365
+          }
+        ],
+        "window_20m": [
+          168,
+          3349,
+          588,
+          779
+        ]
+      },
+      "pixels": {
+        "region": 326713,
+        "with_data": 326713,
+        "valid": 326637,
+        "valid_common": 326597,
+        "excluded_by_scl_class": {
+          "sin_dato": 0,
+          "saturado_o_defectuoso": 0,
+          "sombra_de_nube": 0,
+          "nube_prob_media": 74,
+          "nube_prob_alta": 2,
+          "cirro": 0
+        },
+        "excluded_band_nodata_or_saturated": 0
+      },
+      "coverage_pct": 100.0,
+      "cloud_effective_pct": 0.023,
+      "utm_scale_factor": 1.000774,
+      "water": {
+        "MNDWI": {
+          "threshold": 0.0,
+          "pixels": 203934,
+          "area_km2": 81.4475,
+          "pixels_common_mask": 203894,
+          "area_km2_common_mask": 81.4315
+        },
+        "NDWI": {
+          "threshold": 0.0,
+          "pixels": 194649,
+          "area_km2": 77.7392,
+          "pixels_common_mask": 194610,
+          "area_km2_common_mask": 77.7237
+        }
+      },
+      "scl_water_class": {
+        "pixels": 207247,
+        "area_km2": 82.7707,
+        "note": "Clasificación ESA independiente; referencia cruzada, no medida principal"
+      },
+      "water_touching_region_edge_pct": 0.078,
+      "unit": "km2",
+      "kind": "estimacion",
+      "files": {
+        "water_geojson": "geometries/laguna-pozuelos_water_mndwi_2025-05-04.geojson",
+        "quicklook": "qa/quicklooks/laguna-pozuelos_2025-05-04.png"
+      },
+      "status": "completo",
+      "warnings": [
+        "Superficie de agua visible detectada por índice espectral: no es volumen almacenado ni caudal.",
+        "Agua somera, barro o vegetación inundada pueden clasificarse de forma distinta según el índice y el umbral."
+      ]
+    },
+    {
+      "case_id": "laguna-pozuelos",
+      "date": "2025-09-13",
+      "datetime": "2025-09-13T14:28:01.024000Z",
+      "scene_id": "S2A_MSIL2A_20250913T142801_R053_T19KHR_20250913T211118",
+      "source": "Copernicus Sentinel-2 L2A vía Microsoft Planetary Computer",
+      "stac_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2A_MSIL2A_20250913T142801_R053_T19KHR_20250913T211118",
+      "mgrs_tile": "19KHR",
+      "crs": "EPSG:32719",
+      "processing_baseline": "05.11",
+      "radiometry": {
+        "quantification": 10000.0,
+        "offsets": {
+          "B03": -1000.0,
+          "B08": -1000.0,
+          "B11": -1000.0
+        },
+        "nodata": 0,
+        "saturated": 65535,
+        "source": "MTD_MSIL2A.xml"
+      },
+      "cloud_cover_scene_pct": 0.047372,
+      "region": {
+        "pixels": 326713,
+        "area_km2": 130.483,
+        "buffer_m": 500,
+        "excluded_other_osm_water": [
+          {
+            "osm": "way/263950840",
+            "name": null,
+            "px_removed": 365
+          }
+        ],
+        "window_20m": [
+          168,
+          3349,
+          588,
+          779
+        ]
+      },
+      "pixels": {
+        "region": 326713,
+        "with_data": 326713,
+        "valid": 326673,
+        "valid_common": 326597,
+        "excluded_by_scl_class": {
+          "sin_dato": 0,
+          "saturado_o_defectuoso": 0,
+          "sombra_de_nube": 0,
+          "nube_prob_media": 40,
+          "nube_prob_alta": 0,
+          "cirro": 0
+        },
+        "excluded_band_nodata_or_saturated": 0
+      },
+      "coverage_pct": 100.0,
+      "cloud_effective_pct": 0.012,
+      "utm_scale_factor": 1.000774,
+      "water": {
+        "MNDWI": {
+          "threshold": 0.0,
+          "pixels": 94019,
+          "area_km2": 37.5495,
+          "pixels_common_mask": 94019,
+          "area_km2_common_mask": 37.5495
+        },
+        "NDWI": {
+          "threshold": 0.0,
+          "pixels": 61353,
+          "area_km2": 24.5033,
+          "pixels_common_mask": 61353,
+          "area_km2_common_mask": 24.5033
+        }
+      },
+      "scl_water_class": {
+        "pixels": 152835,
+        "area_km2": 61.0395,
+        "note": "Clasificación ESA independiente; referencia cruzada, no medida principal"
+      },
+      "water_touching_region_edge_pct": 0.0,
+      "unit": "km2",
+      "kind": "estimacion",
+      "files": {
+        "water_geojson": "geometries/laguna-pozuelos_water_mndwi_2025-09-13.geojson",
+        "quicklook": "qa/quicklooks/laguna-pozuelos_2025-09-13.png"
+      },
+      "status": "completo",
+      "warnings": [
+        "Superficie de agua visible detectada por índice espectral: no es volumen almacenado ni caudal.",
+        "Agua somera, barro o vegetación inundada pueden clasificarse de forma distinta según el índice y el umbral."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "date": "2025-05-29",
+      "datetime": "2025-05-29T14:27:19.024000Z",
+      "scene_id": "S2B_MSIL2A_20250529T142719_R053_T19JHN_20250529T180713",
+      "source": "Copernicus Sentinel-2 L2A vía Microsoft Planetary Computer",
+      "stac_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2B_MSIL2A_20250529T142719_R053_T19JHN_20250529T180713",
+      "mgrs_tile": "19JHN",
+      "crs": "EPSG:32719",
+      "processing_baseline": "05.11",
+      "radiometry": {
+        "quantification": 10000.0,
+        "offsets": {
+          "B03": -1000.0,
+          "B08": -1000.0,
+          "B11": -1000.0
+        },
+        "nodata": 0,
+        "saturated": 65535,
+        "source": "MTD_MSIL2A.xml"
+      },
+      "cloud_cover_scene_pct": 0.006756,
+      "region": {
+        "pixels": 55902,
+        "area_km2": 22.3,
+        "buffer_m": 500,
+        "excluded_other_osm_water": [
+          {
+            "osm": "way/505760255",
+            "name": "Dique La Ciénaga",
+            "px_removed": 102
+          },
+          {
+            "osm": "way/506198633",
+            "name": null,
+            "px_removed": 4
+          },
+          {
+            "osm": "way/506198637",
+            "name": null,
+            "px_removed": 7
+          },
+          {
+            "osm": "way/506198639",
+            "name": null,
+            "px_removed": 5
+          },
+          {
+            "osm": "way/506198645",
+            "name": null,
+            "px_removed": 4
+          },
+          {
+            "osm": "way/1387340931",
+            "name": null,
+            "px_removed": 1
+          }
+        ],
+        "window_20m": [
+          3787,
+          338,
+          261,
+          301
+        ]
+      },
+      "pixels": {
+        "region": 55902,
+        "with_data": 55902,
+        "valid": 55887,
+        "valid_common": 55887,
+        "excluded_by_scl_class": {
+          "sin_dato": 0,
+          "saturado_o_defectuoso": 0,
+          "sombra_de_nube": 0,
+          "nube_prob_media": 0,
+          "nube_prob_alta": 0,
+          "cirro": 0
+        },
+        "excluded_band_nodata_or_saturated": 15
+      },
+      "coverage_pct": 100.0,
+      "cloud_effective_pct": 0.0,
+      "utm_scale_factor": 1.001356,
+      "water": {
+        "MNDWI": {
+          "threshold": 0.0,
+          "pixels": 21847,
+          "area_km2": 8.7151,
+          "pixels_common_mask": 21847,
+          "area_km2_common_mask": 8.7151
+        },
+        "NDWI": {
+          "threshold": 0.0,
+          "pixels": 21949,
+          "area_km2": 8.7558,
+          "pixels_common_mask": 21949,
+          "area_km2_common_mask": 8.7558
+        }
+      },
+      "scl_water_class": {
+        "pixels": 21859,
+        "area_km2": 8.7199,
+        "note": "Clasificación ESA independiente; referencia cruzada, no medida principal"
+      },
+      "water_touching_region_edge_pct": 0.0,
+      "unit": "km2",
+      "kind": "estimacion",
+      "files": {
+        "water_geojson": "geometries/dique-las-maderas_water_mndwi_2025-05-29.geojson",
+        "quicklook": "qa/quicklooks/dique-las-maderas_2025-05-29.png"
+      },
+      "status": "completo",
+      "warnings": [
+        "Superficie de agua visible detectada por índice espectral: no es volumen almacenado ni caudal.",
+        "Agua somera, barro o vegetación inundada pueden clasificarse de forma distinta según el índice y el umbral."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "date": "2025-10-03",
+      "datetime": "2025-10-03T14:28:11.024000Z",
+      "scene_id": "S2A_MSIL2A_20251003T142811_R053_T19JHN_20251003T192715",
+      "source": "Copernicus Sentinel-2 L2A vía Microsoft Planetary Computer",
+      "stac_item": "https://planetarycomputer.microsoft.com/api/stac/v1/collections/sentinel-2-l2a/items/S2A_MSIL2A_20251003T142811_R053_T19JHN_20251003T192715",
+      "mgrs_tile": "19JHN",
+      "crs": "EPSG:32719",
+      "processing_baseline": "05.11",
+      "radiometry": {
+        "quantification": 10000.0,
+        "offsets": {
+          "B03": -1000.0,
+          "B08": -1000.0,
+          "B11": -1000.0
+        },
+        "nodata": 0,
+        "saturated": 65535,
+        "source": "MTD_MSIL2A.xml"
+      },
+      "cloud_cover_scene_pct": 3e-06,
+      "region": {
+        "pixels": 55902,
+        "area_km2": 22.3,
+        "buffer_m": 500,
+        "excluded_other_osm_water": [
+          {
+            "osm": "way/505760255",
+            "name": "Dique La Ciénaga",
+            "px_removed": 102
+          },
+          {
+            "osm": "way/506198633",
+            "name": null,
+            "px_removed": 4
+          },
+          {
+            "osm": "way/506198637",
+            "name": null,
+            "px_removed": 7
+          },
+          {
+            "osm": "way/506198639",
+            "name": null,
+            "px_removed": 5
+          },
+          {
+            "osm": "way/506198645",
+            "name": null,
+            "px_removed": 4
+          },
+          {
+            "osm": "way/1387340931",
+            "name": null,
+            "px_removed": 1
+          }
+        ],
+        "window_20m": [
+          3787,
+          338,
+          261,
+          301
+        ]
+      },
+      "pixels": {
+        "region": 55902,
+        "with_data": 55902,
+        "valid": 55902,
+        "valid_common": 55887,
+        "excluded_by_scl_class": {
+          "sin_dato": 0,
+          "saturado_o_defectuoso": 0,
+          "sombra_de_nube": 0,
+          "nube_prob_media": 0,
+          "nube_prob_alta": 0,
+          "cirro": 0
+        },
+        "excluded_band_nodata_or_saturated": 0
+      },
+      "coverage_pct": 100.0,
+      "cloud_effective_pct": 0.0,
+      "utm_scale_factor": 1.001356,
+      "water": {
+        "MNDWI": {
+          "threshold": 0.0,
+          "pixels": 17913,
+          "area_km2": 7.1458,
+          "pixels_common_mask": 17898,
+          "area_km2_common_mask": 7.1398
+        },
+        "NDWI": {
+          "threshold": 0.0,
+          "pixels": 18636,
+          "area_km2": 7.4342,
+          "pixels_common_mask": 18621,
+          "area_km2_common_mask": 7.4282
+        }
+      },
+      "scl_water_class": {
+        "pixels": 19012,
+        "area_km2": 7.5842,
+        "note": "Clasificación ESA independiente; referencia cruzada, no medida principal"
+      },
+      "water_touching_region_edge_pct": 0.0,
+      "unit": "km2",
+      "kind": "estimacion",
+      "files": {
+        "water_geojson": "geometries/dique-las-maderas_water_mndwi_2025-10-03.geojson",
+        "quicklook": "qa/quicklooks/dique-las-maderas_2025-10-03.png"
+      },
+      "status": "completo",
+      "warnings": [
+        "Superficie de agua visible detectada por índice espectral: no es volumen almacenado ni caudal.",
+        "Agua somera, barro o vegetación inundada pueden clasificarse de forma distinta según el índice y el umbral."
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "case_id": "laguna-pozuelos",
+      "date_a": "2025-05-04",
+      "date_b": "2025-09-13",
+      "scene_a": "S2C_MSIL2A_20250504T142811_R053_T19KHR_20250504T193719",
+      "scene_b": "S2A_MSIL2A_20250913T142801_R053_T19KHR_20250913T211118",
+      "common_valid_pixels": 326597,
+      "common_valid_pct_of_region": 99.964,
+      "unit": "km2",
+      "kind": "estimacion",
+      "MNDWI": {
+        "threshold": 0.0,
+        "area_a_km2": 81.4315,
+        "area_b_km2": 37.5495,
+        "abs_diff_km2": -43.882,
+        "pct_change": -53.89,
+        "formula": "(B - A) / A × 100"
+      },
+      "NDWI": {
+        "threshold": 0.0,
+        "area_a_km2": 77.7237,
+        "area_b_km2": 24.5033,
+        "abs_diff_km2": -53.2204,
+        "pct_change": -68.47,
+        "formula": "(B - A) / A × 100"
+      },
+      "MNDWI_sensitivity": [
+        {
+          "threshold": -0.1,
+          "area_a_km2": 82.539,
+          "area_b_km2": 43.3569,
+          "abs_diff_km2": -39.1821,
+          "pct_change": -47.47
+        },
+        {
+          "threshold": 0.0,
+          "area_a_km2": 81.4315,
+          "area_b_km2": 37.5495,
+          "abs_diff_km2": -43.8821,
+          "pct_change": -53.89
+        },
+        {
+          "threshold": 0.1,
+          "area_a_km2": 81.0613,
+          "area_b_km2": 36.2151,
+          "abs_diff_km2": -44.8462,
+          "pct_change": -55.32
+        }
+      ],
+      "status": "completo",
+      "warnings": [
+        "La variación compara superficie visible entre dos fechas; no indica cambio de volumen ni tendencia.",
+        "Dos fechas no representan la variabilidad interanual."
+      ]
+    },
+    {
+      "case_id": "dique-las-maderas",
+      "date_a": "2025-05-29",
+      "date_b": "2025-10-03",
+      "scene_a": "S2B_MSIL2A_20250529T142719_R053_T19JHN_20250529T180713",
+      "scene_b": "S2A_MSIL2A_20251003T142811_R053_T19JHN_20251003T192715",
+      "common_valid_pixels": 55887,
+      "common_valid_pct_of_region": 99.973,
+      "unit": "km2",
+      "kind": "estimacion",
+      "MNDWI": {
+        "threshold": 0.0,
+        "area_a_km2": 8.7151,
+        "area_b_km2": 7.1398,
+        "abs_diff_km2": -1.5753,
+        "pct_change": -18.08,
+        "formula": "(B - A) / A × 100"
+      },
+      "NDWI": {
+        "threshold": 0.0,
+        "area_a_km2": 8.7558,
+        "area_b_km2": 7.4282,
+        "abs_diff_km2": -1.3276,
+        "pct_change": -15.16,
+        "formula": "(B - A) / A × 100"
+      },
+      "MNDWI_sensitivity": [
+        {
+          "threshold": -0.1,
+          "area_a_km2": 8.7806,
+          "area_b_km2": 7.2659,
+          "abs_diff_km2": -1.5147,
+          "pct_change": -17.25
+        },
+        {
+          "threshold": 0.0,
+          "area_a_km2": 8.7151,
+          "area_b_km2": 7.1398,
+          "abs_diff_km2": -1.5753,
+          "pct_change": -18.08
+        },
+        {
+          "threshold": 0.1,
+          "area_a_km2": 8.6621,
+          "area_b_km2": 7.0229,
+          "abs_diff_km2": -1.6392,
+          "pct_change": -18.92
+        }
+      ],
+      "status": "completo",
+      "warnings": [
+        "La variación compara superficie visible entre dos fechas; no indica cambio de volumen ni tendencia.",
+        "Dos fechas no representan la variabilidad interanual."
+      ]
+    }
+  ]
+}

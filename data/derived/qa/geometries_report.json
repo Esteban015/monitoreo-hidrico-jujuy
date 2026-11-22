@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-11-22T17:03:17Z",
+  "cases": {
+    "laguna-pozuelos": {
+      "validity": {
+        "aoi": [],
+        "basin_units": {}
+      },
+      "valid": true,
+      "basin_area_km2_laea": 3922.4,
+      "basin_UP_AREA_km2_hydrobasins": 3932.2,
+      "basin_area_diff_pct": -0.25,
+      "aoi_osm_area_km2_laea": 102.557,
+      "n_basin_units": 31
+    },
+    "dique-las-maderas": {
+      "validity": {
+        "aoi": [],
+        "basin_units": {}
+      },
+      "valid": true,
+      "basin_area_km2_laea": 232.9,
+      "basin_UP_AREA_km2_hydrobasins": 233.5,
+      "basin_area_diff_pct": -0.24,
+      "aoi_osm_area_km2_laea": 8.84,
+      "n_basin_units": 1,
+      "las_maderas_downstream_check": {
+        "reservoir_vertices_inside_unit_pct": 100.0,
+        "dam_distance_to_unit_border_m": 3770.0,
+        "osm_waterways_source": "red",
+        "osm_waterways_from_dam": [
+          {
+            "osm": "way/180853698",
+            "tags": {
+              "name": "Río de Las Pavas (Arroyo Maderas)",
+              "waterway": "river"
+            },
+            "nearest_node_to_dam_m": 195.7,
+            "downstream_length_inside_unit_m": 4551.0
+          },
+          {
+            "osm": "way/181030483",
+            "tags": {
+              "waterway": "river"
+            },
+            "nearest_node_to_dam_m": 177.6,
+            "downstream_length_inside_unit_m": 313.0
+          }
+        ],
+        "includes_downstream_territory": true,
+        "method": "Heurística: cauces OSM (dibujados en sentido del flujo) que nacen a <300 m del muro; se mide la longitud de cauce aguas abajo que permanece dentro de la unidad HydroBASINS."
+      }
+    }
+  }
+}
