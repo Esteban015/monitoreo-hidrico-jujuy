@@ -50,11 +50,12 @@ test("14. sin internet: mapa local, ambos casos, tres modos, imágenes, geometr�
   }
   const PROBE = "https://example.com/";
   const external = requested.filter((u) => u !== PROBE && !/^https?:\/\/(127\.0\.0\.1|localhost)[:/]/.test(u) && /^https?:/.test(u));
-  mkdirSync("docs/evidence/fase5", { recursive: true });
+  const DIR = process.env.EVIDENCE_DIR ?? "test-results/evidence"; // no pisar docs/evidence/ (capturas históricas)
+  mkdirSync(DIR, { recursive: true });
   writeFileSync(
-    "docs/evidence/fase5/offline-escenario-A.json",
+    `${DIR}/offline-escenario-A.json`,
     JSON.stringify({ scenario: "A: servida en 127.0.0.1, DNS bloqueado para todo otro host", probe, cases: log, externalRequests: external, failedRequests: failed, guardExternal: guard.external, probeUrl: PROBE }, null, 2),
   );
   expect(external, "la app no debe intentar salir a internet en modo local").toEqual([]);
-  await page.screenshot({ path: "docs/evidence/fase5/05-sin-internet-mapa-local.png" });
+  await page.screenshot({ path: `${DIR}/05-sin-internet-mapa-local.png` });
 });

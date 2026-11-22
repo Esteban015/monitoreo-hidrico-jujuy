@@ -104,6 +104,21 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 
 ---
 
+## Fase 8 — Iteración UX/UI y brand polish (2026-11-22, rama feature/ux-ui-brand-polish)
+- [x] A. Favicon, Apple Touch Icon, ícono 512 e imagen OG/Twitter de marca (D-27).
+- [x] B. Rutas internas y de datos absolutas; `/demo/` funcional (D-28).
+- [x] C. Hero ANTES → DESPUÉS con métrica principal, rango separado y aclaración.
+- [x] D. Menú móvil accesible y respaldo sin JS (D-30).
+- [x] E. Tarjetas de casos con jerarquía y barras proporcionales (D-31).
+- [x] F. Enlace directo `/demo?case=<id>` (D-29).
+- [x] G. «Cómo funciona» con miniaturas reales (D-33).
+- [x] H. Metadatos Open Graph y Twitter compartidos (D-32).
+- [x] I. Auditoría Lighthouse antes/después y accesibilidad (`docs/UX_UI_AUDIT.md`).
+- [ ] Pendiente: LCP de `/demo` en móvil (atribución de Leaflet tardía), fuera de alcance.
+- [ ] Pendiente: verificar en un Preview de Vercel antes de publicar.
+
+---
+
 ## Fase 6 — Demo
 Depende de: Fase 5.
 - [ ] 6.1 README con cómo correr, fuentes y limitaciones.

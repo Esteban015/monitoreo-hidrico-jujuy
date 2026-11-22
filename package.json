@@ -18,7 +18,9 @@
     "validate:data": "python -m unittest tests/python/test_outputs.py && node --test tests/publish.test.ts",
     "verify": "npm run lint && npm run typecheck && npm run build && npm test && npm run test:py && npm run test:e2e:smoke",
     "pretest": "node scripts/publish-data.mjs",
-    "test:e2e:smoke": "playwright test --project=smoke --global-timeout=120000 --retries=0"
+    "test:e2e:smoke": "playwright test --project=smoke --global-timeout=120000 --retries=0",
+    "brand:assets": "node scripts/brand/generate-brand-assets.mjs",
+    "brand:steps": "node scripts/brand/capture-step-thumbnails.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

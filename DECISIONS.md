@@ -168,3 +168,28 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 ## D-26 · 2026-11-22 · ADOPTADA — Navegación landing ↔ demo con enlaces HTML y corrección del servidor estático
 - **Enlaces:** se usan `<a>` comunes con rutas relativas en lugar de `next/link`. En la exportación estática de Next 16.4, la precarga pedía `/demo/__next.demo.__PAGE__.txt`, pero el archivo se genera como `demo/__next.demo/__PAGE__.txt`, lo que daba un 404 en consola. Con navegación completa entre dos páginas estáticas no hay pérdida funcional.
 - **`scripts/serve-static.mjs`:** ahora prioriza `demo.html` sobre la carpeta `demo/` que también genera Next. Antes respondía 404 en `/demo` (defecto del servidor local, no de la app).
+
+## D-27 · 2026-11-22 · ADOPTADA (UX/UI) — Recursos de identidad generados por script
+- **Decisión:** `scripts/brand/generate-brand-assets.mjs` genera favicon SVG/ICO (isotipo simplificado para 16/32 px), Apple Touch Icon 180, ícono 512 e imágenes OG/Twitter 1200×630. Se configuran por convención de archivos de App Router. Sin librerías gráficas: rasteriza con el Chrome instalado vía `@playwright/test`, que ya es devDependency.
+- **Imágenes de la landing:** el mismo script crea WebP de 640 px de los quicklooks **reales** de `data/derived` (solo redimensionados), con un manifiesto que conserva la procedencia (`public/landing/quicklooks/manifest.json`).
+
+## D-28 · 2026-11-22 · ADOPTADA (UX/UI) — Rutas internas y de datos absolutas
+- **Decisión:** los enlaces internos (`/`, `/demo`, `/#seccion`) y la base de datos (`DATA_BASE = "/data/"`) pasan a ser absolutos. Reemplaza el criterio relativo de D-20/D-26: `./` y `data/` fallaban al servir `/demo/` sin redirección.
+- **Supuesto:** el sitio se sirve en la raíz del dominio. Si alguna vez se publica en una subruta, hay que configurar `basePath`.
+
+## D-29 · 2026-11-22 · ADOPTADA (UX/UI) — Enlace directo a un caso: `/demo?case=<id>`
+- **Decisión:** `resolveCaseParam()` (`src/lib/caseParam.ts`, con pruebas). Sin parámetro, ningún caso seleccionado, como antes. Con un id válido, ese caso. Con un id inválido o vacío, el primer caso, sin error.
+- **Implementación:** se lee en el cliente al terminar de cargar los datos, así que no hay desajuste de hidratación. Sin dependencias de routing. Al elegir un caso, `history.replaceState` actualiza `?case=`. No toca la lógica científica.
+
+## D-30 · 2026-11-22 · ADOPTADA (UX/UI) — Menú móvil accesible
+- **Decisión:** componente propio `MobileMenu`: botón de 44×44 con `aria-expanded` y `aria-controls`, foco al primer enlace al abrir, Escape cierra y devuelve el foco, se cierra al elegir una sección, al tocar fuera o al salir con Tab. El panel tiene `z-40` sobre el contenido.
+- **Respaldo sin JS:** navegación por secciones en el pie y «Ver demo» siempre visible.
+
+## D-31 · 2026-11-22 · ADOPTADA (UX/UI) — Tarjetas de casos con barras proporcionales
+- **Decisión:** las barras Antes/Después representan solo el **valor principal** (MNDWI, área común), proporcional al mayor de los dos. El rango entre métodos se muestra aparte, como texto. No se agregan indicadores ni decimales nuevos.
+
+## D-32 · 2026-11-22 · ADOPTADA (UX/UI) — Metadatos sociales compartidos
+- **Decisión:** `src/lib/siteMeta.ts` (`socialMeta()`). Cuando una página define `openGraph` o `twitter`, Next **reemplaza** el objeto del layout en vez de combinarlo; por eso `/demo` perdía `og:image` y la tarjeta grande. Ambas páginas parten de la misma base y cada etiqueta aparece una sola vez (verificado por E2E).
+
+## D-33 · 2026-11-22 · ADOPTADA (UX/UI) — Miniaturas reales en «Cómo funciona»
+- **Decisión:** `scripts/brand/capture-step-thumbnails.mjs` captura 4 fragmentos de `/demo?case=laguna-pozuelos` del build local y los guarda como WebP (13–45 KB). Sin mapas ni datos ficticios. Si cambia la interfaz de la demo, hay que regenerarlas.

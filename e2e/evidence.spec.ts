@@ -2,7 +2,8 @@
 import { mkdirSync } from "node:fs";
 import { modeButton, openApp, selectCase, test } from "./fixtures";
 
-const DIR = "docs/evidence/fase5";
+// No escribir en docs/evidence/ (capturas históricas): por defecto va a test-results/. EVIDENCE_DIR para regenerar a propósito.
+const DIR = process.env.EVIDENCE_DIR ?? "test-results/evidence";
 
 test("evidencias visuales", async ({ page }, info) => {
   mkdirSync(DIR, { recursive: true });

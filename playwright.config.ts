@@ -20,10 +20,11 @@ export default defineConfig({
   },
   use: { baseURL: `http://127.0.0.1:${PORT}/`, channel: "chrome", trace: "off", screenshot: "off" },
   projects: [
-    { name: "smoke", testMatch: /(smoke|landing)\.spec\.ts/, use: { viewport: { width: 1440, height: 900 } } },
+    { name: "smoke", testMatch: /(smoke|landing|navigation|assets)\.spec\.ts/, use: { viewport: { width: 1440, height: 900 } } },
     { name: "desktop", testMatch: /(dashboard|responsive|evidence)\.spec\.ts/, use: { viewport: { width: 1440, height: 900 } } },
     { name: "tablet", testMatch: /responsive\.spec\.ts/, use: { viewport: { width: 768, height: 1024 }, hasTouch: true } },
-    { name: "movil", testMatch: /(responsive|evidence|landing)\.spec\.ts/, use: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true } },
+    { name: "movil", testMatch: /(responsive|evidence|landing|menu)\.spec\.ts/, use: { viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true } },
+    { name: "movil-se", testMatch: /(responsive|landing|menu)\.spec\.ts/, use: { viewport: { width: 375, height: 667 }, hasTouch: true, isMobile: true } },
     { name: "movil-chico", testMatch: /responsive\.spec\.ts/, use: { viewport: { width: 360, height: 800 }, hasTouch: true, isMobile: true } },
     {
       // Escenario A real: solo localhost resuelve; cualquier dominio de internet falla a nivel DNS.

@@ -1,9 +1,9 @@
 // Carga de los datasets publicados (public/data/, ver scripts/publish-data.mjs).
-// Rutas RELATIVAS (sin "/" inicial) para funcionar con exportación estática servida en cualquier subruta.
+// Rutas ABSOLUTAS desde la raíz del sitio (D-28): funcionan igual desde "/", "/demo" y "/demo/".
 // Sin imports de valores: se puede testear con `node --test` directamente.
 import type { DataBundle } from "./types.ts";
 
-export const DATA_BASE = "data/";
+export const DATA_BASE = "/data/";
 export const DATA_FILES = { cases: "cases.json", water: "water_metrics.json", rainfall: "rainfall_metrics.json" } as const;
 
 export type Fetcher = (url: string) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;

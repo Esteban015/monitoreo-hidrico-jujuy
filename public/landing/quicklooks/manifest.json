@@ -1,0 +1,49 @@
+{
+  "note": "Quicklooks Sentinel-2 reales (falso color B11/B08/B03) redimensionados a 640 px de ancho para la landing. Generado por scripts/brand/generate-brand-assets.mjs.",
+  "files": [
+    {
+      "file": "laguna-pozuelos_2025-05-04.webp",
+      "scene_id": "S2C_MSIL2A_20250504T142811_R053_T19KHR_20250504T193719",
+      "source": "data/derived/qa/quicklooks/laguna-pozuelos_2025-05-04.png",
+      "width": 640,
+      "height": 848,
+      "original": [
+        588,
+        779
+      ]
+    },
+    {
+      "file": "laguna-pozuelos_2025-09-13.webp",
+      "scene_id": "S2A_MSIL2A_20250913T142801_R053_T19KHR_20250913T211118",
+      "source": "data/derived/qa/quicklooks/laguna-pozuelos_2025-09-13.png",
+      "width": 640,
+      "height": 848,
+      "original": [
+        588,
+        779
+      ]
+    },
+    {
+      "file": "dique-las-maderas_2025-05-29.webp",
+      "scene_id": "S2B_MSIL2A_20250529T142719_R053_T19JHN_20250529T180713",
+      "source": "data/derived/qa/quicklooks/dique-las-maderas_2025-05-29.png",
+      "width": 640,
+      "height": 738,
+      "original": [
+        261,
+        301
+      ]
+    },
+    {
+      "file": "dique-las-maderas_2025-10-03.webp",
+      "scene_id": "S2A_MSIL2A_20251003T142811_R053_T19JHN_20251003T192715",
+      "source": "data/derived/qa/quicklooks/dique-las-maderas_2025-10-03.png",
+      "width": 640,
+      "height": 738,
+      "original": [
+        261,
+        301
+      ]
+    }
+  ]
+}
