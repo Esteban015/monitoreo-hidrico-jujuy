@@ -101,7 +101,7 @@ export default function HistoryChart({ climate, sceneA, sceneB }: { climate: Cli
         </span>
       </div>
 
-      <div className="mt-2 space-y-1">
+      <div className="mt-2 space-y-1" data-testid="history-observations">
         {observations.map((o) => (
           <div key={o.scene.scene_id} className="flex items-center justify-between gap-2 rounded bg-slate-50 px-2 py-1 text-xs">
             <span className="text-slate-600">{fmtDate(o.scene.date)}</span>
@@ -109,6 +109,28 @@ export default function HistoryChart({ climate, sceneA, sceneB }: { climate: Cli
           </div>
         ))}
       </div>
+
+      <details className="mt-2 text-xs text-slate-700" data-testid="history-months">
+        <summary className="cursor-pointer select-none font-medium text-slate-900">Últimos meses de la fuente</summary>
+        <table className="mt-1 w-full">
+          <thead className="text-left text-slate-500">
+            <tr>
+              <th className="py-1 font-normal">Mes</th>
+              <th className="py-1 font-normal">Lluvia</th>
+              <th className="py-1 font-normal">Temperatura</th>
+            </tr>
+          </thead>
+          <tbody>
+            {months.slice(-12).map((m) => (
+              <tr key={m.month} className="border-t border-slate-100">
+                <td className="py-0.5">{fmtMonth(m.month)}</td>
+                <td className="py-0.5">{m.precip_mm === null ? "—" : `${fmtNum(m.precip_mm, 1)} mm`}</td>
+                <td className="py-0.5">{m.temp_c === null ? "—" : `${fmtNum(m.temp_c, 1)} °C`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </details>
       <p className="mt-1.5 text-[11px] leading-snug text-slate-500">
         La serie de lluvia y temperatura es real y continua. De superficie de agua hay <strong>solo 2 observaciones reales</strong>: no se
         interpolan fechas ni se inventan valores intermedios.

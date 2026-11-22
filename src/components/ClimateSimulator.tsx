@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { fmtNum, fmtPct, fmtSigned } from "@/lib/metrics";
-import { clamp, precipCurve, predictArea } from "@/lib/model";
+import { clamp, parseDecimal, precipCurve, predictArea } from "@/lib/model";
 import type { WaterModelCase } from "@/lib/types";
 
 /**
@@ -13,8 +13,35 @@ import type { WaterModelCase } from "@/lib/types";
 export default function ClimateSimulator({ model }: { model: WaterModelCase }) {
   const [precip, setPrecip] = useState(model.baseline.precip_3m_mm);
   const [temp, setTemp] = useState(model.baseline.temp_3m_c);
+  const [precipText, setPrecipText] = useState(fmtNum(model.baseline.precip_3m_mm, 1));
+  const [tempText, setTempText] = useState(fmtNum(model.baseline.temp_3m_c, 1));
+  const [precipMsg, setPrecipMsg] = useState<string | null>(null);
+  const [tempMsg, setTempMsg] = useState<string | null>(null);
   const [pMin, pMax] = model.ranges.precip_3m_mm;
   const [tMin, tMax] = model.ranges.temp_3m_c;
+
+  const applyPrecip = (raw: string) => {
+    const n = parseDecimal(raw);
+    if (n === null) {
+      setPrecipMsg("Ingresá un número válido, en milímetros.");
+      return;
+    }
+    const c = clamp(n, pMin, pMax);
+    setPrecip(c);
+    setPrecipText(fmtNum(c, 1));
+    setPrecipMsg(c !== n ? `Fuera del rango del modelo (${fmtNum(pMin, 0)}–${fmtNum(pMax, 0)} mm). Se usa el borde.` : null);
+  };
+  const applyTemp = (raw: string) => {
+    const n = parseDecimal(raw);
+    if (n === null) {
+      setTempMsg("Ingresá un número válido, en grados Celsius.");
+      return;
+    }
+    const c = clamp(n, tMin, tMax);
+    setTemp(c);
+    setTempText(fmtNum(c, 1));
+    setTempMsg(c !== n ? `Fuera del rango del modelo (${fmtNum(tMin, 1)}–${fmtNum(tMax, 1)} °C). Se usa el borde.` : null);
+  };
   const base = model.baseline.last_observed_area_km2;
   const pred = predictArea(model, precip, temp);
   const delta = pred - base;
@@ -35,12 +62,24 @@ export default function ClimateSimulator({ model }: { model: WaterModelCase }) {
   const baseY = cy(base);
 
   const reset = () => {
-    setPrecip(model.baseline.precip_3m_mm);
-    setTemp(model.baseline.temp_3m_c);
+    const p = model.baseline.precip_3m_mm;
+    const t = model.baseline.temp_3m_c;
+    setPrecip(p);
+    setTemp(t);
+    setPrecipText(fmtNum(p, 1));
+    setTempText(fmtNum(t, 1));
+    setPrecipMsg(null);
+    setTempMsg(null);
   };
   const preset = (factor: number, dTemp: number) => {
-    setPrecip(clamp(model.baseline.precip_3m_mm * factor, pMin, pMax));
-    setTemp(clamp(model.baseline.temp_3m_c + dTemp, tMin, tMax));
+    const p = clamp(model.baseline.precip_3m_mm * factor, pMin, pMax);
+    const t = clamp(model.baseline.temp_3m_c + dTemp, tMin, tMax);
+    setPrecip(p);
+    setTemp(t);
+    setPrecipText(fmtNum(p, 1));
+    setTempText(fmtNum(t, 1));
+    setPrecipMsg(null);
+    setTempMsg(null);
   };
 
   return (
@@ -49,7 +88,9 @@ export default function ClimateSimulator({ model }: { model: WaterModelCase }) {
         <h3 className="text-sm font-semibold text-slate-900">Simulador climático</h3>
         <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-900">DEMOSTRATIVO</span>
       </div>
-      <p className="mt-0.5 text-xs text-slate-500">¿Qué pasaría con la superficie visible si cambian la lluvia y la temperatura?</p>
+      <p className="mt-0.5 text-xs text-slate-500">
+        Ingresá la precipitación y la temperatura esperadas, o mové los controles, para ver cómo cambiaría la superficie visible.
+      </p>
 
       <div className="mt-2 rounded border border-amber-300 bg-amber-50 p-2 text-[11px] leading-snug text-amber-900" data-testid="sim-disclaimer">
         <strong>Modelo demostrativo — datos sintéticos.</strong> Entrenado con una respuesta sintética calibrada a 2 observaciones reales.
@@ -60,19 +101,45 @@ export default function ClimateSimulator({ model }: { model: WaterModelCase }) {
         <label className="block">
           <span className="flex items-baseline justify-between gap-2 text-xs text-slate-700">
             <span>Precipitación acumulada (3 meses)</span>
-            <span className="font-semibold tabular-nums text-sky-900">{fmtNum(precip, 0)} mm</span>
+            <span className="inline-flex items-center gap-1 font-semibold tabular-nums text-sky-900">
+              <input
+                type="text"
+                inputMode="decimal"
+                data-testid="sim-precip-input"
+                aria-label="Precipitación acumulada de 3 meses en milímetros"
+                aria-invalid={precipMsg !== null}
+                value={precipText}
+                onChange={(e) => setPrecipText(e.target.value)}
+                onBlur={() => applyPrecip(precipText)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") applyPrecip(precipText);
+                }}
+                className="w-20 rounded border border-slate-300 bg-white px-1.5 py-0.5 text-right text-xs text-slate-900"
+              />
+              mm
+            </span>
           </span>
           <input
             type="range"
             data-testid="sim-precip"
-            aria-label="Precipitación acumulada de 3 meses en milímetros"
+            aria-label="Control de precipitación acumulada de 3 meses"
             min={pMin}
             max={pMax}
             step={5}
             value={precip}
-            onChange={(e) => setPrecip(Number(e.target.value))}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              setPrecip(v);
+              setPrecipText(fmtNum(v, 1));
+              setPrecipMsg(null);
+            }}
             className="mt-1 w-full accent-sky-700"
           />
+          {precipMsg && (
+            <p className="mt-1 text-[11px] text-amber-800" data-testid="sim-precip-msg" role="status">
+              {precipMsg}
+            </p>
+          )}
           <span className="flex justify-between text-[10px] text-slate-400">
             <span>{fmtNum(pMin, 0)} mm</span>
             <span>{fmtNum(pMax, 0)} mm</span>
@@ -82,19 +149,45 @@ export default function ClimateSimulator({ model }: { model: WaterModelCase }) {
         <label className="block">
           <span className="flex items-baseline justify-between gap-2 text-xs text-slate-700">
             <span>Temperatura media (3 meses)</span>
-            <span className="font-semibold tabular-nums text-amber-800">{fmtNum(temp, 1)} °C</span>
+            <span className="inline-flex items-center gap-1 font-semibold tabular-nums text-amber-800">
+              <input
+                type="text"
+                inputMode="decimal"
+                data-testid="sim-temp-input"
+                aria-label="Temperatura media de 3 meses en grados Celsius"
+                aria-invalid={tempMsg !== null}
+                value={tempText}
+                onChange={(e) => setTempText(e.target.value)}
+                onBlur={() => applyTemp(tempText)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") applyTemp(tempText);
+                }}
+                className="w-16 rounded border border-slate-300 bg-white px-1.5 py-0.5 text-right text-xs text-slate-900"
+              />
+              °C
+            </span>
           </span>
           <input
             type="range"
             data-testid="sim-temp"
-            aria-label="Temperatura media de 3 meses en grados Celsius"
+            aria-label="Control de temperatura media de 3 meses"
             min={tMin}
             max={tMax}
             step={0.1}
             value={temp}
-            onChange={(e) => setTemp(Number(e.target.value))}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              setTemp(v);
+              setTempText(fmtNum(v, 1));
+              setTempMsg(null);
+            }}
             className="mt-1 w-full accent-amber-600"
           />
+          {tempMsg && (
+            <p className="mt-1 text-[11px] text-amber-800" data-testid="sim-temp-msg" role="status">
+              {tempMsg}
+            </p>
+          )}
           <span className="flex justify-between text-[10px] text-slate-400">
             <span>{fmtNum(tMin, 1)} °C</span>
             <span>{fmtNum(tMax, 1)} °C</span>

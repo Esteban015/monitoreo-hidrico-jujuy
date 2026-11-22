@@ -6,6 +6,26 @@ export function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
 }
 
+/**
+ * Lee un número escrito en español (coma decimal, punto de miles) o en notación con punto.
+ * Devuelve null si el texto no es un número finito.
+ */
+export function parseDecimal(raw: string): number | null {
+  let t = raw.trim().replace(/\s+/g, "").replace(/−/g, "-");
+  if (!t) return null;
+  const hasComma = t.includes(",");
+  const hasDot = t.includes(".");
+  if (hasComma && hasDot) {
+    if (t.lastIndexOf(",") > t.lastIndexOf(".")) t = t.replace(/\./g, "").replace(",", ".");
+    else t = t.replace(/,/g, "");
+  } else if (hasComma) {
+    t = t.replace(",", ".");
+  }
+  if (!/^-?\d+(\.\d+)?$/.test(t)) return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? n : null;
+}
+
 function lowerIndex(axis: number[], v: number): number {
   let lo = 0;
   let hi = axis.length - 1;

@@ -17,6 +17,8 @@ Plataforma geoespacial para comparar la **superficie visible de agua** de cuerpo
 | Superficie de agua | MNDWI > 0 (principal) y NDWI > 0 (secundario), grilla de 20 m |
 | Incertidumbre | Sensibilidad al umbral y rango entre métodos, visible junto al valor principal |
 | Precipitación | CHIRPS v3.0 mensual, media areal en la cuenca, anomalía y percentil vs. 1995–2024 |
+| Historial de la fuente | Serie mensual real de lluvia y temperatura (Open-Meteo / ERA5-Land) + las 2 observaciones reales de superficie |
+| Simulador climático | `HistGradientBoostingRegressor` (scikit-learn) sobre grilla; escenarios de lluvia y temperatura, **rotulado como demostrativo** |
 | Trazabilidad | ID de escena, fecha, nubosidad efectiva, cobertura, fuente, método y licencias |
 | Modo offline | Datos y mapa base provincial local; sin APIs externas durante la demo |
 | API de solo lectura | `/api/*` sobre los mismos JSON, sin base de datos |
@@ -35,8 +37,9 @@ Plataforma geoespacial para comparar la **superficie visible de agua** de cuerpo
 - No estima aguas subterráneas, acuíferos ni niveles freáticos.
 - No calcula caudal (m³/s) ni volumen almacenado (hm³). **Superficie ≠ volumen ≠ caudal.**
 - No cubre toda la provincia a escala de detalle: son 2 casos testigo con datos reales.
-- No hace análisis por lote, modelos predictivos, SAR ni IA.
-- No interpola fechas intermedias ni inventa series: hay dos observaciones reales por caso.
+- No hace predicciones validadas: el simulador es **demostrativo**, se entrenó con datos sintéticos calibrados a 2 observaciones reales y así se rotula en la UI.
+- No hace análisis por lote, SAR ni IA generativa.
+- No interpola fechas intermedias ni inventa series: hay dos observaciones reales por caso. El historial muestra clima real continuo, pero de superficie solo marca las 2 fechas observadas.
 - No reemplaza un estudio hidrológico ni una delimitación oficial de cuenca.
 
 ## 3. Arquitectura
@@ -52,13 +55,14 @@ Plataforma geoespacial para comparar la **superficie visible de agua** de cuerpo
 │  Node.js 22 · server/index.js (sin dependencias)             │
 │  · Sirve out/ (frontend estático)                            │
 │  · GET /api/health · /api/casos · /api/meta · /api/fuentes   │
-│  · Lee data/derived/*.json en solo lectura                   │
+│  · /historial · /modelo · Lee data/derived/ en solo lectura   │
 └───────────────┬──────────────────────────────────────────────┘
                 │
 ┌───────────────▼──────────────────────────────────────────────┐
 │  Datos precalculados (versionados, offline)                  │
 │  Sentinel-2 L2A → MNDWI/NDWI → superficies (scripts Python)  │
-│  CHIRPS v3.0 mensual · HydroBASINS nivel 10 · OSM · IGN      │
+│  CHIRPS v3.0 · Open-Meteo (lluvia/temperatura) · HydroBASINS  │
+│  Modelo HGB entrenado en Python y exportado a grilla JSON    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -96,12 +100,14 @@ Base: `/api`. Respuestas JSON, CORS abierto, solo `GET`/`HEAD`.
 
 | Endpoint | Descripción |
 |---|---|
-| `GET /api/health` | Estado del servicio y de los 3 datasets |
-| `GET /api/meta` | Método, fuentes y limitaciones |
+| `GET /api/health` | Estado del servicio y de los 5 datasets |
+| `GET /api/meta` | Método, fuentes, modelo y limitaciones |
 | `GET /api/casos` | Casos con comparación y precipitación resumidas |
-| `GET /api/casos/{id}` | Detalle: escenas, comparación, lluvia, advertencias |
+| `GET /api/casos/{id}` | Detalle: escenas, comparación, lluvia, historial y modelo |
 | `GET /api/casos/{id}/comparacion` | MNDWI/NDWI, sensibilidad e incertidumbre |
 | `GET /api/casos/{id}/precipitacion` | CHIRPS mensual, anomalía y percentil |
+| `GET /api/casos/{id}/historial` | Serie mensual real (Open-Meteo) + 2 observaciones de superficie |
+| `GET /api/casos/{id}/modelo` | Metadatos, supuestos y grilla del HGB demostrativo |
 | `GET /api/casos/{id}/geometrias` | Rutas a GeoJSON de cuenca, AOI y agua |
 | `GET /api/fuentes` | Fuentes, proveedores, licencias y uso |
 | `GET /api/openapi.json` | Especificación OpenAPI 3.1 |
@@ -159,6 +165,8 @@ Subir `out/` a cualquier CDN. Los datos ya están en `out/data/`. La API no esta
 |---|---|---|---|
 | Superficie de agua | Sentinel-2 L2A (Copernicus / Planetary Computer STAC) | MNDWI > 0, NDWI > 0, grilla 20 m | **Estimación** por umbral |
 | Precipitación | CHIRPS v3.0 mensual (CHC, UCSB), 0,05° | Media areal en la cuenca, anomalía vs. 1995–2024 | **Estimación** satélite + estaciones |
+| Lluvia y temperatura mensual | Open-Meteo Historical (ERA5-Land) | Serie 2019–2026 en el centroide del AOI | **Reanálisis**, no medición local |
+| Simulador | `HistGradientBoostingRegressor` (scikit-learn) | Sensibilidad de superficie a lluvia/temperatura | **Demostrativo sintético** (no validado) |
 | Cuenca | HydroBASINS v1c nivel 10 (HydroSHEDS) | Cuenca de aporte modelada | **Modelo**, no delimitación oficial |
 | Contorno de referencia | OpenStreetMap (ODbL) | AOI cartográfico, no medición | Cartografía |
 | Mapa base local | IGN Argentina | Provincias y departamentos | Cartografía |
@@ -166,21 +174,24 @@ Subir `out/` a cualquier CDN. Los datos ya están en `out/data/`. La API no esta
 
 - Escenas, fechas, nubosidad efectiva, cobertura y método: `data/derived/water_metrics.json`.
 - Lluvia, referencia, anomalía y percentil: `data/derived/rainfall_metrics.json`.
+- Serie mensual real de lluvia/temperatura y observaciones: `data/derived/climate/climate_series.json`.
+- Modelo HGB, grilla, métricas sintéticas y supuestos: `data/derived/model/water_model.json`.
 - Cuencas, AOI y advertencias: `data/derived/cases.json`.
 - Manifiesto de datos crudos y accesos: `data/raw/MANIFEST.md`.
-- Decisiones metodológicas: `DECISIONS.md` (D-04 a D-21).
+- Decisiones metodológicas: `DECISIONS.md` (D-04 a D-25).
 - Fuentes y criterios QA: `DATA_SOURCES.md`.
 
 ## 8. Estructura
 
 ```
 src/                  Frontend Next.js (App Router)
-  components/         Dashboard, MapView, InfoPanel
-  lib/                Carga de datasets, métricas, tipos, avisos
+  components/         Dashboard, MapView, InfoPanel, HistoryChart, ClimateSimulator
+  lib/                Carga de datasets, métricas, inferencia del modelo, tipos, avisos
 server/               Backend Node sin dependencias + OpenAPI
 scripts/              Preprocesamiento Python y publicación de datos
   explore/            Verificación de acceso a fuentes
   process/            Geometrías, MNDWI, CHIRPS
+  model/              Open-Meteo + entrenamiento/exportación del HGB
 data/derived/         Datos versionados que consume la app
 data/raw/             Manifiesto (los crudos grandes no se versionan)
 tests/                Unitarios Node + QA Python
@@ -196,12 +207,12 @@ Resultado real del cierre del MVP (2026-11-22):
 npm run lint         # OK
 npm run typecheck    # OK
 npm run build        # OK — 4 páginas estáticas
-npm test             # 18/18 OK
+npm test             # 23/23 OK (incluye inferencia del modelo)
 npm run test:py      # 43/43 OK
-npx playwright test --project=desktop --project=sin-internet  # 13/13 OK
+npx playwright test  # 18/18 OK (desktop, tablet, móvil y offline)
 ```
 
-Los E2E cubren: inicio sin solicitudes externas, ambos casos, valores reales, modos Antes/Después/Comparar, incertidumbre, precipitación, trazabilidad, error y reintento, geometría faltante, responsive y offline real (DNS externo bloqueado).
+Los E2E cubren: inicio sin solicitudes externas, ambos casos, valores reales, modos Antes/Después/Comparar, incertidumbre, precipitación, trazabilidad, error y reintento, geometría faltante, mapa físico opcional, vista general/modo Agua, historial, simulador, responsive y offline real (DNS externo bloqueado).
 
 ## 10. Limitaciones científicas
 
@@ -212,6 +223,7 @@ Los E2E cubren: inicio sin solicitudes externas, ambos casos, valores reales, mo
 5. **CHIRPS es una estimación**, no un pluviómetro. En meses secos (<10 mm) la anomalía porcentual es inestable y se informa el percentil.
 6. **Resolución 20 m.** Cuerpos de agua angostos o cambios menores al borde de píxel no son significativos.
 7. **Mapa base online opcional.** Sin Internet se usa el mapa provincial local; las métricas no dependen de teselas.
+8. **El simulador NO es una predicción validada.** Hay solo 2 observaciones reales de superficie por caso. El `HistGradientBoostingRegressor` se entrenó con una respuesta sintética calibrada a esas observaciones; además, lluvia y temperatura son colineales entre los 2 puntos, por lo que se fija la elasticidad térmica (5 % por +5 °C) y se calibra la de lluvia. Sirve para explorar sensibilidad, no para decidir. Una predicción real requiere una serie multianual de superficie (decenas de escenas sin nubes).
 
 ## 11. Documentación
 
@@ -229,5 +241,7 @@ Los E2E cubren: inicio sin solicitudes externas, ambos casos, valores reales, mo
 - **CHIRPS:** Climate Hazards Center, UCSB. Citar Funk et al.
 - **HydroBASINS / HydroSHEDS:** Lehner & Grill (2013). Uso libre con atribución.
 - **OpenStreetMap:** © colaboradores de OpenStreetMap, ODbL 1.0.
+- **Open-Meteo / ERA5-Land:** Open-Meteo CC-BY 4.0; reanálisis ERA5-Land de Copernicus C3S.
+- **scikit-learn:** licencia BSD-3-Clause.
 - **IGN Argentina:** ver condiciones del Instituto Geográfico Nacional.
 - **Código:** prototipo de hackatón; definir licencia antes de publicar.

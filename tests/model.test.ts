@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { predictArea, precipCurve } from "../src/lib/model.ts";
+import { parseDecimal, predictArea, precipCurve } from "../src/lib/model.ts";
 import type { WaterModelFile } from "../src/lib/types.ts";
 
 const model: WaterModelFile = JSON.parse(readFileSync(new URL("../data/derived/model/water_model.json", import.meta.url), "utf-8"));
@@ -45,6 +45,16 @@ test("la curva de respuesta tiene 41 puntos y valores finitos", () => {
     assert.equal(curve.length, 41);
     assert.ok(curve.every((p) => Number.isFinite(p.precip) && Number.isFinite(p.area)));
   }
+});
+
+test("la entrada de lluvia y temperatura acepta coma decimal y rechaza texto", () => {
+  assert.equal(parseDecimal("18,5"), 18.5);
+  assert.equal(parseDecimal("120"), 120);
+  assert.equal(parseDecimal("1.234,5"), 1234.5);
+  assert.equal(parseDecimal("−2,5"), -2.5);
+  assert.equal(parseDecimal(""), null);
+  assert.equal(parseDecimal("lluvia"), null);
+  assert.equal(parseDecimal("12mm"), null);
 });
 
 test("el historial climático es real, continuo y con 2 observaciones por caso", () => {

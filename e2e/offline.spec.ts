@@ -38,8 +38,11 @@ test("14. sin internet: mapa local, ambos casos, tres modos, imágenes, geometr�
       counts[m] = await overlayPaths(page);
       expect(counts[m]).toBeGreaterThan(0);
     }
-    // imágenes de control locales
-    await page.getByText("Imágenes de control Sentinel-2").click();
+    // imágenes de control locales (el <details> conserva su estado al cambiar de caso)
+    const quicklooks = page.getByTestId("quicklooks");
+    if (!(await quicklooks.evaluate((el) => (el as HTMLDetailsElement).open))) {
+      await quicklooks.locator("summary").click();
+    }
     const imgs = page.getByTestId("results").locator("img");
     await expect(imgs).toHaveCount(2);
     for (const img of await imgs.all()) {

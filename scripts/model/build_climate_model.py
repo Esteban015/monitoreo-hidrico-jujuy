@@ -12,6 +12,7 @@ ADVERTENCIA CIENTÍFICA:
 """
 from __future__ import annotations
 
+import inspect
 import json
 import random
 from datetime import date, timedelta
@@ -23,6 +24,10 @@ import sklearn
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
+
+# La grilla publicada se generó con esta versión. Otra versión sigue pudiendo entrenar,
+# pero se avisa: los hiperparámetros que no existan en esa versión se omiten.
+PINNED_SKLEARN = "1.9.1"
 
 ROOT = Path(__file__).resolve().parents[2]
 DERIVED = ROOT / "data" / "derived"
@@ -136,6 +141,31 @@ def window_before(rows: list[dict], image_date: str) -> dict:
     return next(r for r in reversed(rows) if r["month"] <= target)
 
 
+def make_regressor() -> HistGradientBoostingRegressor:
+    """Construye el estimador con los parámetros que esta versión de scikit-learn acepta."""
+    if sklearn.__version__ != PINNED_SKLEARN:
+        print(
+            f"[model] aviso de versión: scikit-learn {sklearn.__version__} "
+            f"(el dataset publicado usa {PINNED_SKLEARN}). "
+            "pip install scikit-learn==" + PINNED_SKLEARN
+        )
+    wanted = {
+        "max_iter": 300,
+        "learning_rate": 0.06,
+        "max_leaf_nodes": 15,
+        "l2_regularization": 1.0,
+        "early_stopping": True,
+        "validation_fraction": 0.12,
+        "n_iter_no_change": 20,
+        "random_state": SEED,
+    }
+    supported = set(inspect.signature(HistGradientBoostingRegressor.__init__).parameters)
+    dropped = sorted(k for k in wanted if k not in supported)
+    if dropped:
+        print(f"[model] sklearn {sklearn.__version__} no acepta: {', '.join(dropped)}. Se omiten.")
+    return HistGradientBoostingRegressor(**{k: v for k, v in wanted.items() if k in supported})
+
+
 def main() -> None:
     cases = read_json(DERIVED / "cases.json")["cases"]
     water = read_json(DERIVED / "water_metrics.json")
@@ -240,16 +270,7 @@ def main() -> None:
         y_syn = np.array([response(p, t) for p, t in X]) + rng.normal(0, 0.01 * area_ref, n)
         X_train, X_test, y_train, y_test = train_test_split(X, y_syn, test_size=0.2, random_state=SEED)
 
-        reg = HistGradientBoostingRegressor(
-            max_iter=300,
-            learning_rate=0.06,
-            max_leaf_nodes=15,
-            l2_regularization=1.0,
-            early_stopping=True,
-            validation_fraction=0.12,
-            n_iter_no_change=20,
-            random_state=SEED,
-        )
+        reg = make_regressor()
         reg.fit(X_train, y_train)
         pred = reg.predict(X_test)
 

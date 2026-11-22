@@ -146,6 +146,11 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 - **Estado:** despliegue local verificado en `http://localhost:3000` (frontend + API). La URL pública queda PENDIENTE de credenciales del proveedor; no se publicó nada.
 - **Justificación:** reproduce el entorno con un comando, no requiere secretos y permite demo local sin Internet.
 
+## D-24 · 2026-11-22 · ADOPTADA — Versión fijada del simulador climático
+- **Decisión:** `scripts/requirements.txt` fija `scikit-learn==1.9.1` (la versión escrita en `water_model.json`), más `numpy==2.5.4` y `requests==2.34.2`. `build_climate_model.py` avisa si el entorno no coincide y omite hiperparámetros que esa versión de `HistGradientBoostingRegressor` no acepte, en lugar de abortar por `TypeError`. El `package.json` declara `"type": "module"` para que Node no reinterprete los `.js`/`.ts` con sintaxis ESM (aviso `MODULE_TYPELESS_PACKAGE_JSON`).
+- **Inferencia en el navegador:** sigue siendo la grilla exportada. La entrada numérica de precipitación y temperatura usa esa grilla; no se carga el estimador serializado (evita `InconsistentVersionWarning` al deserializar entre versiones).
+- **Historial:** al elegir una fuente se muestra primero la serie climática real y las dos observaciones de superficie.
+
 ## D-21 · 2026-11-22 · ADOPTADA (Fase 4) — Presentación de resultados en el dashboard
 - **Valores:** todos se leen de los JSON publicados; ninguna métrica está escrita en `src/` (verificado por búsqueda).
 - **Rango de incertidumbre:** mínimo y máximo de variaciones **ya presentes** en `water_metrics.json`: sensibilidad MNDWI (−0,1/0/+0,1), NDWI umbral 0 y la variación de la clase SCL 6 (calculada con las áreas por fecha del mismo archivo). Resultado: Pozuelos de −26,3 % a −68,5 %; Las Maderas de −13,0 % a −18,9 %. Se muestra junto al valor principal MNDWI, con una barra y la lista de métodos.

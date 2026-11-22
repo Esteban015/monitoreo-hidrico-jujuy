@@ -39,6 +39,7 @@ export default function InfoPanel({
         <p role="status" className="rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900" data-testid="data-status">
           Datos incompletos para este caso: falta {missing.join(", ")}. No se muestran valores parciales.
         </p>
+        {climate && sceneA && sceneB && <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} />}
       </section>
     );
   }
@@ -51,6 +52,14 @@ export default function InfoPanel({
   return (
     <section className="space-y-4 p-4" aria-live="polite" data-testid="results">
       <CaseHeader view={view} />
+
+      {climate ? (
+        <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} />
+      ) : (
+        <p className="rounded border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600" data-testid="history-missing">
+          No hay historial climático publicado para esta fuente de agua.
+        </p>
+      )}
 
       {/* Comparador Antes / Después: solo las dos observaciones reales */}
       <div>
@@ -141,12 +150,10 @@ export default function InfoPanel({
         </div>
       </div>
 
-      {/* Historial real + simulador demostrativo */}
-      {climate && <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} />}
       {model && <ClimateSimulator key={model.name} model={model} />}
 
       {/* Imágenes de control */}
-      <details className="rounded border border-slate-200 p-2 text-sm">
+      <details data-testid="quicklooks" className="rounded border border-slate-200 p-2 text-sm">
         <summary className="cursor-pointer select-none font-medium text-slate-900">Imágenes de control Sentinel-2</summary>
         <p className="mt-1 text-xs text-slate-600">Falso color (B11, B08, B03): el agua se ve oscura. Línea cian: agua detectada; línea amarilla: región de análisis.</p>
         <div className="mt-2 grid grid-cols-2 gap-2">
