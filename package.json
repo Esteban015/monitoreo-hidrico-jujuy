@@ -13,10 +13,12 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.ts",
     "test:unit": "node --test tests/*.test.ts",
-    "test:py": "scripts/.venv/Scripts/python -m unittest discover -s tests/python",
+    "test:py": "python -m unittest discover -s tests/python",
     "test:e2e": "playwright test",
-    "validate:data": "scripts/.venv/Scripts/python -m unittest tests/python/test_outputs.py && node --test tests/publish.test.ts",
-    "verify": "npm run lint && npm run typecheck && npm run test:py && npm run build && npm run test:unit && npm run test:e2e"
+    "validate:data": "python -m unittest tests/python/test_outputs.py && node --test tests/publish.test.ts",
+    "verify": "npm run lint && npm run typecheck && npm run build && npm test && npm run test:py && npm run test:e2e:smoke",
+    "pretest": "node scripts/publish-data.mjs",
+    "test:e2e:smoke": "playwright test --project=smoke --global-timeout=120000 --retries=0"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -35,5 +37,8 @@
     "eslint-config-next": "16.4.6",
     "tailwindcss": "4.3.3",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   }
 }

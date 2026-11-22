@@ -83,13 +83,14 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 
 ---
 
-## Fase 5 — Ficha de transparencia + modo offline
-Depende de: Fase 4.
-- [ ] 5.1 Ficha: fuente, ID de escena, fecha de adquisición, % nubes, resolución, umbral, período de referencia de lluvia, licencias, advertencias.
-- [ ] 5.2 Prueba offline: build estático servido localmente con la red desactivada (alternativa al mapa base, D-10).
-- [ ] 5.3 Entrada inválida: caso inexistente o archivo faltante muestra un mensaje claro en español.
-
-**Aceptación:** demo completa sin red; ficha visible para cada fecha mostrada.
+## Fase 5 — Estabilización, QA E2E y demo offline
+- [x] 5.1 Mapa base local con límites del IGN y OSM opcional (D-22).
+- [x] 5.2 Defectos corregidos: render recortado (Canvas, D-23), `npm start` dependía de `npx`, aviso offline de Leaflet.
+- [x] 5.3 Limpieza autorizada: se eliminaron `src/lib/cases.ts`, `src/lib/loadCaseSummary.ts` y sus pruebas (la constante de encuadre pasó a `mapConfig.ts`).
+- [x] 5.4 E2E con Playwright (17 pruebas en 5 proyectos, incluido sin internet) y evidencias en `docs/evidence/fase5/`.
+- [x] 5.5 Prueba real del escenario A (servidor local con DNS bloqueado).
+- [ ] 5.6 Leyenda móvil superpuesta con la atribución (ajuste pendiente).
+- [ ] 5.7 Verificar la licencia de los geoservicios del IGN.
 
 ---
 

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Lint, typecheck, build y pruebas
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # las pruebas usan TypeScript nativo de Node (>= 22.18)
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Build (exportación estática; prebuild publica data/derived -> public/data)
+        run: npm run build
+      - name: Pruebas unitarias e integridad de datos publicados
+        run: npm test
+      - name: Verificar que out/ contiene todos los datos publicados
+        run: |
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("public/data/manifest.json", "utf8"));
+            const missing = m.files.filter(f => !fs.existsSync("out/data/" + f.path));
+            if (missing.length) { console.error("Faltan en out/data:", missing.map(f => f.path)); process.exit(1); }
+            console.log(`out/data contiene los ${m.files.length} archivos del manifiesto`);
+          '
+
+  python:
+    name: Pruebas Python (cálculo y validación de datasets)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install -r scripts/requirements-ci.txt
+      - run: python -m unittest discover -s tests/python -v

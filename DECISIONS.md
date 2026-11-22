@@ -143,3 +143,18 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 - **Mapa:** se encuadra en el cuerpo de agua (el contorno OSM ampliado un 35 %). La cuenca aparece como sombreado con bordes tenues, porque Pozuelos tiene 31 subunidades. La leyenda es plegable y empieza cerrada en anchos menores a 768 px.
 - **Mapa base:** sigue siendo OSM en línea. Sin conexión aparece el aviso "Mapa base no disponible…" y las geometrías y métricas funcionan igual (verificado bloqueando los hosts externos). Se corrigió que Leaflet emitía `load` aunque fallaran todas las teselas.
 - **Sin semáforos:** colores neutros (azul y ámbar para las fechas, violeta para la cuenca) y sin etiquetas del tipo "sequía".
+
+## D-22 · 2026-11-22 · ADOPTADA (Fase 5) — Mapa base local con límites del IGN
+- **Decisión:** el mapa usa por defecto el límite provincial y los 16 departamentos de Jujuy del WFS del IGN (`ign:provincia`, `ign:departamento`). Se simplificaron con Douglas-Peucker a ~100 m (de 13 720 a 1136 y de 123 796 a 4149 vértices, 114 KB) mediante `scripts/basemap/fetch_ign_basemap.py`, y se publican desde `data/derived/basemap/`.
+- **OpenStreetMap:** queda como opción manual («OpenStreetMap (online)»). En modo local no hay pedidos externos (verificado con DNS bloqueado).
+- **Licencia IGN:** no se encontró un texto explícito para los geoservicios WFS. Se atribuye «Límites: IGN Argentina»; **queda pendiente de verificar**.
+
+## D-23 · 2026-11-22 · ADOPTADA (Fase 5) — Render Canvas en Leaflet
+- **Decisión:** `preferCanvas: true`. Con SVG, la capa de agua de Pozuelos (más de 280 polígonos) se componía recortada en Chrome sin interfaz, aunque la geometría estaba completa en el DOM. Con Canvas se dibuja completa y rinde mejor.
+- **Consecuencia:** las pruebas leen los conteos `data-base-features`, `data-drawn-a` y `data-drawn-b` que expone `MapView`, en lugar de contar elementos `<path>`.
+
+## D-24 · 2026-11-22 · ADOPTADA — CI en Pull Requests y despliegue estático en Vercel
+- **CI** (`.github/workflows/ci.yml`, PR → `master`): `npm ci`, lint, typecheck, build, `npm test` (integridad sha256 de los datos publicados), control de que `out/data` tenga todo el manifiesto, y las pruebas Python con solo numpy (`scripts/requirements-ci.txt`). Sin credenciales.
+- **E2E en CI:** no se incluye por ahora. Para uso local existe `npm run test:e2e:smoke` (tope global de 120 s, sin reintentos).
+- **Vercel:** `vercel.json` con preset Next.js, `npm ci` y `npm run build`. La exportación estática (`out/`) no necesita variables de entorno ni datos crudos (verificado con un clon limpio desde GitHub).
+- **`npm start`:** usa `scripts/serve-static.mjs` (Node, sin descargas) en lugar de `npx serve`.
