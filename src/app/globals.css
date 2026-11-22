@@ -8,18 +8,47 @@
   --color-brand-support: #61a5a2; /* verde agua: decorativo (2,6: nunca texto) */
   --color-brand-bg: #f5f7f8; /* fondo claro */
   --color-brand-ink: #1f2d3a; /* texto principal (13,1) */
-  --color-brand-sand: #d9c7a3; /* acento territorial: fondos/separadores (decorativo) */
+  --color-brand-muted: #55606b; /* texto secundario/rótulos (6,4 sobre blanco; 5,5 sobre arena) — reemplaza ink/60 */
+  --color-brand-sand: #d9c7a3; /* acento territorial: fondos/separadores (decorativo; 5,7 sobre primario) */
   --color-brand-sand-soft: #f3ece0; /* superficie cálida derivada de sand */
   --color-brand-warning: #d98e04; /* advertencia: bordes e íconos */
   --color-brand-warning-ink: #a16207; /* texto de advertencia accesible (4,6) */
+  /* Colores de datos (mismos que el mapa de la demo, D-21) */
+  --color-data-a: #1d4ed8;
+  --color-data-b: #d97706;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
   background: var(--color-brand-bg);
   color: var(--color-brand-ink);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Foco visible de dos tonos: anillo blanco + contorno petróleo, legible sobre fondos claros y oscuros. */
+:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #ffffff;
+  border-radius: 6px;
+}
+.bg-brand-primary :focus-visible,
+:focus-visible.on-dark {
+  outline-color: #ffffff;
+  box-shadow: 0 0 0 2px var(--color-brand-primary);
 }

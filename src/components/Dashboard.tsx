@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { resolveCaseParam } from "@/lib/caseParam";
 import { loadBundle, type BundleResult } from "@/lib/datasets";
 import { fmtDate, fmtPct, getCaseView } from "@/lib/metrics";
 import InfoPanel from "./InfoPanel";
@@ -22,22 +23,42 @@ export default function Dashboard() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [mode, setMode] = useState<ViewMode>("ambos");
 
+  // Al cargar los datos, aplica el enlace directo /demo?case=<id> (D-29). Se lee en el cliente, después de la
+  // hidratación, para no generar diferencias con el HTML prerenderizado.
+  const applyResult = useCallback((r: BundleResult) => {
+    setResult(r);
+    if (r.status === "ok") {
+      const fromUrl = resolveCaseParam(window.location.search, r.bundle.cases.cases.map((c) => c.case_id));
+      if (fromUrl) setSelectedId(fromUrl);
+    }
+  }, []);
+
   const load = useCallback(() => {
     setResult("cargando");
-    loadBundle((url) => fetch(url)).then(setResult);
-  }, []);
+    loadBundle((url) => fetch(url)).then(applyResult);
+  }, [applyResult]);
 
   useEffect(() => {
     let cancelled = false;
     loadBundle((url) => fetch(url)).then((r) => {
-      if (!cancelled) setResult(r);
+      if (!cancelled) applyResult(r);
     });
     return () => {
       cancelled = true;
     };
+  }, [applyResult]);
+
+  const selectCase = useCallback((id: string) => {
+    setSelectedId(id);
+    // Mantiene la URL compartible sin recargar ni cambiar de ruta.
+    const url = new URL(window.location.href);
+    url.searchParams.set("case", id);
+    window.history.replaceState(window.history.state, "", url);
   }, []);
 
   const bundle = result !== "cargando" && result.status === "ok" ? result.bundle : null;
+  const loadFailed = result !== "cargando" && result.status === "error";
+  const showIntro = !selectedId && !loadFailed;
   const view = useMemo(() => (bundle && selectedId ? getCaseView(bundle, selectedId) : null), [bundle, selectedId]);
   const layers: MapLayers | null = useMemo(
     () =>
@@ -82,7 +103,7 @@ export default function Dashboard() {
                   <li key={c.case_id}>
                     <button
                       type="button"
-                      onClick={() => setSelectedId(c.case_id)}
+                      onClick={() => selectCase(c.case_id)}
                       aria-pressed={active}
                       data-case={c.case_id}
                       className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${active ? "bg-brand-primary text-white" : "text-slate-800 hover:bg-slate-100"}`}
@@ -102,7 +123,8 @@ export default function Dashboard() {
           )}
         </nav>
         <div className="border-t border-slate-200">
-          {bundle && !selectedId && (
+          {/* Texto de bienvenida visible desde el primer render (no espera a los datos). No mejoró el LCP medido: ver docs/UX_UI_AUDIT.md. */}
+          {showIntro && (
             <div className="p-4 text-sm text-slate-600">
               <p>Seleccioná un caso para comparar la superficie de agua visible en dos fechas reales de Sentinel-2 y la precipitación mensual de su cuenca.</p>
             </div>

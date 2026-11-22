@@ -1,0 +1,33 @@
+{
+  "note": "Capturas reales de /demo?case=laguna-pozuelos (scripts/brand/capture-step-thumbnails.mjs).",
+  "files": [
+    {
+      "step": "1",
+      "src": "/landing/steps/step-1.webp",
+      "width": 760,
+      "height": 282,
+      "alt": "Captura de la demo: lista de casos testigo con Laguna de los Pozuelos seleccionada y su cambio estimado."
+    },
+    {
+      "step": "2",
+      "src": "/landing/steps/step-2.webp",
+      "width": 760,
+      "height": 339,
+      "alt": "Captura de la demo: botones Antes, Después y Comparar con la superficie visible estimada de cada fecha."
+    },
+    {
+      "step": "3",
+      "src": "/landing/steps/step-3.webp",
+      "width": 760,
+      "height": 211,
+      "alt": "Captura de la demo: precipitación del mes previo a la imagen, con su referencia 1995–2024, anomalía y percentil."
+    },
+    {
+      "step": "4",
+      "src": "/landing/steps/step-4.webp",
+      "width": 760,
+      "height": 526,
+      "alt": "Captura de la demo: cambio estimado con su rango entre métodos y la advertencia de alta sensibilidad al método."
+    }
+  ]
+}

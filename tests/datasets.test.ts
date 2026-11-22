@@ -22,19 +22,19 @@ function fetcherFrom(map: Record<string, { status: number; body?: unknown; bad?:
 }
 
 const okMap = () => ({
-  "data/cases.json": { status: 200, body: real("cases.json") },
-  "data/water_metrics.json": { status: 200, body: real("water_metrics.json") },
-  "data/rainfall_metrics.json": { status: 200, body: real("rainfall_metrics.json") },
+  "/data/cases.json": { status: 200, body: real("cases.json") },
+  "/data/water_metrics.json": { status: 200, body: real("water_metrics.json") },
+  "/data/rainfall_metrics.json": { status: 200, body: real("rainfall_metrics.json") },
 });
 
-test("carga los tres datasets reales con rutas relativas", async () => {
+test("carga los tres datasets reales", async () => {
   const r = await loadBundle(fetcherFrom(okMap()));
   assert.equal(r.status, "ok");
   if (r.status === "ok") assert.equal(r.bundle.cases.cases.length, 2);
 });
 
-test("rutas relativas compatibles con exportación estática; rechaza rutas peligrosas", () => {
-  assert.equal(dataUrl("geometries/x.geojson"), "data/geometries/x.geojson");
+test("rutas absolutas desde la raíz (válidas en /demo y /demo/); rechaza rutas peligrosas", () => {
+  assert.equal(dataUrl("geometries/x.geojson"), "/data/geometries/x.geojson");
   assert.throws(() => dataUrl("/data/x.json"));
   assert.throws(() => dataUrl("../secret.json"));
   assert.throws(() => dataUrl("https://example.com/x.json"));
@@ -42,14 +42,14 @@ test("rutas relativas compatibles con exportación estática; rechaza rutas peli
 
 test("404 => error explícito", async () => {
   const m = okMap();
-  delete (m as Record<string, unknown>)["data/water_metrics.json"];
+  delete (m as Record<string, unknown>)["/data/water_metrics.json"];
   const r = await loadBundle(fetcherFrom(m));
   assert.equal(r.status, "error");
   if (r.status === "error") assert.match(r.message, /water_metrics\.json \(HTTP 404\)/);
 });
 
 test("descarga incompleta (JSON truncado) => error", async () => {
-  const m = { ...okMap(), "data/rainfall_metrics.json": { status: 200, bad: true } };
+  const m = { ...okMap(), "/data/rainfall_metrics.json": { status: 200, bad: true } };
   const r = await loadBundle(fetcherFrom(m));
   assert.equal(r.status, "error");
   if (r.status === "error") assert.match(r.message, /inválido o incompleto/);
@@ -64,7 +64,7 @@ test("fallo de red => error, sin excepción", async () => {
 
 test("estructura incompleta o unidades inesperadas => error", async () => {
   const water = real("water_metrics.json");
-  const m = { ...okMap(), "data/water_metrics.json": { status: 200, body: { ...water, comparisons: undefined } } };
+  const m = { ...okMap(), "/data/water_metrics.json": { status: 200, body: { ...water, comparisons: undefined } } };
   const r = await loadBundle(fetcherFrom(m));
   assert.equal(r.status, "error");
   const rain = { ...real("rainfall_metrics.json"), unit: "mm/día" };

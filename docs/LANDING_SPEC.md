@@ -27,7 +27,7 @@
 
 ## Datos en la landing
 - **Origen:** las cifras de los casos y del hero **no están escritas a mano**. `src/lib/landingData.ts` lee `data/derived/*.json` en el build (componente de servidor, exportación estática) y usa las mismas funciones del dashboard (`getCaseView`, `uncertaintyRange`, `fmt*`). No hay cálculos nuevos.
-- **Imágenes del hero:** se sirven desde `data/qa/quicklooks/` (publicadas por `scripts/publish-data.mjs`).
+- **Imágenes del hero:** desde v0.2, WebP optimizados de los mismos quicklooks reales en `public/landing/quicklooks/` (ver «Cambios v0.2»). Los PNG originales siguen en `/data/qa/quicklooks/` para la demo.
 - **Si cambian los datos:** al reprocesar y volver a compilar, la landing se actualiza sola.
 
 ## Criterios verificados
@@ -35,3 +35,12 @@
 - Valores de la landing iguales a los del dashboard y a `data/derived` (prueba `e2e/landing.spec.ts`).
 - El CTA lleva a `/demo` con datos y mapa cargados, y «Inicio» vuelve a `/`.
 - Sin pedidos a dominios externos al cargar (el enlace a GitHub solo se sigue con un clic).
+
+## Cambios v0.2 (iteración UX/UI, D-27 a D-33)
+- **Rutas absolutas:** `/`, `/demo`, `/#problema`, `/#como-funciona`, `/#casos`, `/#metodologia`, `/demo?case=<id>`. Los datos se piden desde `/data/...`. Funcionan desde `/demo` y desde `/demo/`.
+- **Hero:** ANTES → DESPUÉS de Laguna de los Pozuelos con fechas, WebP sin recorte, métrica principal destacada, rango separado y la aclaración «Cambio estimado de superficie de agua visible entre las dos fechas. No es volumen ni caudal, ni una tendencia.» CTA principal «Explorar la demo», secundario «Metodología y límites», y enlace «Ver este caso en la demo».
+- **Encabezado:** en escritorio, secciones y «Ver demo». En móvil, «Ver demo» siempre visible más un menú accesible (`MobileMenu`). El pie repite la navegación como respaldo sin JS.
+- **Tarjetas de casos:** caso → cambio → barras Antes/Después proporcionales al valor principal → fechas → rango → advertencia → «Explorar <caso> en la demo» (`/demo?case=<id>`).
+- **Cómo funciona:** 4 pasos con ícono SVG y miniatura real de la demo (`public/landing/steps/`, `npm run brand:steps`). Cuatro columnas en escritorio, dos en tablet, una en móvil.
+- **Demo:** lee `?case=` después de cargar los datos (sin desajuste de hidratación), valida el id y, si es inválido, usa el primer caso. Al cambiar de caso actualiza la URL con `replaceState`.
+- **Metadatos:** `metadataBase` = https://monitoreo-hidrico-jujuy.vercel.app; canónica por página; Open Graph y Twitter (`summary_large_image`) desde `src/lib/siteMeta.ts`.

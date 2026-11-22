@@ -70,3 +70,18 @@ Ajustes respecto de la paleta sugerida: se agregaron `secondary-ink` y `warning-
 - Técnico pero entendible: cada término técnico va acompañado de su explicación.
 - Convincente sin exagerar: ningún número sin su fuente y su límite.
 - Las limitaciones se presentan como parte del valor (transparencia), no como letra chica.
+
+## 9. Recursos de identidad digital (v0.2, iteración UX/UI)
+Generados por `npm run brand:assets` (`scripts/brand/generate-brand-assets.mjs`), sin dependencias nuevas: rasteriza con el Chrome instalado vía Playwright.
+
+| Recurso | Archivo | Detalle |
+|---|---|---|
+| Favicon vectorial | `src/app/icon.svg` | Isotipo **simplificado**: gota arena + una onda verde agua sobre petróleo, trazos más gruesos para 16/32 px |
+| Favicon ICO | `src/app/favicon.ico` | 16, 32 y 48 px (PNG embebidos), misma versión simplificada |
+| Apple Touch Icon | `src/app/apple-icon.png` | 180×180, isotipo completo a sangre sobre petróleo |
+| Ícono de reutilización | `public/brand/icon-512.png` | 512×512, isotipo completo |
+| Open Graph / Twitter | `src/app/opengraph-image.png`, `twitter-image.png` (+ `.alt.txt`) | 1200×630: isotipo, nombre, propuesta de valor, fuentes y los dos quicklooks reales de Pozuelos con sus fechas. **Sin cifras**, para que la imagen no quede desactualizada. |
+
+- **Texto secundario:** se agrega el token `brand-muted` `#55606B` (6,4:1 sobre blanco), que reemplaza el uso de `brand-ink/60` (3,95:1, no cumplía AA).
+- **Foco visible:** contorno petróleo con halo blanco; sobre fondos petróleo, contorno blanco.
+- **Colores de datos** en la landing: `data-a` `#1D4ED8` (Antes) y `data-b` `#D97706` (Después), los mismos del mapa de la demo.
