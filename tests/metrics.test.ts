@@ -7,7 +7,13 @@ import type { DataBundle } from "../src/lib/types.ts";
 
 const PUB = new URL("../public/data/", import.meta.url);
 const read = (n: string) => JSON.parse(readFileSync(new URL(n, PUB), "utf-8"));
-const bundle: DataBundle = { cases: read("cases.json"), water: read("water_metrics.json"), rainfall: read("rainfall_metrics.json") };
+const bundle: DataBundle = {
+  cases: read("cases.json"),
+  water: read("water_metrics.json"),
+  rainfall: read("rainfall_metrics.json"),
+  climate: read("climate/climate_series.json"),
+  model: read("model/water_model.json"),
+};
 
 test("selección de casos: ambos completos, caso inexistente => null", () => {
   for (const id of ["laguna-pozuelos", "dique-las-maderas"]) {
@@ -77,7 +83,11 @@ test("ausencia de valores inventados: cada número mostrado existe en los archiv
     assert.equal(v.comparison!.MNDWI.area_b_km2, v.sceneB!.water.MNDWI.area_km2_common_mask);
     assert.equal(c.basin.official, false);
   }
-  assert.ok(!JSON.stringify(bundle).includes('"synthetic":true'));
+  // Los datos base (casos, superficie y lluvia) son reales. El único componente
+  // sintético es el modelo demostrativo, que debe estar rotulado como tal.
+  assert.ok(!JSON.stringify({ cases: bundle.cases, water: bundle.water, rainfall: bundle.rainfall }).includes('"synthetic":true'));
+  assert.equal(bundle.model.synthetic, true);
+  assert.equal(bundle.climate.real, true);
 });
 
 test("datos incompletos => se informa lo que falta", () => {

@@ -4,7 +4,13 @@
 import type { DataBundle } from "./types.ts";
 
 export const DATA_BASE = "data/";
-export const DATA_FILES = { cases: "cases.json", water: "water_metrics.json", rainfall: "rainfall_metrics.json" } as const;
+export const DATA_FILES = {
+  cases: "cases.json",
+  water: "water_metrics.json",
+  rainfall: "rainfall_metrics.json",
+  climate: "climate/climate_series.json",
+  model: "model/water_model.json",
+} as const;
 
 export type Fetcher = (url: string) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
 
@@ -43,17 +49,22 @@ export function structuralProblems(b: unknown): string[] {
   if (o?.water && Array.isArray(o.water.scenes) && o.water.scenes.some((s) => s.unit !== "km2"))
     p.push("unidad de superficie inesperada (se esperaba km2)");
   if (o?.rainfall && o.rainfall.unit !== "mm/mes") p.push("unidad de precipitación inesperada (se esperaba mm/mes)");
+  if (!o?.climate || typeof o.climate.cases !== "object") p.push("climate_series.json sin 'cases'");
+  if (!o?.model || typeof o.model.cases !== "object") p.push("water_model.json sin 'cases'");
+  if (o?.model && o.model.synthetic !== true) p.push("el modelo debe estar rotulado como sintético");
   return p;
 }
 
 export async function loadBundle(fetcher: Fetcher): Promise<BundleResult> {
   try {
-    const [cases, water, rainfall] = await Promise.all([
+    const [cases, water, rainfall, climate, model] = await Promise.all([
       fetchJson(fetcher, DATA_FILES.cases),
       fetchJson(fetcher, DATA_FILES.water),
       fetchJson(fetcher, DATA_FILES.rainfall),
+      fetchJson(fetcher, DATA_FILES.climate),
+      fetchJson(fetcher, DATA_FILES.model),
     ]);
-    const bundle = { cases, water, rainfall } as DataBundle;
+    const bundle = { cases, water, rainfall, climate, model } as DataBundle;
     const problems = structuralProblems(bundle);
     if (problems.length) return { status: "error", message: `Datos incompletos: ${problems.join("; ")}` };
     return { status: "ok", bundle };

@@ -1,0 +1,1357 @@
+{
+  "generated_at": "2026-11-22T00:00:00Z",
+  "generator": "scripts/model/build_climate_model.py",
+  "source": "Open-Meteo Historical Weather API (reanálisis ERA5-Land)",
+  "source_url": "https://archive-api.open-meteo.com/v1/archive",
+  "license": "Open-Meteo: CC-BY 4.0 · ERA5-Land: Copernicus Climate Change Service",
+  "kind": "estimacion",
+  "real": true,
+  "unit": {
+    "precip_mm": "mm/mes",
+    "temp_c": "°C",
+    "precip_3m_mm": "mm/3 meses",
+    "temp_3m_c": "°C"
+  },
+  "cases": {
+    "laguna-pozuelos": {
+      "name": "Laguna de los Pozuelos",
+      "lat": -22.3513,
+      "lon": -65.9978,
+      "elevation_m": 3662.0,
+      "first_month": "2019-03",
+      "last_month": "2026-10",
+      "months": [
+        {
+          "month": "2019-03",
+          "precip_mm": 49.0,
+          "temp_c": 11.78,
+          "precip_3m_mm": 240.9,
+          "temp_3m_c": 11.6
+        },
+        {
+          "month": "2019-04",
+          "precip_mm": 14.6,
+          "temp_c": 9.98,
+          "precip_3m_mm": 170.3,
+          "temp_3m_c": 10.87
+        },
+        {
+          "month": "2019-05",
+          "precip_mm": 0.0,
+          "temp_c": 7.45,
+          "precip_3m_mm": 63.6,
+          "temp_3m_c": 9.74
+        },
+        {
+          "month": "2019-06",
+          "precip_mm": 0.0,
+          "temp_c": 6.52,
+          "precip_3m_mm": 14.6,
+          "temp_3m_c": 7.98
+        },
+        {
+          "month": "2019-07",
+          "precip_mm": 2.4,
+          "temp_c": 5.14,
+          "precip_3m_mm": 2.4,
+          "temp_3m_c": 6.37
+        },
+        {
+          "month": "2019-08",
+          "precip_mm": 0.0,
+          "temp_c": 6.87,
+          "precip_3m_mm": 2.4,
+          "temp_3m_c": 6.18
+        },
+        {
+          "month": "2019-09",
+          "precip_mm": 0.8,
+          "temp_c": 9.36,
+          "precip_3m_mm": 3.2,
+          "temp_3m_c": 7.12
+        },
+        {
+          "month": "2019-10",
+          "precip_mm": 8.2,
+          "temp_c": 11.03,
+          "precip_3m_mm": 9.0,
+          "temp_3m_c": 9.09
+        },
+        {
+          "month": "2019-11",
+          "precip_mm": 66.1,
+          "temp_c": 11.0,
+          "precip_3m_mm": 75.1,
+          "temp_3m_c": 10.46
+        },
+        {
+          "month": "2019-12",
+          "precip_mm": 52.6,
+          "temp_c": 12.28,
+          "precip_3m_mm": 126.9,
+          "temp_3m_c": 11.44
+        },
+        {
+          "month": "2020-01",
+          "precip_mm": 146.7,
+          "temp_c": 10.98,
+          "precip_3m_mm": 265.4,
+          "temp_3m_c": 11.42
+        },
+        {
+          "month": "2020-02",
+          "precip_mm": 89.2,
+          "temp_c": 11.62,
+          "precip_3m_mm": 288.5,
+          "temp_3m_c": 11.63
+        },
+        {
+          "month": "2020-03",
+          "precip_mm": 97.2,
+          "temp_c": 10.11,
+          "precip_3m_mm": 333.1,
+          "temp_3m_c": 10.9
+        },
+        {
+          "month": "2020-04",
+          "precip_mm": 8.0,
+          "temp_c": 9.37,
+          "precip_3m_mm": 194.4,
+          "temp_3m_c": 10.37
+        },
+        {
+          "month": "2020-05",
+          "precip_mm": 0.0,
+          "temp_c": 7.46,
+          "precip_3m_mm": 105.2,
+          "temp_3m_c": 8.98
+        },
+        {
+          "month": "2020-06",
+          "precip_mm": 0.1,
+          "temp_c": 5.87,
+          "precip_3m_mm": 8.1,
+          "temp_3m_c": 7.57
+        },
+        {
+          "month": "2020-07",
+          "precip_mm": 0.0,
+          "temp_c": 5.86,
+          "precip_3m_mm": 0.1,
+          "temp_3m_c": 6.4
+        },
+        {
+          "month": "2020-08",
+          "precip_mm": 0.0,
+          "temp_c": 6.69,
+          "precip_3m_mm": 0.1,
+          "temp_3m_c": 6.14
+        },
+        {
+          "month": "2020-09",
+          "precip_mm": 23.3,
+          "temp_c": 8.57,
+          "precip_3m_mm": 23.3,
+          "temp_3m_c": 7.04
+        },
+        {
+          "month": "2020-10",
+          "precip_mm": 19.3,
+          "temp_c": 11.05,
+          "precip_3m_mm": 42.6,
+          "temp_3m_c": 8.77
+        },
+        {
+          "month": "2020-11",
+          "precip_mm": 20.4,
+          "temp_c": 11.07,
+          "precip_3m_mm": 63.0,
+          "temp_3m_c": 10.23
+        },
+        {
+          "month": "2020-12",
+          "precip_mm": 74.2,
+          "temp_c": 11.83,
+          "precip_3m_mm": 113.9,
+          "temp_3m_c": 11.32
+        },
+        {
+          "month": "2021-01",
+          "precip_mm": 184.6,
+          "temp_c": 9.87,
+          "precip_3m_mm": 279.2,
+          "temp_3m_c": 10.92
+        },
+        {
+          "month": "2021-02",
+          "precip_mm": 121.1,
+          "temp_c": 10.39,
+          "precip_3m_mm": 379.9,
+          "temp_3m_c": 10.7
+        },
+        {
+          "month": "2021-03",
+          "precip_mm": 62.0,
+          "temp_c": 9.61,
+          "precip_3m_mm": 367.7,
+          "temp_3m_c": 9.96
+        },
+        {
+          "month": "2021-04",
+          "precip_mm": 7.8,
+          "temp_c": 8.84,
+          "precip_3m_mm": 190.9,
+          "temp_3m_c": 9.61
+        },
+        {
+          "month": "2021-05",
+          "precip_mm": 0.3,
+          "temp_c": 6.81,
+          "precip_3m_mm": 70.1,
+          "temp_3m_c": 8.42
+        },
+        {
+          "month": "2021-06",
+          "precip_mm": 0.0,
+          "temp_c": 4.01,
+          "precip_3m_mm": 8.1,
+          "temp_3m_c": 6.55
+        },
+        {
+          "month": "2021-07",
+          "precip_mm": 0.0,
+          "temp_c": 5.25,
+          "precip_3m_mm": 0.3,
+          "temp_3m_c": 5.36
+        },
+        {
+          "month": "2021-08",
+          "precip_mm": 0.9,
+          "temp_c": 5.98,
+          "precip_3m_mm": 0.9,
+          "temp_3m_c": 5.08
+        },
+        {
+          "month": "2021-09",
+          "precip_mm": 10.5,
+          "temp_c": 9.62,
+          "precip_3m_mm": 11.4,
+          "temp_3m_c": 6.95
+        },
+        {
+          "month": "2021-10",
+          "precip_mm": 3.4,
+          "temp_c": 10.48,
+          "precip_3m_mm": 14.8,
+          "temp_3m_c": 8.69
+        },
+        {
+          "month": "2021-11",
+          "precip_mm": 39.6,
+          "temp_c": 12.06,
+          "precip_3m_mm": 53.5,
+          "temp_3m_c": 10.72
+        },
+        {
+          "month": "2021-12",
+          "precip_mm": 265.5,
+          "temp_c": 10.02,
+          "precip_3m_mm": 308.5,
+          "temp_3m_c": 10.85
+        },
+        {
+          "month": "2022-01",
+          "precip_mm": 250.3,
+          "temp_c": 9.95,
+          "precip_3m_mm": 555.4,
+          "temp_3m_c": 10.68
+        },
+        {
+          "month": "2022-02",
+          "precip_mm": 76.9,
+          "temp_c": 10.1,
+          "precip_3m_mm": 592.7,
+          "temp_3m_c": 10.02
+        },
+        {
+          "month": "2022-03",
+          "precip_mm": 49.2,
+          "temp_c": 10.41,
+          "precip_3m_mm": 376.4,
+          "temp_3m_c": 10.15
+        },
+        {
+          "month": "2022-04",
+          "precip_mm": 3.2,
+          "temp_c": 9.11,
+          "precip_3m_mm": 129.3,
+          "temp_3m_c": 9.87
+        },
+        {
+          "month": "2022-05",
+          "precip_mm": 0.1,
+          "temp_c": 5.98,
+          "precip_3m_mm": 52.5,
+          "temp_3m_c": 8.5
+        },
+        {
+          "month": "2022-06",
+          "precip_mm": 0.0,
+          "temp_c": 4.13,
+          "precip_3m_mm": 3.3,
+          "temp_3m_c": 6.41
+        },
+        {
+          "month": "2022-07",
+          "precip_mm": 0.0,
+          "temp_c": 6.35,
+          "precip_3m_mm": 0.1,
+          "temp_3m_c": 5.49
+        },
+        {
+          "month": "2022-08",
+          "precip_mm": 2.2,
+          "temp_c": 5.31,
+          "precip_3m_mm": 2.2,
+          "temp_3m_c": 5.26
+        },
+        {
+          "month": "2022-09",
+          "precip_mm": 0.0,
+          "temp_c": 6.55,
+          "precip_3m_mm": 2.2,
+          "temp_3m_c": 6.07
+        },
+        {
+          "month": "2022-10",
+          "precip_mm": 3.8,
+          "temp_c": 8.78,
+          "precip_3m_mm": 6.0,
+          "temp_3m_c": 6.88
+        },
+        {
+          "month": "2022-11",
+          "precip_mm": 22.0,
+          "temp_c": 9.69,
+          "precip_3m_mm": 25.8,
+          "temp_3m_c": 8.34
+        },
+        {
+          "month": "2022-12",
+          "precip_mm": 93.6,
+          "temp_c": 9.92,
+          "precip_3m_mm": 119.4,
+          "temp_3m_c": 9.46
+        },
+        {
+          "month": "2023-01",
+          "precip_mm": 99.8,
+          "temp_c": 10.72,
+          "precip_3m_mm": 215.4,
+          "temp_3m_c": 10.11
+        },
+        {
+          "month": "2023-02",
+          "precip_mm": 112.8,
+          "temp_c": 10.15,
+          "precip_3m_mm": 306.2,
+          "temp_3m_c": 10.26
+        },
+        {
+          "month": "2023-03",
+          "precip_mm": 65.9,
+          "temp_c": 10.91,
+          "precip_3m_mm": 278.5,
+          "temp_3m_c": 10.59
+        },
+        {
+          "month": "2023-04",
+          "precip_mm": 37.0,
+          "temp_c": 8.76,
+          "precip_3m_mm": 215.7,
+          "temp_3m_c": 9.94
+        },
+        {
+          "month": "2023-05",
+          "precip_mm": 0.6,
+          "temp_c": 8.02,
+          "precip_3m_mm": 103.5,
+          "temp_3m_c": 9.23
+        },
+        {
+          "month": "2023-06",
+          "precip_mm": 0.0,
+          "temp_c": 6.15,
+          "precip_3m_mm": 37.6,
+          "temp_3m_c": 7.64
+        },
+        {
+          "month": "2023-07",
+          "precip_mm": 0.0,
+          "temp_c": 7.82,
+          "precip_3m_mm": 0.6,
+          "temp_3m_c": 7.33
+        },
+        {
+          "month": "2023-08",
+          "precip_mm": 0.0,
+          "temp_c": 8.43,
+          "precip_3m_mm": 0.0,
+          "temp_3m_c": 7.47
+        },
+        {
+          "month": "2023-09",
+          "precip_mm": 0.0,
+          "temp_c": 10.95,
+          "precip_3m_mm": 0.0,
+          "temp_3m_c": 9.07
+        },
+        {
+          "month": "2023-10",
+          "precip_mm": 16.5,
+          "temp_c": 12.77,
+          "precip_3m_mm": 16.5,
+          "temp_3m_c": 10.72
+        },
+        {
+          "month": "2023-11",
+          "precip_mm": 56.8,
+          "temp_c": 12.91,
+          "precip_3m_mm": 73.3,
+          "temp_3m_c": 12.21
+        },
+        {
+          "month": "2023-12",
+          "precip_mm": 102.8,
+          "temp_c": 13.97,
+          "precip_3m_mm": 176.1,
+          "temp_3m_c": 13.22
+        },
+        {
+          "month": "2024-01",
+          "precip_mm": 125.6,
+          "temp_c": 13.17,
+          "precip_3m_mm": 285.2,
+          "temp_3m_c": 13.35
+        },
+        {
+          "month": "2024-02",
+          "precip_mm": 233.5,
+          "temp_c": 11.47,
+          "precip_3m_mm": 461.9,
+          "temp_3m_c": 12.87
+        },
+        {
+          "month": "2024-03",
+          "precip_mm": 117.0,
+          "temp_c": 12.09,
+          "precip_3m_mm": 476.1,
+          "temp_3m_c": 12.24
+        },
+        {
+          "month": "2024-04",
+          "precip_mm": 21.6,
+          "temp_c": 12.8,
+          "precip_3m_mm": 372.1,
+          "temp_3m_c": 12.12
+        },
+        {
+          "month": "2024-05",
+          "precip_mm": 0.2,
+          "temp_c": 9.67,
+          "precip_3m_mm": 138.8,
+          "temp_3m_c": 11.52
+        },
+        {
+          "month": "2024-06",
+          "precip_mm": 0.0,
+          "temp_c": 7.64,
+          "precip_3m_mm": 21.8,
+          "temp_3m_c": 10.04
+        },
+        {
+          "month": "2024-07",
+          "precip_mm": 0.1,
+          "temp_c": 6.67,
+          "precip_3m_mm": 0.3,
+          "temp_3m_c": 7.99
+        },
+        {
+          "month": "2024-08",
+          "precip_mm": 0.0,
+          "temp_c": 7.56,
+          "precip_3m_mm": 0.1,
+          "temp_3m_c": 7.29
+        },
+        {
+          "month": "2024-09",
+          "precip_mm": 0.0,
+          "temp_c": 10.47,
+          "precip_3m_mm": 0.1,
+          "temp_3m_c": 8.23
+        },
+        {
+          "month": "2024-10",
+          "precip_mm": 17.1,
+          "temp_c": 12.05,
+          "precip_3m_mm": 17.1,
+          "temp_3m_c": 10.03
+        },
+        {
+          "month": "2024-11",
+          "precip_mm": 67.0,
+          "temp_c": 12.61,
+          "precip_3m_mm": 84.1,
+          "temp_3m_c": 11.71
+        },
+        {
+          "month": "2024-12",
+          "precip_mm": 53.7,
+          "temp_c": 13.3,
+          "precip_3m_mm": 137.8,
+          "temp_3m_c": 12.65
+        },
+        {
+          "month": "2025-01",
+          "precip_mm": 331.7,
+          "temp_c": 10.57,
+          "precip_3m_mm": 452.4,
+          "temp_3m_c": 12.16
+        },
+        {
+          "month": "2025-02",
+          "precip_mm": 134.5,
+          "temp_c": 12.33,
+          "precip_3m_mm": 519.9,
+          "temp_3m_c": 12.07
+        },
+        {
+          "month": "2025-03",
+          "precip_mm": 263.7,
+          "temp_c": 10.53,
+          "precip_3m_mm": 729.9,
+          "temp_3m_c": 11.14
+        },
+        {
+          "month": "2025-04",
+          "precip_mm": 20.2,
+          "temp_c": 10.22,
+          "precip_3m_mm": 418.4,
+          "temp_3m_c": 11.03
+        },
+        {
+          "month": "2025-05",
+          "precip_mm": 0.7,
+          "temp_c": 9.64,
+          "precip_3m_mm": 284.6,
+          "temp_3m_c": 10.13
+        },
+        {
+          "month": "2025-06",
+          "precip_mm": 0.1,
+          "temp_c": 6.25,
+          "precip_3m_mm": 21.0,
+          "temp_3m_c": 8.7
+        },
+        {
+          "month": "2025-07",
+          "precip_mm": 0.0,
+          "temp_c": 6.67,
+          "precip_3m_mm": 0.8,
+          "temp_3m_c": 7.52
+        },
+        {
+          "month": "2025-08",
+          "precip_mm": 0.4,
+          "temp_c": 6.8,
+          "precip_3m_mm": 0.5,
+          "temp_3m_c": 6.57
+        },
+        {
+          "month": "2025-09",
+          "precip_mm": 9.3,
+          "temp_c": 9.88,
+          "precip_3m_mm": 9.7,
+          "temp_3m_c": 7.78
+        },
+        {
+          "month": "2025-10",
+          "precip_mm": 27.6,
+          "temp_c": 11.14,
+          "precip_3m_mm": 37.3,
+          "temp_3m_c": 9.27
+        },
+        {
+          "month": "2025-11",
+          "precip_mm": 47.3,
+          "temp_c": 11.74,
+          "precip_3m_mm": 84.2,
+          "temp_3m_c": 10.92
+        },
+        {
+          "month": "2025-12",
+          "precip_mm": 133.0,
+          "temp_c": 11.82,
+          "precip_3m_mm": 207.9,
+          "temp_3m_c": 11.57
+        },
+        {
+          "month": "2026-01",
+          "precip_mm": 223.1,
+          "temp_c": 10.72,
+          "precip_3m_mm": 403.4,
+          "temp_3m_c": 11.43
+        },
+        {
+          "month": "2026-02",
+          "precip_mm": 83.5,
+          "temp_c": 11.75,
+          "precip_3m_mm": 439.6,
+          "temp_3m_c": 11.43
+        },
+        {
+          "month": "2026-03",
+          "precip_mm": 86.9,
+          "temp_c": 12.08,
+          "precip_3m_mm": 393.5,
+          "temp_3m_c": 11.52
+        },
+        {
+          "month": "2026-04",
+          "precip_mm": 9.6,
+          "temp_c": 11.18,
+          "precip_3m_mm": 180.0,
+          "temp_3m_c": 11.67
+        },
+        {
+          "month": "2026-05",
+          "precip_mm": 0.0,
+          "temp_c": 8.94,
+          "precip_3m_mm": 96.5,
+          "temp_3m_c": 10.73
+        },
+        {
+          "month": "2026-06",
+          "precip_mm": 0.4,
+          "temp_c": 6.69,
+          "precip_3m_mm": 10.0,
+          "temp_3m_c": 8.94
+        },
+        {
+          "month": "2026-07",
+          "precip_mm": 0.0,
+          "temp_c": 7.45,
+          "precip_3m_mm": 0.4,
+          "temp_3m_c": 7.69
+        },
+        {
+          "month": "2026-08",
+          "precip_mm": 13.7,
+          "temp_c": 7.05,
+          "precip_3m_mm": 14.1,
+          "temp_3m_c": 7.06
+        },
+        {
+          "month": "2026-09",
+          "precip_mm": 8.3,
+          "temp_c": 9.88,
+          "precip_3m_mm": 22.0,
+          "temp_3m_c": 8.13
+        },
+        {
+          "month": "2026-10",
+          "precip_mm": 3.7,
+          "temp_c": 10.92,
+          "precip_3m_mm": 25.7,
+          "temp_3m_c": 9.28
+        }
+      ],
+      "observations": [
+        {
+          "date": "2025-05-04",
+          "window_month": "2025-04",
+          "area_km2": 81.4475,
+          "precip_3m_mm": 418.4,
+          "temp_3m_c": 11.03
+        },
+        {
+          "date": "2025-09-13",
+          "window_month": "2025-08",
+          "area_km2": 37.5495,
+          "precip_3m_mm": 0.5,
+          "temp_3m_c": 6.57
+        }
+      ]
+    },
+    "dique-las-maderas": {
+      "name": "Dique Las Maderas",
+      "lat": -24.4557,
+      "lon": -65.2687,
+      "elevation_m": 1164.0,
+      "first_month": "2019-03",
+      "last_month": "2026-10",
+      "months": [
+        {
+          "month": "2019-03",
+          "precip_mm": 186.5,
+          "temp_c": 17.65,
+          "precip_3m_mm": 599.6,
+          "temp_3m_c": 19.81
+        },
+        {
+          "month": "2019-04",
+          "precip_mm": 245.3,
+          "temp_c": 16.6,
+          "precip_3m_mm": 586.4,
+          "temp_3m_c": 18.27
+        },
+        {
+          "month": "2019-05",
+          "precip_mm": 65.5,
+          "temp_c": 13.03,
+          "precip_3m_mm": 497.3,
+          "temp_3m_c": 15.76
+        },
+        {
+          "month": "2019-06",
+          "precip_mm": 12.0,
+          "temp_c": 11.7,
+          "precip_3m_mm": 322.8,
+          "temp_3m_c": 13.78
+        },
+        {
+          "month": "2019-07",
+          "precip_mm": 10.6,
+          "temp_c": 10.97,
+          "precip_3m_mm": 88.1,
+          "temp_3m_c": 11.9
+        },
+        {
+          "month": "2019-08",
+          "precip_mm": 1.8,
+          "temp_c": 13.32,
+          "precip_3m_mm": 24.4,
+          "temp_3m_c": 12.0
+        },
+        {
+          "month": "2019-09",
+          "precip_mm": 15.8,
+          "temp_c": 16.17,
+          "precip_3m_mm": 28.2,
+          "temp_3m_c": 13.49
+        },
+        {
+          "month": "2019-10",
+          "precip_mm": 95.5,
+          "temp_c": 18.89,
+          "precip_3m_mm": 113.1,
+          "temp_3m_c": 16.13
+        },
+        {
+          "month": "2019-11",
+          "precip_mm": 158.1,
+          "temp_c": 21.61,
+          "precip_3m_mm": 269.4,
+          "temp_3m_c": 18.89
+        },
+        {
+          "month": "2019-12",
+          "precip_mm": 220.8,
+          "temp_c": 20.66,
+          "precip_3m_mm": 474.4,
+          "temp_3m_c": 20.39
+        },
+        {
+          "month": "2020-01",
+          "precip_mm": 272.4,
+          "temp_c": 21.75,
+          "precip_3m_mm": 651.3,
+          "temp_3m_c": 21.34
+        },
+        {
+          "month": "2020-02",
+          "precip_mm": 317.6,
+          "temp_c": 20.13,
+          "precip_3m_mm": 810.8,
+          "temp_3m_c": 20.85
+        },
+        {
+          "month": "2020-03",
+          "precip_mm": 157.3,
+          "temp_c": 20.77,
+          "precip_3m_mm": 747.3,
+          "temp_3m_c": 20.88
+        },
+        {
+          "month": "2020-04",
+          "precip_mm": 168.6,
+          "temp_c": 16.97,
+          "precip_3m_mm": 643.5,
+          "temp_3m_c": 19.29
+        },
+        {
+          "month": "2020-05",
+          "precip_mm": 22.4,
+          "temp_c": 13.8,
+          "precip_3m_mm": 348.3,
+          "temp_3m_c": 17.18
+        },
+        {
+          "month": "2020-06",
+          "precip_mm": 22.4,
+          "temp_c": 11.67,
+          "precip_3m_mm": 213.4,
+          "temp_3m_c": 14.15
+        },
+        {
+          "month": "2020-07",
+          "precip_mm": 10.8,
+          "temp_c": 10.8,
+          "precip_3m_mm": 55.6,
+          "temp_3m_c": 12.09
+        },
+        {
+          "month": "2020-08",
+          "precip_mm": 2.9,
+          "temp_c": 14.14,
+          "precip_3m_mm": 36.1,
+          "temp_3m_c": 12.2
+        },
+        {
+          "month": "2020-09",
+          "precip_mm": 10.6,
+          "temp_c": 16.82,
+          "precip_3m_mm": 24.3,
+          "temp_3m_c": 13.92
+        },
+        {
+          "month": "2020-10",
+          "precip_mm": 45.0,
+          "temp_c": 21.11,
+          "precip_3m_mm": 58.5,
+          "temp_3m_c": 17.36
+        },
+        {
+          "month": "2020-11",
+          "precip_mm": 148.5,
+          "temp_c": 21.09,
+          "precip_3m_mm": 204.1,
+          "temp_3m_c": 19.67
+        },
+        {
+          "month": "2020-12",
+          "precip_mm": 183.9,
+          "temp_c": 21.24,
+          "precip_3m_mm": 377.4,
+          "temp_3m_c": 21.15
+        },
+        {
+          "month": "2021-01",
+          "precip_mm": 259.2,
+          "temp_c": 20.73,
+          "precip_3m_mm": 591.6,
+          "temp_3m_c": 21.02
+        },
+        {
+          "month": "2021-02",
+          "precip_mm": 272.1,
+          "temp_c": 19.41,
+          "precip_3m_mm": 715.2,
+          "temp_3m_c": 20.46
+        },
+        {
+          "month": "2021-03",
+          "precip_mm": 331.0,
+          "temp_c": 18.55,
+          "precip_3m_mm": 862.3,
+          "temp_3m_c": 19.56
+        },
+        {
+          "month": "2021-04",
+          "precip_mm": 174.8,
+          "temp_c": 16.81,
+          "precip_3m_mm": 777.9,
+          "temp_3m_c": 18.26
+        },
+        {
+          "month": "2021-05",
+          "precip_mm": 33.7,
+          "temp_c": 12.56,
+          "precip_3m_mm": 539.5,
+          "temp_3m_c": 15.97
+        },
+        {
+          "month": "2021-06",
+          "precip_mm": 33.6,
+          "temp_c": 9.75,
+          "precip_3m_mm": 242.1,
+          "temp_3m_c": 13.04
+        },
+        {
+          "month": "2021-07",
+          "precip_mm": 9.2,
+          "temp_c": 11.42,
+          "precip_3m_mm": 76.5,
+          "temp_3m_c": 11.24
+        },
+        {
+          "month": "2021-08",
+          "precip_mm": 0.3,
+          "temp_c": 13.9,
+          "precip_3m_mm": 43.1,
+          "temp_3m_c": 11.69
+        },
+        {
+          "month": "2021-09",
+          "precip_mm": 25.0,
+          "temp_c": 17.78,
+          "precip_3m_mm": 34.5,
+          "temp_3m_c": 14.37
+        },
+        {
+          "month": "2021-10",
+          "precip_mm": 45.2,
+          "temp_c": 19.49,
+          "precip_3m_mm": 70.5,
+          "temp_3m_c": 17.06
+        },
+        {
+          "month": "2021-11",
+          "precip_mm": 133.3,
+          "temp_c": 19.57,
+          "precip_3m_mm": 203.5,
+          "temp_3m_c": 18.95
+        },
+        {
+          "month": "2021-12",
+          "precip_mm": 223.1,
+          "temp_c": 21.77,
+          "precip_3m_mm": 401.6,
+          "temp_3m_c": 20.28
+        },
+        {
+          "month": "2022-01",
+          "precip_mm": 206.1,
+          "temp_c": 23.08,
+          "precip_3m_mm": 562.5,
+          "temp_3m_c": 21.47
+        },
+        {
+          "month": "2022-02",
+          "precip_mm": 231.3,
+          "temp_c": 20.15,
+          "precip_3m_mm": 660.5,
+          "temp_3m_c": 21.67
+        },
+        {
+          "month": "2022-03",
+          "precip_mm": 222.5,
+          "temp_c": 18.37,
+          "precip_3m_mm": 659.9,
+          "temp_3m_c": 20.53
+        },
+        {
+          "month": "2022-04",
+          "precip_mm": 92.7,
+          "temp_c": 16.49,
+          "precip_3m_mm": 546.5,
+          "temp_3m_c": 18.34
+        },
+        {
+          "month": "2022-05",
+          "precip_mm": 87.4,
+          "temp_c": 12.15,
+          "precip_3m_mm": 402.6,
+          "temp_3m_c": 15.67
+        },
+        {
+          "month": "2022-06",
+          "precip_mm": 12.2,
+          "temp_c": 9.34,
+          "precip_3m_mm": 192.3,
+          "temp_3m_c": 12.66
+        },
+        {
+          "month": "2022-07",
+          "precip_mm": 4.6,
+          "temp_c": 12.53,
+          "precip_3m_mm": 104.2,
+          "temp_3m_c": 11.34
+        },
+        {
+          "month": "2022-08",
+          "precip_mm": 13.6,
+          "temp_c": 13.3,
+          "precip_3m_mm": 30.4,
+          "temp_3m_c": 11.72
+        },
+        {
+          "month": "2022-09",
+          "precip_mm": 49.3,
+          "temp_c": 14.79,
+          "precip_3m_mm": 67.5,
+          "temp_3m_c": 13.54
+        },
+        {
+          "month": "2022-10",
+          "precip_mm": 31.2,
+          "temp_c": 18.67,
+          "precip_3m_mm": 94.1,
+          "temp_3m_c": 15.59
+        },
+        {
+          "month": "2022-11",
+          "precip_mm": 32.3,
+          "temp_c": 21.61,
+          "precip_3m_mm": 112.8,
+          "temp_3m_c": 18.36
+        },
+        {
+          "month": "2022-12",
+          "precip_mm": 150.4,
+          "temp_c": 22.07,
+          "precip_3m_mm": 213.9,
+          "temp_3m_c": 20.78
+        },
+        {
+          "month": "2023-01",
+          "precip_mm": 175.6,
+          "temp_c": 22.44,
+          "precip_3m_mm": 358.3,
+          "temp_3m_c": 22.04
+        },
+        {
+          "month": "2023-02",
+          "precip_mm": 109.4,
+          "temp_c": 20.56,
+          "precip_3m_mm": 435.4,
+          "temp_3m_c": 21.69
+        },
+        {
+          "month": "2023-03",
+          "precip_mm": 111.1,
+          "temp_c": 21.79,
+          "precip_3m_mm": 396.1,
+          "temp_3m_c": 21.6
+        },
+        {
+          "month": "2023-04",
+          "precip_mm": 208.6,
+          "temp_c": 16.75,
+          "precip_3m_mm": 429.1,
+          "temp_3m_c": 19.7
+        },
+        {
+          "month": "2023-05",
+          "precip_mm": 35.0,
+          "temp_c": 14.76,
+          "precip_3m_mm": 354.7,
+          "temp_3m_c": 17.77
+        },
+        {
+          "month": "2023-06",
+          "precip_mm": 14.1,
+          "temp_c": 13.23,
+          "precip_3m_mm": 257.7,
+          "temp_3m_c": 14.91
+        },
+        {
+          "month": "2023-07",
+          "precip_mm": 19.8,
+          "temp_c": 13.23,
+          "precip_3m_mm": 68.9,
+          "temp_3m_c": 13.74
+        },
+        {
+          "month": "2023-08",
+          "precip_mm": 0.0,
+          "temp_c": 16.35,
+          "precip_3m_mm": 33.9,
+          "temp_3m_c": 14.27
+        },
+        {
+          "month": "2023-09",
+          "precip_mm": 19.3,
+          "temp_c": 17.96,
+          "precip_3m_mm": 39.1,
+          "temp_3m_c": 15.85
+        },
+        {
+          "month": "2023-10",
+          "precip_mm": 48.1,
+          "temp_c": 20.05,
+          "precip_3m_mm": 67.4,
+          "temp_3m_c": 18.12
+        },
+        {
+          "month": "2023-11",
+          "precip_mm": 109.2,
+          "temp_c": 22.73,
+          "precip_3m_mm": 176.6,
+          "temp_3m_c": 20.25
+        },
+        {
+          "month": "2023-12",
+          "precip_mm": 219.1,
+          "temp_c": 21.97,
+          "precip_3m_mm": 376.4,
+          "temp_3m_c": 21.58
+        },
+        {
+          "month": "2024-01",
+          "precip_mm": 211.8,
+          "temp_c": 22.22,
+          "precip_3m_mm": 540.1,
+          "temp_3m_c": 22.31
+        },
+        {
+          "month": "2024-02",
+          "precip_mm": 226.6,
+          "temp_c": 21.96,
+          "precip_3m_mm": 657.5,
+          "temp_3m_c": 22.05
+        },
+        {
+          "month": "2024-03",
+          "precip_mm": 147.4,
+          "temp_c": 21.81,
+          "precip_3m_mm": 585.8,
+          "temp_3m_c": 22.0
+        },
+        {
+          "month": "2024-04",
+          "precip_mm": 75.5,
+          "temp_c": 17.95,
+          "precip_3m_mm": 449.5,
+          "temp_3m_c": 20.57
+        },
+        {
+          "month": "2024-05",
+          "precip_mm": 50.2,
+          "temp_c": 10.77,
+          "precip_3m_mm": 273.1,
+          "temp_3m_c": 16.84
+        },
+        {
+          "month": "2024-06",
+          "precip_mm": 8.4,
+          "temp_c": 13.48,
+          "precip_3m_mm": 134.1,
+          "temp_3m_c": 14.07
+        },
+        {
+          "month": "2024-07",
+          "precip_mm": 5.7,
+          "temp_c": 9.9,
+          "precip_3m_mm": 64.3,
+          "temp_3m_c": 11.38
+        },
+        {
+          "month": "2024-08",
+          "precip_mm": 12.6,
+          "temp_c": 12.58,
+          "precip_3m_mm": 26.7,
+          "temp_3m_c": 11.99
+        },
+        {
+          "month": "2024-09",
+          "precip_mm": 23.2,
+          "temp_c": 18.44,
+          "precip_3m_mm": 41.5,
+          "temp_3m_c": 13.64
+        },
+        {
+          "month": "2024-10",
+          "precip_mm": 95.7,
+          "temp_c": 20.55,
+          "precip_3m_mm": 131.5,
+          "temp_3m_c": 17.19
+        },
+        {
+          "month": "2024-11",
+          "precip_mm": 254.7,
+          "temp_c": 20.9,
+          "precip_3m_mm": 373.6,
+          "temp_3m_c": 19.96
+        },
+        {
+          "month": "2024-12",
+          "precip_mm": 114.4,
+          "temp_c": 20.36,
+          "precip_3m_mm": 464.8,
+          "temp_3m_c": 20.6
+        },
+        {
+          "month": "2025-01",
+          "precip_mm": 324.9,
+          "temp_c": 21.65,
+          "precip_3m_mm": 694.0,
+          "temp_3m_c": 20.97
+        },
+        {
+          "month": "2025-02",
+          "precip_mm": 128.9,
+          "temp_c": 23.45,
+          "precip_3m_mm": 568.2,
+          "temp_3m_c": 21.82
+        },
+        {
+          "month": "2025-03",
+          "precip_mm": 173.4,
+          "temp_c": 19.48,
+          "precip_3m_mm": 627.2,
+          "temp_3m_c": 21.53
+        },
+        {
+          "month": "2025-04",
+          "precip_mm": 71.1,
+          "temp_c": 16.16,
+          "precip_3m_mm": 373.4,
+          "temp_3m_c": 19.7
+        },
+        {
+          "month": "2025-05",
+          "precip_mm": 24.6,
+          "temp_c": 15.72,
+          "precip_3m_mm": 269.1,
+          "temp_3m_c": 17.12
+        },
+        {
+          "month": "2025-06",
+          "precip_mm": 16.7,
+          "temp_c": 10.02,
+          "precip_3m_mm": 112.4,
+          "temp_3m_c": 13.97
+        },
+        {
+          "month": "2025-07",
+          "precip_mm": 16.1,
+          "temp_c": 11.75,
+          "precip_3m_mm": 57.4,
+          "temp_3m_c": 12.5
+        },
+        {
+          "month": "2025-08",
+          "precip_mm": 17.0,
+          "temp_c": 13.22,
+          "precip_3m_mm": 49.8,
+          "temp_3m_c": 11.66
+        },
+        {
+          "month": "2025-09",
+          "precip_mm": 18.5,
+          "temp_c": 17.42,
+          "precip_3m_mm": 51.6,
+          "temp_3m_c": 14.13
+        },
+        {
+          "month": "2025-10",
+          "precip_mm": 75.2,
+          "temp_c": 18.17,
+          "precip_3m_mm": 110.7,
+          "temp_3m_c": 16.27
+        },
+        {
+          "month": "2025-11",
+          "precip_mm": 55.2,
+          "temp_c": 20.3,
+          "precip_3m_mm": 148.9,
+          "temp_3m_c": 18.63
+        },
+        {
+          "month": "2025-12",
+          "precip_mm": 360.1,
+          "temp_c": 20.82,
+          "precip_3m_mm": 490.5,
+          "temp_3m_c": 19.76
+        },
+        {
+          "month": "2026-01",
+          "precip_mm": 279.6,
+          "temp_c": 21.09,
+          "precip_3m_mm": 694.9,
+          "temp_3m_c": 20.74
+        },
+        {
+          "month": "2026-02",
+          "precip_mm": 374.8,
+          "temp_c": 21.47,
+          "precip_3m_mm": 1014.5,
+          "temp_3m_c": 21.13
+        },
+        {
+          "month": "2026-03",
+          "precip_mm": 177.5,
+          "temp_c": 20.08,
+          "precip_3m_mm": 831.9,
+          "temp_3m_c": 20.88
+        },
+        {
+          "month": "2026-04",
+          "precip_mm": 61.8,
+          "temp_c": 17.05,
+          "precip_3m_mm": 614.1,
+          "temp_3m_c": 19.53
+        },
+        {
+          "month": "2026-05",
+          "precip_mm": 38.4,
+          "temp_c": 11.69,
+          "precip_3m_mm": 277.7,
+          "temp_3m_c": 16.27
+        },
+        {
+          "month": "2026-06",
+          "precip_mm": 43.3,
+          "temp_c": 11.53,
+          "precip_3m_mm": 143.5,
+          "temp_3m_c": 13.42
+        },
+        {
+          "month": "2026-07",
+          "precip_mm": 16.4,
+          "temp_c": 12.95,
+          "precip_3m_mm": 98.1,
+          "temp_3m_c": 12.06
+        },
+        {
+          "month": "2026-08",
+          "precip_mm": 13.4,
+          "temp_c": 13.96,
+          "precip_3m_mm": 73.1,
+          "temp_3m_c": 12.81
+        },
+        {
+          "month": "2026-09",
+          "precip_mm": 76.5,
+          "temp_c": 16.04,
+          "precip_3m_mm": 106.3,
+          "temp_3m_c": 14.32
+        },
+        {
+          "month": "2026-10",
+          "precip_mm": 190.3,
+          "temp_c": 16.04,
+          "precip_3m_mm": 280.2,
+          "temp_3m_c": 15.35
+        }
+      ],
+      "observations": [
+        {
+          "date": "2025-05-29",
+          "window_month": "2025-04",
+          "area_km2": 8.7151,
+          "precip_3m_mm": 373.4,
+          "temp_3m_c": 19.7
+        },
+        {
+          "date": "2025-10-03",
+          "window_month": "2025-09",
+          "area_km2": 7.1458,
+          "precip_3m_mm": 51.6,
+          "temp_3m_c": 14.13
+        }
+      ]
+    }
+  }
+}

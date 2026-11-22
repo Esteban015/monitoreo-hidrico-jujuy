@@ -172,7 +172,6 @@ export default function MapView({
     if (baseMode !== "fisico") {
       tilesRef.current?.remove();
       tilesRef.current = null;
-      setTileState("inactivo");
       return;
     }
     if (tilesRef.current) return;
@@ -352,7 +351,10 @@ export default function MapView({
             key={m}
             type="button"
             aria-pressed={baseMode === m}
-            onClick={() => setBaseMode(m)}
+            onClick={() => {
+              setBaseMode(m);
+              if (m !== "fisico") setTileState("inactivo");
+            }}
             className={`min-h-9 px-3 py-1.5 font-medium transition ${baseMode === m ? "bg-sky-800 text-white shadow-inner" : "text-slate-700 hover:bg-slate-100"}`}
             title={title}
           >

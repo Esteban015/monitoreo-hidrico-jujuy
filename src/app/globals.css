@@ -5,3 +5,70 @@ body {
   color: #0f172a;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
+
+/* Puntos de agua de la vista general / modo Agua (Leaflet divIcon). */
+.water-pin-wrap {
+  background: transparent;
+  border: 0;
+}
+.water-pin {
+  position: relative;
+  width: var(--s);
+  height: var(--s);
+  transform: translate(-50%, -50%);
+}
+.water-pin__dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #7dd3fc, #0284c7 70%);
+  border: 2px solid #fff;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45);
+}
+.water-pin__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #38bdf8;
+  opacity: 0.35;
+  animation: water-pulse 2.4s ease-out infinite;
+}
+.water-pin__label {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  white-space: nowrap;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3px 7px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+  pointer-events: none;
+}
+.water-pin__label strong {
+  font-size: 11px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+.water-pin__label span {
+  font-size: 9px;
+  line-height: 1.2;
+  color: #0369a1;
+}
+@keyframes water-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}

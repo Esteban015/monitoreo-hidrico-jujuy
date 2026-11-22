@@ -67,6 +67,25 @@
         "responses": { "200": { "description": "Observaciones de lluvia" } }
       }
     },
+    "/api/casos/{id}/historial": {
+      "get": {
+        "summary": "Historial climático real de la cuenca y observaciones de superficie",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Serie mensual de lluvia y temperatura + 2 observaciones Sentinel-2" } }
+      }
+    },
+    "/api/casos/{id}/modelo": {
+      "get": {
+        "summary": "Modelo HistGradientBoostingRegressor demostrativo y grilla de inferencia",
+        "description": "Modelo entrenado con datos sintéticos calibrados a 2 observaciones reales. No es una predicción validada.",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Metadatos, supuestos, métricas sintéticas y grilla" } }
+      }
+    },
     "/api/casos/{id}/geometrias": {
       "get": {
         "summary": "Rutas de los GeoJSON de cuenca, AOI y agua por fecha",

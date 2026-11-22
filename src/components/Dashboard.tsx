@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { loadBundle, type BundleResult } from "@/lib/datasets";
 import { fmtDate, fmtPct, getCaseView } from "@/lib/metrics";
 import InfoPanel from "./InfoPanel";
-import type { MapLayers, ViewMode } from "./MapView";
+import type { MapLayers, OverviewCase, ViewMode } from "./MapView";
 
 // Leaflet usa `window`: se carga solo en el cliente.
 const MapView = dynamic(() => import("./MapView"), {
@@ -39,6 +39,23 @@ export default function Dashboard() {
 
   const bundle = result !== "cargando" && result.status === "ok" ? result.bundle : null;
   const view = useMemo(() => (bundle && selectedId ? getCaseView(bundle, selectedId) : null), [bundle, selectedId]);
+  const overview: OverviewCase[] | null = useMemo(
+    () =>
+      bundle
+        ? bundle.cases.cases.map((c) => {
+            const cmp = bundle.water.comparisons.find((x) => x.case_id === c.case_id);
+            return {
+              caseId: c.case_id,
+              name: c.name,
+              ecoregion: c.ecoregion,
+              kind: c.kind,
+              aoiFile: c.aoi.file,
+              areaKm2: Math.max(cmp?.MNDWI.area_a_km2 ?? 0, cmp?.MNDWI.area_b_km2 ?? 0),
+            };
+          })
+        : null,
+    [bundle],
+  );
   const layers: MapLayers | null = useMemo(
     () =>
       view && view.sceneA && view.sceneB
@@ -112,11 +129,20 @@ export default function Dashboard() {
               El caso «{selectedId}» no existe en los datos publicados.
             </p>
           )}
-          {bundle && view && <InfoPanel view={view} mode={mode} onMode={setMode} method={bundle.water.method} />}
+          {bundle && view && (
+            <InfoPanel
+              view={view}
+              mode={mode}
+              onMode={setMode}
+              method={bundle.water.method}
+              climate={bundle.climate.cases[view.info.case_id] ?? null}
+              model={bundle.model.cases[view.info.case_id] ?? null}
+            />
+          )}
         </div>
       </aside>
       <main className="relative order-first h-[50vh] shrink-0 md:order-none md:h-auto md:flex-1">
-        <MapView layers={layers} mode={mode} />
+        <MapView layers={layers} mode={mode} overview={overview} onSelect={setSelectedId} />
       </main>
     </div>
   );

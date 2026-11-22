@@ -23,6 +23,8 @@ const DATA_FILES = {
   cases: "cases.json",
   water: "water_metrics.json",
   rainfall: "rainfall_metrics.json",
+  climate: "climate/climate_series.json",
+  model: "model/water_model.json",
 };
 
 const MIME = {
@@ -63,6 +65,8 @@ function loadBundle() {
     cases: readData(DATA_FILES.cases),
     water: readData(DATA_FILES.water),
     rainfall: readData(DATA_FILES.rainfall),
+    climate: readData(DATA_FILES.climate),
+    model: readData(DATA_FILES.model),
   };
 }
 
@@ -168,6 +172,8 @@ function handleApi(req, res, url) {
           "GET /api/casos/{id}",
           "GET /api/casos/{id}/comparacion",
           "GET /api/casos/{id}/precipitacion",
+          "GET /api/casos/{id}/historial",
+          "GET /api/casos/{id}/modelo",
           "GET /api/casos/{id}/geometrias",
           "GET /api/fuentes",
           "GET /api/openapi.json",
@@ -208,6 +214,19 @@ function handleApi(req, res, url) {
           unit: bundle.rainfall.unit,
           resolution_deg: bundle.rainfall.resolution_deg,
           status: bundle.rainfall.status,
+        },
+        climate: {
+          source: bundle.climate.source,
+          license: bundle.climate.license,
+          real: bundle.climate.real,
+          cases: Object.keys(bundle.climate.cases),
+        },
+        model: {
+          algorithm: bundle.model.algorithm,
+          sklearn_version: bundle.model.sklearn_version,
+          synthetic: bundle.model.synthetic,
+          label: bundle.model.label,
+          disclaimer: bundle.model.disclaimer,
         },
         limitations: [
           "Mide superficie visible de agua; no representa volumen almacenado ni caudal.",
@@ -251,6 +270,25 @@ function handleApi(req, res, url) {
           license: "Ver condiciones del IGN",
           use: "Mapa base provincial local (departamentos)",
         },
+        openmeteo: {
+          product: "Open-Meteo Historical Weather API (ERA5-Land)",
+          provider: "Open-Meteo / Copernicus Climate Change Service",
+          license: "CC-BY 4.0",
+          use: "Serie mensual real de precipitación y temperatura de la cuenca",
+        },
+        physical_tiles: {
+          product: "OpenTopoMap",
+          provider: "OpenTopoMap / OpenStreetMap",
+          license: "CC-BY-SA",
+          use: "Mapa físico opcional (requiere internet)",
+        },
+        model: {
+          product: "HistGradientBoostingRegressor (scikit-learn)",
+          provider: "Modelo propio demostrativo",
+          license: "Código del proyecto",
+          use: "Simulador de sensibilidad; entrenado con datos sintéticos calibrados a 2 observaciones reales",
+          synthetic: true,
+        },
       });
     }
 
@@ -276,6 +314,18 @@ function handleApi(req, res, url) {
         comparison: comparisonSummary(cmp),
         scenes: scenes.map(sceneSummary),
         precipitation: bundle.rainfall.observations.filter((o) => o.case_id === id),
+        history: bundle.climate.cases[id]
+          ? {
+              source: bundle.climate.source,
+              first_month: bundle.climate.cases[id].first_month,
+              last_month: bundle.climate.cases[id].last_month,
+              months: bundle.climate.cases[id].months.length,
+              water_observations: bundle.climate.cases[id].observations,
+            }
+          : null,
+        model: bundle.model.cases[id]
+          ? { synthetic: true, algorithm: bundle.model.algorithm, disclaimer: bundle.model.disclaimer }
+          : null,
         warnings: Array.from(
           new Set([
             ...(c.warnings ?? []),
@@ -305,6 +355,40 @@ function handleApi(req, res, url) {
         source: bundle.rainfall.source,
         unit: bundle.rainfall.unit,
         observations: bundle.rainfall.observations.filter((o) => o.case_id === id),
+      });
+    }
+
+    if (route.length === 3 && route[2] === "historial") {
+      const climate = bundle.climate.cases[id];
+      if (!climate) return notFound(res, `El caso «${id}» no tiene historial climático publicado`);
+      return sendJson(res, 200, {
+        case_id: id,
+        source: bundle.climate.source,
+        source_url: bundle.climate.source_url,
+        license: bundle.climate.license,
+        real: true,
+        first_month: climate.first_month,
+        last_month: climate.last_month,
+        months: climate.months,
+        water_observations: climate.observations,
+        note: "La serie climática es real y continua. De superficie de agua sólo hay 2 observaciones reales; no se interpolan.",
+      });
+    }
+
+    if (route.length === 3 && route[2] === "modelo") {
+      const model = bundle.model.cases[id];
+      if (!model) return notFound(res, `El caso «${id}» no tiene modelo publicado`);
+      return sendJson(res, 200, {
+        case_id: id,
+        synthetic: true,
+        label: bundle.model.label,
+        algorithm: bundle.model.algorithm,
+        sklearn_version: bundle.model.sklearn_version,
+        disclaimer: bundle.model.disclaimer,
+        assumptions: bundle.model.assumptions,
+        features: bundle.model.features,
+        target: bundle.model.target,
+        ...model,
       });
     }
 

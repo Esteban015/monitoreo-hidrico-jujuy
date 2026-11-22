@@ -8,8 +8,9 @@ const view = (id: string) => getCaseView(bundle, id)!;
 test("1-2. inicia y dibuja el mapa base LOCAL sin solicitudes externas", async ({ page, guard }) => {
   await openApp(page);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Monitoreo de Cuencas");
-  await expect(page.getByTestId("map")).toHaveAttribute("data-basemap", "local");
+  await expect(page.getByTestId("map")).toHaveAttribute("data-basemap", "politico");
   await expect(page.getByTestId("map")).toHaveAttribute("data-base-features", "17"); // provincia + 16 departamentos (IGN)
+  await expect(page.locator(".water-pin")).toHaveCount(2); // vista general: los 2 cuerpos de agua visibles
   expect(await page.locator(".leaflet-base-pane canvas, .leaflet-overlay-pane canvas").count()).toBeGreaterThan(0);
   await expect(page.locator(".leaflet-control-attribution")).toContainText("IGN Argentina");
   await expect(page.locator(".leaflet-tile")).toHaveCount(0); // ninguna tesela remota
@@ -137,15 +138,34 @@ test("11b. geometría faltante: aviso en el mapa, métricas intactas", async ({ 
   await expect(page.getByTestId("pct-main")).toHaveText(fmtPct(view("dique-las-maderas").comparison!.MNDWI.pct_change));
 });
 
-test("OSM opcional: sin internet avisa y los datos locales siguen funcionando", async ({ page, guard }) => {
+test("mapa físico opcional: sin internet avisa y los datos locales siguen funcionando", async ({ page, guard }) => {
   guard.allowConsoleErrors.push(/Failed to load resource|ERR_INTERNET_DISCONNECTED|net::/);
   await openApp(page);
   await selectCase(page, "laguna-pozuelos");
-  await page.getByRole("button", { name: "OpenStreetMap (online)" }).click();
+  await page.getByRole("button", { name: "Físico", exact: true }).click();
   await expect(page.getByTestId("map")).toHaveAttribute("data-osm", "sin-conexion");
-  await expect(page.getByTestId("map").getByRole("status")).toContainText("OpenStreetMap no disponible");
-  expect(guard.external.every((u) => u.includes("tile.openstreetmap.org"))).toBe(true);
-  await page.getByRole("button", { name: "Mapa local" }).click();
+  await expect(page.getByTestId("map").getByRole("status")).toContainText("Mapa físico no disponible");
+  expect(guard.external.every((u) => u.includes("opentopomap.org"))).toBe(true);
+  await page.getByRole("button", { name: "Político", exact: true }).click();
   await expect(page.getByTestId("map")).toHaveAttribute("data-osm", "inactivo");
   await expect(page.getByTestId("pct-main")).toHaveText(fmtPct(view("laguna-pozuelos").comparison!.MNDWI.pct_change));
+});
+
+test("vista general, modo Agua, historial y simulador climático", async ({ page }) => {
+  await openApp(page);
+  await expect(page.locator(".water-pin")).toHaveCount(2);
+  await page.getByRole("button", { name: "Agua", exact: true }).click();
+  const legend = page.getByTestId("legend");
+  await expect(legend).toContainText("Mayor superficie de agua visible");
+  await expect(legend).toContainText("No es volumen");
+  await page.locator(".water-pin").first().click();
+  await expect(page.getByTestId("results")).toBeVisible();
+  await expect(page.getByTestId("history")).toContainText("Historial de la fuente de agua");
+  await expect(page.getByTestId("simulator")).toBeVisible();
+  await expect(page.getByTestId("sim-disclaimer")).toContainText("Modelo demostrativo — datos sintéticos");
+  const before = await page.getByTestId("sim-area").innerText();
+  await page.getByTestId("preset-humedo").click();
+  await expect(page.getByTestId("sim-area")).not.toHaveText(before);
+  await page.getByTestId("preset-reset").click();
+  await expect(page.getByTestId("sim-area")).toHaveText(before);
 });

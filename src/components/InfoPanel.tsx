@@ -2,10 +2,12 @@
 
 import type { ViewMode } from "./MapView";
 import { COLORS } from "./MapView";
+import ClimateSimulator from "./ClimateSimulator";
+import HistoryChart from "./HistoryChart";
 import { dataUrl } from "@/lib/datasets";
 import { describePercentile, fmtDate, fmtMonth, fmtNum, fmtPct, fmtSigned, uncertaintyRange, type CaseView } from "@/lib/metrics";
 import { HIGH_SENSITIVITY_SPAN, NOTICES } from "@/lib/notices";
-import type { RainObservation, SceneMetrics, WaterFile } from "@/lib/types";
+import type { ClimateCase, RainObservation, SceneMetrics, WaterFile, WaterModelCase } from "@/lib/types";
 
 const MODES: { id: ViewMode; label: string }[] = [
   { id: "antes", label: "Antes" },
@@ -13,7 +15,21 @@ const MODES: { id: ViewMode; label: string }[] = [
   { id: "ambos", label: "Comparar" },
 ];
 
-export default function InfoPanel({ view, mode, onMode, method }: { view: CaseView; mode: ViewMode; onMode: (m: ViewMode) => void; method: WaterFile["method"] }) {
+export default function InfoPanel({
+  view,
+  mode,
+  onMode,
+  method,
+  climate,
+  model,
+}: {
+  view: CaseView;
+  mode: ViewMode;
+  onMode: (m: ViewMode) => void;
+  method: WaterFile["method"];
+  climate: ClimateCase | null;
+  model: WaterModelCase | null;
+}) {
   const { info, sceneA, sceneB, comparison, rainA, rainB, missing } = view;
 
   if (missing.length || !sceneA || !sceneB || !comparison) {
@@ -124,6 +140,10 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
           <RainCard obs={rainB} imageDate={sceneB.date} />
         </div>
       </div>
+
+      {/* Historial real + simulador demostrativo */}
+      {climate && <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} />}
+      {model && <ClimateSimulator key={model.name} model={model} />}
 
       {/* Imágenes de control */}
       <details className="rounded border border-slate-200 p-2 text-sm">

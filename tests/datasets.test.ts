@@ -25,9 +25,11 @@ const okMap = () => ({
   "data/cases.json": { status: 200, body: real("cases.json") },
   "data/water_metrics.json": { status: 200, body: real("water_metrics.json") },
   "data/rainfall_metrics.json": { status: 200, body: real("rainfall_metrics.json") },
+  "data/climate/climate_series.json": { status: 200, body: real("climate/climate_series.json") },
+  "data/model/water_model.json": { status: 200, body: real("model/water_model.json") },
 });
 
-test("carga los tres datasets reales con rutas relativas", async () => {
+test("carga los cinco datasets reales con rutas relativas", async () => {
   const r = await loadBundle(fetcherFrom(okMap()));
   assert.equal(r.status, "ok");
   if (r.status === "ok") assert.equal(r.bundle.cases.cases.length, 2);
@@ -68,5 +70,13 @@ test("estructura incompleta o unidades inesperadas => error", async () => {
   const r = await loadBundle(fetcherFrom(m));
   assert.equal(r.status, "error");
   const rain = { ...real("rainfall_metrics.json"), unit: "mm/día" };
-  assert.ok(structuralProblems({ cases: real("cases.json"), water, rainfall: rain }).some((p) => p.includes("mm/mes")));
+  assert.ok(
+    structuralProblems({
+      cases: real("cases.json"),
+      water,
+      rainfall: rain,
+      climate: real("climate/climate_series.json"),
+      model: real("model/water_model.json"),
+    }).some((p) => p.includes("mm/mes")),
+  );
 });
