@@ -35,7 +35,7 @@ SHOULD (solo si sobra tiempo): 3.er caso testigo (Dique La Ciénaga o Río Grand
 - **Caudal (m³/s) y volumen almacenado (hm³)**: el MVP mide *superficie visible*, no volumen ni caudal.
 - Cobertura de toda la provincia a escala de detalle.
 - Análisis por lote agrícola, modelos predictivos, radar (SAR), IA.
-- Backend propio, base de datos, autenticación, microservicios.
+- Backend propio con cómputo, base de datos, autenticación o microservicios. (El backend mínimo de solo lectura de D-22 sólo sirve datos ya precalculados.)
 - Procesamiento satelital en el navegador o en tiempo real.
 
 ## 6. Flujo de demo (objetivo: 2 minutos)

@@ -83,22 +83,25 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 
 ---
 
-## Fase 5 — Ficha de transparencia + modo offline
+## Fase 5 — Ficha de transparencia + modo offline ✅
 Depende de: Fase 4.
-- [ ] 5.1 Ficha: fuente, ID de escena, fecha de adquisición, % nubes, resolución, umbral, período de referencia de lluvia, licencias, advertencias.
-- [ ] 5.2 Prueba offline: build estático servido localmente con la red desactivada (alternativa al mapa base, D-10).
-- [ ] 5.3 Entrada inválida: caso inexistente o archivo faltante muestra un mensaje claro en español.
+- [x] 5.1 Ficha: fuente, ID de escena, fecha de adquisición, % nubes, resolución, umbral, período de referencia de lluvia, licencias, advertencias.
+- [x] 5.2 Prueba offline: build estático servido localmente con la red desactivada (alternativa al mapa base, D-10). Evidencia en `docs/evidence/fase5/`.
+- [x] 5.3 Entrada inválida: caso inexistente o archivo faltante muestra un mensaje claro en español.
+- [x] 5.4 Aprobación humana de Fase 5 (evidencias revisadas).
 
 **Aceptación:** demo completa sin red; ficha visible para cada fecha mostrada.
 
 ---
 
-## Fase 6 — Demo
+## Fase 6 — Demo y despliegue ✅
 Depende de: Fase 5.
-- [ ] 6.1 README con cómo correr, fuentes y limitaciones.
-- [ ] 6.2 Pitch de 30 s + recorrido de 2 min (según PROJECT.md §6).
-- [ ] 6.3 Prueba final: inicio + flujo feliz + error; registrar comandos y salidas.
-- [ ] 6.4 (Opcional, con aprobación) despliegue estático.
+- [x] 6.1 README con cómo correr, fuentes y limitaciones.
+- [x] 6.2 Pitch de 30 s + recorrido de 2 min (`docs/PITCH.md`).
+- [x] 6.3 Prueba final: inicio + flujo feliz + error; comandos y salidas en `docs/DEPLOY.md` y README §9.
+- [x] 6.4 Despliegue local front + back (`npm start`) y configuración Docker/Render. URL pública pendiente de credenciales (D-23).
+
+**Aceptación:** `npm run build`, `npm test` (18), QA Python (43) y E2E desktop (12) pasan; frontend y API responden en `http://localhost:3000`.
 
 ---
 

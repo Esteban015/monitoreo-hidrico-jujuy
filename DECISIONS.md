@@ -134,6 +134,18 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 - **Qué no se publica:** cachés, datos crudos, `http_log`, `geometries_report.json` ni scripts.
 - **Rutas:** relativas (`data/...`, sin "/" inicial), compatibles con la exportación estática servida en cualquier subruta. `dataUrl()` rechaza rutas absolutas, `..` y URLs externas.
 
+## D-22 · 2026-11-22 · ADOPTADA (Fase 6) — Backend mínimo de solo lectura (supera parcialmente D-02)
+- **Decisión:** agregar `server/index.js` (Node ≥ 20, sin dependencias) que sirve `out/` y expone `/api/*` sobre los mismos JSON de `data/derived/`. Un solo proceso despliega front + back.
+- **Justificación:** el pedido del equipo fue desplegar front y back y contar con una API. No hay cómputo en tiempo de ejecución ni base de datos: la API sólo lee y compone los datasets ya validados, por lo que no contradice el principio de datos precalculados ni el modo offline.
+- **Alcance:** `GET /api/health`, `/api/meta`, `/api/casos`, `/api/casos/{id}`, `/comparacion`, `/precipitacion`, `/geometrias`, `/api/fuentes`, `/api/openapi.json`. Sólo GET/HEAD, CORS abierto, errores JSON, protección de path traversal y caché por mtime.
+- **Alternativas:** mantener sólo el estático (D-02) y publicar la API como función serverless — descartada por más piezas y configuración; agregar Express — descartada por dependencia innecesaria.
+- **Compatibilidad:** el frontend no cambia; sigue leyendo `data/*.json` relativos. `npm run start:static` conserva el modo estático puro.
+
+## D-23 · 2026-11-22 · ADOPTADA (Fase 6) — Despliegue en un contenedor
+- **Decisión:** `Dockerfile` multi-stage (build Next → runtime Node) + `render.yaml`. Variables `PORT`, `HOST`, `STATIC_DIR`, `DATA_DIR`, `LOG_REQUESTS`. Health check en `/api/health`.
+- **Estado:** despliegue local verificado en `http://localhost:3000` (frontend + API). La URL pública queda PENDIENTE de credenciales del proveedor; no se publicó nada.
+- **Justificación:** reproduce el entorno con un comando, no requiere secretos y permite demo local sin Internet.
+
 ## D-21 · 2026-11-22 · ADOPTADA (Fase 4) — Presentación de resultados en el dashboard
 - **Valores:** todos se leen de los JSON publicados; ninguna métrica está escrita en `src/` (verificado por búsqueda).
 - **Rango de incertidumbre:** mínimo y máximo de variaciones **ya presentes** en `water_metrics.json`: sensibilidad MNDWI (−0,1/0/+0,1), NDWI umbral 0 y la variación de la clase SCL 6 (calculada con las áreas por fecha del mismo archivo). Resultado: Pozuelos de −26,3 % a −68,5 %; Las Maderas de −13,0 % a −18,9 %. Se muestra junto al valor principal MNDWI, con una barra y la lista de métodos.

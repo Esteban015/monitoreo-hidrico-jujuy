@@ -186,6 +186,11 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
             </a>{" "}
             ({info.aoi.role}). © colaboradores de OpenStreetMap, ODbL.
           </Trace>
+          <Trace label="Licencias y atribución">
+            Sentinel-2: datos abiertos Copernicus (ESA). CHIRPS: Climate Hazards Center, UCSB (citar Funk et al.).
+            HydroBASINS/HydroSHEDS: Lehner &amp; Grill (2013), uso con atribución. OpenStreetMap: ODbL 1.0.
+            IGN Argentina: ver condiciones del Instituto Geográfico Nacional.
+          </Trace>
         </dl>
       </details>
     </section>
