@@ -1,0 +1,3 @@
+# Dependencias mínimas para las pruebas Python en CI (tests/python): cálculo y validación de datasets ya generados.
+# No reprocesa datos ni descarga escenas; rasterio/pyshp (scripts/requirements.txt) no son necesarios para las pruebas.
+numpy==2.5.5
