@@ -3,8 +3,8 @@ import "./globals.css";
 
 // Sin fuentes remotas (next/font/google) para que el build no dependa de Internet.
 export const metadata: Metadata = {
-  title: "Monitoreo de Cuencas — Jujuy",
-  description: "Seguimiento de superficie de agua y precipitación en cuencas testigo de Jujuy",
+  title: "Monitoreo Hídrico Jujuy",
+  description: "Agua superficial de Jujuy con datos satelitales reales y trazables",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

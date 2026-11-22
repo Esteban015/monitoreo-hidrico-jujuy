@@ -158,3 +158,13 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 - **E2E en CI:** no se incluye por ahora. Para uso local existe `npm run test:e2e:smoke` (tope global de 120 s, sin reintentos).
 - **Vercel:** `vercel.json` con preset Next.js, `npm ci` y `npm run build`. La exportación estática (`out/`) no necesita variables de entorno ni datos crudos (verificado con un clon limpio desde GitHub).
 - **`npm start`:** usa `scripts/serve-static.mjs` (Node, sin descargas) en lugar de `npx serve`.
+
+## D-25 · 2026-11-22 · PROPUESTA (fase de marca, pendiente de aprobación) — Identidad de marca y landing
+- **Decisión:** marca «Monitoreo Hídrico Jujuy», posicionada como herramienta de monitoreo y apoyo a decisiones (ver `docs/BRAND_GUIDELINES.md`). Se usa la paleta sugerida, con dos variantes de texto accesibles (`#24708F` y `#A16207`) porque el secundario y la advertencia originales no llegan a 4,5:1 como texto.
+- **Rutas:** la landing ocupa `/` y el dashboard pasa a `/demo` (`docs/LANDING_SPEC.md`). **Impacto:** la URL de producción hoy muestra el dashboard en la raíz; al publicar este cambio, la raíz pasará a ser la landing.
+- **Datos:** la landing lee `data/derived` en el build con las funciones existentes; no hay métricas escritas a mano ni cálculos nuevos.
+- **Sin dependencias ni fuentes remotas:** isotipo SVG inline y fuente del sistema.
+
+## D-26 · 2026-11-22 · ADOPTADA — Navegación landing ↔ demo con enlaces HTML y corrección del servidor estático
+- **Enlaces:** se usan `<a>` comunes con rutas relativas en lugar de `next/link`. En la exportación estática de Next 16.4, la precarga pedía `/demo/__next.demo.__PAGE__.txt`, pero el archivo se genera como `demo/__next.demo/__PAGE__.txt`, lo que daba un 404 en consola. Con navegación completa entre dos páginas estáticas no hay pérdida funcional.
+- **`scripts/serve-static.mjs`:** ahora prioriza `demo.html` sobre la carpeta `demo/` que también genera Next. Antes respondía 404 en `/demo` (defecto del servidor local, no de la app).

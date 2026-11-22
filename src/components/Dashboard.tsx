@@ -85,13 +85,13 @@ export default function Dashboard() {
                       onClick={() => setSelectedId(c.case_id)}
                       aria-pressed={active}
                       data-case={c.case_id}
-                      className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${active ? "bg-sky-800 text-white" : "text-slate-800 hover:bg-slate-100"}`}
+                      className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${active ? "bg-brand-primary text-white" : "text-slate-800 hover:bg-slate-100"}`}
                     >
                       <span className="flex items-baseline justify-between gap-2">
                         <span className="font-medium">{c.name}</span>
-                        <span className={`text-xs ${active ? "text-sky-100" : "text-slate-500"}`}>{fmtPct(pct)}</span>
+                        <span className={`text-xs ${active ? "text-white/80" : "text-slate-500"}`}>{fmtPct(pct)}</span>
                       </span>
-                      <span className={`block text-xs ${active ? "text-sky-100" : "text-slate-500"}`}>
+                      <span className={`block text-xs ${active ? "text-white/80" : "text-slate-500"}`}>
                         {c.ecoregion} · {c.kind}
                       </span>
                     </button>

@@ -51,7 +51,7 @@ Requisitos: Node.js ≥ 22.18 (las pruebas usan TypeScript nativo de Node; el bu
 
 ```bash
 npm ci
-npm run dev      # http://localhost:3000 (publica data/derived -> public/data antes de iniciar)
+npm run dev      # http://localhost:3000 = landing; /demo = dashboard (publica data/derived -> public/data antes de iniciar)
 npm run build    # exportación estática en out/ (también publica los datos)
 npm start        # sirve out/ en http://127.0.0.1:3000 con un servidor Node local, sin descargas
 ```

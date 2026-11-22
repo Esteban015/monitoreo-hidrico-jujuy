@@ -37,7 +37,7 @@ export const test = base.extend<{ guard: Guard }>({
 export { expect };
 
 export async function openApp(page: Page) {
-  await page.goto("./");
+  await page.goto("demo");
   await expect(page.locator("[data-case]")).toHaveCount(2);
   await expect(page.getByTestId("map")).toHaveAttribute("data-basemap-status", "listo");
 }
