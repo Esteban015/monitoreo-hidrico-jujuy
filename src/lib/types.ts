@@ -133,8 +133,103 @@ export interface RainfallFile {
   warnings: string[];
 }
 
+export interface ClimateMonth {
+  month: string;
+  precip_mm: number | null;
+  temp_c: number | null;
+  precip_3m_mm: number;
+  temp_3m_c: number;
+}
+
+export interface ClimateObservation {
+  date: string;
+  window_month: string;
+  area_km2: number;
+  precip_3m_mm: number;
+  temp_3m_c: number;
+}
+
+export interface ClimateCase {
+  name: string;
+  lat: number;
+  lon: number;
+  elevation_m: number | null;
+  first_month: string;
+  last_month: string;
+  months: ClimateMonth[];
+  observations: ClimateObservation[];
+}
+
+export interface ClimateFile {
+  generated_at: string;
+  generator: string;
+  source: string;
+  source_url: string;
+  license: string;
+  kind: string;
+  real: boolean;
+  unit: Record<string, string>;
+  cases: Record<string, ClimateCase>;
+}
+
+export interface ModelGrid {
+  precip_3m_mm: number[];
+  temp_3m_c: number[];
+  area_km2: number[][];
+}
+
+export interface WaterModelCase {
+  name: string;
+  synthetic: boolean;
+  baseline: {
+    month: string;
+    precip_3m_mm: number;
+    temp_3m_c: number;
+    last_observed_area_km2: number;
+    last_observed_date: string;
+    latest_climate: { month: string; precip_3m_mm: number; temp_3m_c: number };
+  };
+  ranges: { precip_3m_mm: [number, number]; temp_3m_c: [number, number] };
+  grid: ModelGrid;
+  training: {
+    samples: number;
+    synthetic: boolean;
+    r2_synthetic_test: number;
+    mae_synthetic_test_km2: number;
+    calibration: { date: string; observed_km2: number; model_km2: number; precip_3m_mm: number; temp_3m_c: number }[];
+  };
+  response: {
+    alpha_precip_per_100mm: number;
+    beta_temp_per_5c: number;
+    area_ref_km2: number;
+    p_ref_mm: number;
+    t_ref_c: number;
+  };
+  reference_grid_area_km2: number;
+}
+
+export interface WaterModelFile {
+  generated_at: string;
+  generator: string;
+  synthetic: boolean;
+  label: string;
+  algorithm: string;
+  sklearn_version: string;
+  features: { name: string; label: string; unit: string }[];
+  target: { name: string; label: string; unit: string };
+  disclaimer: string;
+  assumptions: string[];
+  cases: Record<string, WaterModelCase>;
+}
+
 export interface DataBundle {
   cases: CasesFile;
   water: WaterFile;
   rainfall: RainfallFile;
+  /** Opcional (D-34): serie climática estimada (Open-Meteo, punto). null si falta o es inválida. */
+  climate?: ClimateFile | null;
+  /** Opcional (D-34): modelo DEMOSTRATIVO sintético. null si falta o no está rotulado como sintético. */
+  model?: WaterModelFile | null;
+  /** Avisos de carga de los datasets opcionales. */
+  notes?: string[];
 }

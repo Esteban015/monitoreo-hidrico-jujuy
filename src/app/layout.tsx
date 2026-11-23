@@ -7,7 +7,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL, socialMeta } from "@
 // twitter-image.png en src/app/ (generados por scripts/brand/generate-brand-assets.mjs; D-27).
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: SITE_TITLE, template: "%s — Monitoreo Hídrico Jujuy" },
+  title: { default: SITE_TITLE, template: "%s — AquaJuy" },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },

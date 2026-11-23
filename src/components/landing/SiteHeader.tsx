@@ -14,7 +14,7 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-brand-primary/10 bg-brand-bg/95 backdrop-blur">
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5">
-        <a href="/" aria-label="Monitoreo Hídrico Jujuy, inicio" className="inline-flex min-h-11 items-center">
+        <a href="/" aria-label="AquaJuy, inicio" className="inline-flex min-h-11 items-center">
           <Logo compact />
         </a>
         <nav aria-label="Secciones" className="hidden items-center gap-1 text-sm text-brand-ink md:flex">

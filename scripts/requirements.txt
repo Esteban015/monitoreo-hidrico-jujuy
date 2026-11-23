@@ -4,3 +4,8 @@
 rasterio==1.4.3
 # pyshp: lectura de shapefiles de HydroBASINS (Python puro, sin GDAL/OGR para vectores).
 pyshp==2.3.1
+# Clima (Open-Meteo) y simulador. Versiones fijadas a las que generaron data/derived/model/water_model.json
+# (sklearn_version 1.9.1). Otra versión de scikit-learn cambia el estimador y el aviso InconsistentVersionWarning.
+numpy==2.5.4
+requests==2.34.2
+scikit-learn==1.9.1

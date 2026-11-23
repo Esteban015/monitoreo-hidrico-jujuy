@@ -7,7 +7,7 @@ export const JUJUY_VIEW_BOUNDS: [[number, number], [number, number]] = [
   [-21.7, -64.1],
 ];
 
-// Mapa base local (D-22): límites reales del IGN publicados en public/data/basemap/.
+// Mapa base local: límites reales del IGN publicados en public/data/basemap/.
 export const BASEMAP_FILES = {
   provincia: "basemap/jujuy_provincia_ign.geojson",
   departamentos: "basemap/jujuy_departamentos_ign.geojson",
@@ -16,9 +16,11 @@ export const BASEMAP_FILES = {
 export const ATTRIBUTION_LOCAL =
   "Límites: IGN Argentina · Cuencas: HydroBASINS (Lehner &amp; Grill 2013) · Agua: Copernicus Sentinel-2 (procesado) · Contornos de referencia: © OpenStreetMap (ODbL)";
 
-export const OSM_TILES = {
-  url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">colaboradores de OpenStreetMap</a>',
-};
+// Relieve online (OpenTopoMap, CC-BY-SA). Sólo se pide al elegir «Físico».
+export const PHYSICAL_TILES = {
+  url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  attribution:
+    'Mapa físico: © <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA) · datos © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+} as const;
 
-export type BaseMapMode = "local" | "osm";
+export type BaseMapMode = "politico" | "fisico" | "agua";

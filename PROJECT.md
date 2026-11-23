@@ -34,8 +34,8 @@ SHOULD (solo si sobra tiempo): 3.er caso testigo (Dique La Ciénaga o Río Grand
 - Aguas subterráneas, acuíferos, niveles freáticos.
 - **Caudal (m³/s) y volumen almacenado (hm³)**: el MVP mide *superficie visible*, no volumen ni caudal.
 - Cobertura de toda la provincia a escala de detalle.
-- Análisis por lote agrícola, modelos predictivos, radar (SAR), IA.
-- Backend propio, base de datos, autenticación, microservicios.
+- Análisis por lote agrícola, modelos predictivos **validados**, radar (SAR). (El simulador del PR #3 es demostrativo y sintético, D-34: no es un modelo predictivo.)
+- Backend propio con cómputo, base de datos, autenticación o microservicios. (La API mínima de solo lectura de D-35 es opcional y sólo sirve datos ya precalculados.)
 - Procesamiento satelital en el navegador o en tiempo real.
 
 ## 6. Flujo de demo (objetivo: 2 minutos)

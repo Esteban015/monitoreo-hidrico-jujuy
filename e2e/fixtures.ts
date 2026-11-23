@@ -6,7 +6,13 @@ import type { DataBundle } from "../src/lib/types";
 /** Datos reales publicados (los mismos que sirve la app): las expectativas salen de acá, no de valores escritos a mano. */
 export function loadBundle(): DataBundle {
   const read = (n: string) => JSON.parse(readFileSync(join(process.cwd(), "out", "data", n), "utf-8")); // Playwright corre desde la raíz
-  return { cases: read("cases.json"), water: read("water_metrics.json"), rainfall: read("rainfall_metrics.json") };
+  return {
+    cases: read("cases.json"),
+    water: read("water_metrics.json"),
+    rainfall: read("rainfall_metrics.json"),
+    climate: read("climate/climate_series.json"),
+    model: read("model/water_model.json"),
+  };
 }
 
 type Guard = { pageErrors: string[]; consoleErrors: string[]; external: string[]; allowConsoleErrors: RegExp[] };

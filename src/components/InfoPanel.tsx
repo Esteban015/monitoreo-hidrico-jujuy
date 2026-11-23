@@ -2,10 +2,12 @@
 
 import type { ViewMode } from "./MapView";
 import { COLORS } from "./MapView";
+import ClimateSimulator from "./ClimateSimulator";
+import HistoryChart from "./HistoryChart";
 import { dataUrl } from "@/lib/datasets";
 import { describePercentile, fmtDate, fmtMonth, fmtNum, fmtPct, fmtSigned, uncertaintyRange, type CaseView } from "@/lib/metrics";
 import { HIGH_SENSITIVITY_SPAN, NOTICES } from "@/lib/notices";
-import type { RainObservation, SceneMetrics, WaterFile } from "@/lib/types";
+import type { ClimateCase, RainObservation, SceneMetrics, WaterFile, WaterModelCase } from "@/lib/types";
 
 const MODES: { id: ViewMode; label: string }[] = [
   { id: "antes", label: "Antes" },
@@ -13,7 +15,27 @@ const MODES: { id: ViewMode; label: string }[] = [
   { id: "ambos", label: "Comparar" },
 ];
 
-export default function InfoPanel({ view, mode, onMode, method }: { view: CaseView; mode: ViewMode; onMode: (m: ViewMode) => void; method: WaterFile["method"] }) {
+export default function InfoPanel({
+  view,
+  mode,
+  onMode,
+  method,
+  climate,
+  model,
+  modelMeta = null,
+  climateSource = null,
+  notes = [],
+}: {
+  view: CaseView;
+  mode: ViewMode;
+  onMode: (m: ViewMode) => void;
+  method: WaterFile["method"];
+  climate: ClimateCase | null;
+  model: WaterModelCase | null;
+  modelMeta?: { algorithm: string; generatedAt: string } | null;
+  climateSource?: { source: string; generatedAt: string } | null;
+  notes?: string[];
+}) {
   const { info, sceneA, sceneB, comparison, rainA, rainB, missing } = view;
 
   if (missing.length || !sceneA || !sceneB || !comparison) {
@@ -23,6 +45,7 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
         <p role="status" className="rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900" data-testid="data-status">
           Datos incompletos para este caso: falta {missing.join(", ")}. No se muestran valores parciales.
         </p>
+        {climate && sceneA && sceneB && <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} source={climateSource?.source ?? null} />}
       </section>
     );
   }
@@ -35,6 +58,15 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
   return (
     <section className="space-y-4 p-4" aria-live="polite" data-testid="results">
       <CaseHeader view={view} />
+
+      {/* A. OBSERVACIONES SATELITALES (Sentinel-2) */}
+      <BlockTitle
+        letter="A"
+        title="Observaciones satelitales"
+        subtitle="Sentinel-2: superficie de agua visible estimada en dos fechas reales."
+        testId="block-observaciones"
+        tone="obs"
+      />
 
       {/* Comparador Antes / Después: solo las dos observaciones reales */}
       <div>
@@ -115,6 +147,15 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
         </p>
       </div>
 
+      {/* B. CLIMA ESTIMADO (CHIRPS en la cuenca + Open-Meteo en un punto) */}
+      <BlockTitle
+        letter="B"
+        title="Clima estimado"
+        subtitle="Estimaciones satelitales y de reanálisis, no mediciones de estación. No explican por sí solas el cambio del agua."
+        testId="block-clima"
+        tone="clima"
+      />
+
       {/* Precipitación */}
       <div data-testid="rainfall">
         <h3 className="text-sm font-semibold text-slate-900">Precipitación mensual en la cuenca (CHIRPS)</h3>
@@ -125,8 +166,37 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
         </div>
       </div>
 
+      {climate ? (
+        <HistoryChart climate={climate} sceneA={sceneA} sceneB={sceneB} source={climateSource?.source ?? null} />
+      ) : (
+        <p className="rounded border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600" data-testid="history-missing">
+          No hay historial climático publicado para esta fuente de agua.
+        </p>
+      )}
+
+      {/* C. ESCENARIOS SIMULADOS (modelo sintético) */}
+      <BlockTitle
+        letter="C"
+        title="Escenarios simulados"
+        subtitle="Modelo demostrativo con datos sintéticos. No es una observación ni un pronóstico."
+        testId="block-simulacion"
+        tone="sim"
+      />
+      {model ? (
+        <ClimateSimulator key={model.name} model={model} algorithm={modelMeta?.algorithm ?? "HistGradientBoostingRegressor"} />
+      ) : (
+        <p className="rounded border border-slate-200 bg-slate-50 p-3 text-sm text-slate-600" data-testid="sim-missing">
+          Simulador no disponible: no se publicó un modelo demostrativo válido para este caso.
+        </p>
+      )}
+      {notes.length > 0 && (
+        <p className="text-xs text-slate-500" data-testid="data-notes">
+          Datos opcionales no cargados: {notes.join("; ")}.
+        </p>
+      )}
+
       {/* Imágenes de control */}
-      <details className="rounded border border-slate-200 p-2 text-sm">
+      <details data-testid="quicklooks" className="rounded border border-slate-200 p-2 text-sm">
         <summary className="cursor-pointer select-none font-medium text-slate-900">Imágenes de control Sentinel-2</summary>
         <p className="mt-1 text-xs text-slate-600">Falso color (B11, B08, B03): el agua se ve oscura. Línea cian: agua detectada; línea amarilla: región de análisis.</p>
         <div className="mt-2 grid grid-cols-2 gap-2">
@@ -177,6 +247,15 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
           <Trace label="Precipitación">
             CHIRPS v3.0 mensual (Climate Hazards Center, UCSB), 0,05°. {rainA?.method}. Referencia: {rainA?.reference ? `${rainA.reference.first_year}–${rainA.reference.last_year} (${rainA.reference.n_years} años)` : "—"}.
           </Trace>
+          <Trace label="Clima estimado (serie mensual)">
+            {climateSource ? climateSource.source : "Open-Meteo Historical Weather API"}, en el centro del área de interés (un punto, no promedio de la cuenca). Lluvia
+            en mm/mes y temperatura media en °C. Reanálisis con el modelo por defecto de Open-Meteo. Generado el {climateSource ? fmtDate(climateSource.generatedAt.slice(0, 10)) : "—"}.
+            Difiere de CHIRPS (que es un promedio sobre la cuenca).
+          </Trace>
+          <Trace label="Simulador">
+            {modelMeta?.algorithm ?? "HistGradientBoostingRegressor"} (scikit-learn) entrenado con una respuesta <strong>sintética</strong> calibrada a las 2
+            observaciones reales; se usa una grilla precalculada en el navegador. Demostrativo: no es un pronóstico validado.
+          </Trace>
           <Trace label="Cuenca">
             {info.basin.label}: {info.basin.source}, unidad de salida {info.basin.outlet_hybas_id}, {fmtNum(info.basin.area_km2, 1)} km² ({info.basin.area_method}). Oficial: no.
           </Trace>
@@ -185,6 +264,11 @@ export default function InfoPanel({ view, mode, onMode, method }: { view: CaseVi
               OpenStreetMap {info.aoi.ref}
             </a>{" "}
             ({info.aoi.role}). © colaboradores de OpenStreetMap, ODbL.
+          </Trace>
+          <Trace label="Licencias y atribución">
+            Sentinel-2: datos abiertos Copernicus (ESA). CHIRPS: Climate Hazards Center, UCSB (citar Funk et al.).
+            HydroBASINS/HydroSHEDS: Lehner &amp; Grill (2013), uso con atribución. OpenStreetMap: ODbL 1.0.
+            IGN Argentina: ver condiciones del Instituto Geográfico Nacional.
           </Trace>
         </dl>
       </details>
@@ -288,6 +372,24 @@ function Trace({ label, children }: { label: string; children: React.ReactNode }
     <div>
       <dt className="font-medium text-slate-900">{label}</dt>
       <dd>{children}</dd>
+    </div>
+  );
+}
+
+/** Encabezado de bloque (D-34): separa observaciones (A), clima estimado (B) y escenarios simulados (C). */
+function BlockTitle({ letter, title, subtitle, testId, tone }: { letter: string; title: string; subtitle: string; testId: string; tone: "obs" | "clima" | "sim" }) {
+  const toneCls = {
+    obs: "border-brand-primary bg-brand-primary/5 text-brand-primary",
+    clima: "border-brand-secondary bg-brand-secondary/5 text-brand-secondary-ink",
+    sim: "border-brand-warning bg-brand-sand-soft text-brand-warning-ink",
+  }[tone];
+  return (
+    <div className={`rounded-md border-l-4 px-3 py-2 ${toneCls}`} data-testid={testId}>
+      <h3 className="text-sm font-semibold">
+        <span aria-hidden="true">{letter}. </span>
+        {title}
+      </h3>
+      <p className="text-xs text-brand-muted">{subtitle}</p>
     </div>
   );
 }

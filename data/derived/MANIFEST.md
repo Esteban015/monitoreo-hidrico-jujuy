@@ -1,7 +1,7 @@
 # MANIFEST — Datos procesados (Fase 3)
 
 Generado el 2026-11-22 con `scripts/process/10_geometries.py`, `11_water.py` y `12_rainfall_chirps.py` (en ese orden).
-Validado con `tests/python/test_outputs.py`. Todos los valores provienen de datos reales; no hay datos sintéticos.
+Validado con `tests/python/test_outputs.py`. Los valores de las secciones de Fase 3 provienen de datos reales. **Excepción (PR #3):** `model/water_model.json` es un modelo demostrativo entrenado con datos **sintéticos**; ver «Anexo PR #3».
 Convención de carpeta: `data/derived/` (documentada desde la Fase 0; equivale al `data/processed/` sugerido).
 
 ## Archivos
@@ -56,3 +56,15 @@ Celdas de Pozuelos: 137,6 equivalentes (173 con algún peso).
 - `data/raw/cache/chirps/`: ventanas mensuales y listado del directorio (550 archivos, de 1981-01 a 2026-10).
 - `data/raw/cache/osm/`: cuerpos de agua vecinos y cauces cerca del muro.
 - Tamaño de la caché: unos 14 MB. Se puede regenerar con los scripts.
+
+
+## Anexo PR #3 (integrado 2026-11-23) — Clima estimado y modelo demostrativo
+Generados por `scripts/model/build_climate_model.py` (aporte de Juli). No se regeneraron en la integración.
+
+| Archivo | Contenido | Naturaleza |
+|---|---|---|
+| `climate/climate_series.json` | Lluvia (mm/mes) y temperatura media (°C) mensuales 2019-03 → 2026-10, y acumulados de 3 meses, por caso | **Estimación** de reanálisis (Open-Meteo Historical, modelo por defecto) en **un punto** (centro del AOI). No es promedio de cuenca ni medición de estación. El campo `source` menciona ERA5-Land, pero el script no lo fuerza: no verificado. |
+| `model/water_model.json` | Grilla 61×61 (lluvia 3 m × temperatura 3 m → superficie km²) exportada de `HistGradientBoostingRegressor` (scikit-learn 1.9.1) | **Sintético** (`synthetic: true`). Entrenado con una respuesta sintética calibrada a las 2 observaciones reales; elasticidad térmica fija. El R² es sobre datos sintéticos y no valida el modelo. |
+
+- **Reproducibilidad limitada:** el período termina en «hoy − 2 días» y usa caché local (`data/raw/climate`, no versionada); otra corrida cambia la serie.
+- **Diferencia con CHIRPS:** en los meses analizados Open-Meteo (punto) da 1,4–3× la lluvia de CHIRPS (cuenca).
