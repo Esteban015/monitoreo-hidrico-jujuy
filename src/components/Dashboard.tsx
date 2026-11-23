@@ -3,10 +3,10 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { resolveCaseParam } from "@/lib/caseParam";
-import { loadBundle, type BundleResult } from "@/lib/datasets";
+import { climateSourceLabel, loadBundle, type BundleResult } from "@/lib/datasets";
 import { fmtDate, fmtPct, getCaseView } from "@/lib/metrics";
 import InfoPanel from "./InfoPanel";
-import type { MapLayers, ViewMode } from "./MapView";
+import type { MapLayers, OverviewCase, ViewMode } from "./MapView";
 
 // Leaflet usa `window`: se carga solo en el cliente.
 const MapView = dynamic(() => import("./MapView"), {
@@ -48,11 +48,12 @@ export default function Dashboard() {
     };
   }, [applyResult]);
 
-  const selectCase = useCallback((id: string) => {
+  // Selección desde la lista, los puntos del mapa o «Ver todo Jujuy» (null). Mantiene la URL compartible (D-29).
+  const selectCase = useCallback((id: string | null) => {
     setSelectedId(id);
-    // Mantiene la URL compartible sin recargar ni cambiar de ruta.
     const url = new URL(window.location.href);
-    url.searchParams.set("case", id);
+    if (id) url.searchParams.set("case", id);
+    else url.searchParams.delete("case");
     window.history.replaceState(window.history.state, "", url);
   }, []);
 
@@ -60,6 +61,23 @@ export default function Dashboard() {
   const loadFailed = result !== "cargando" && result.status === "error";
   const showIntro = !selectedId && !loadFailed;
   const view = useMemo(() => (bundle && selectedId ? getCaseView(bundle, selectedId) : null), [bundle, selectedId]);
+  const overview: OverviewCase[] | null = useMemo(
+    () =>
+      bundle
+        ? bundle.cases.cases.map((c) => {
+            const cmp = bundle.water.comparisons.find((x) => x.case_id === c.case_id);
+            return {
+              caseId: c.case_id,
+              name: c.name,
+              ecoregion: c.ecoregion,
+              kind: c.kind,
+              aoiFile: c.aoi.file,
+              areaKm2: Math.max(cmp?.MNDWI.area_a_km2 ?? 0, cmp?.MNDWI.area_b_km2 ?? 0),
+            };
+          })
+        : null,
+    [bundle],
+  );
   const layers: MapLayers | null = useMemo(
     () =>
       view && view.sceneA && view.sceneB
@@ -134,11 +152,23 @@ export default function Dashboard() {
               El caso «{selectedId}» no existe en los datos publicados.
             </p>
           )}
-          {bundle && view && <InfoPanel view={view} mode={mode} onMode={setMode} method={bundle.water.method} />}
+          {bundle && view && (
+            <InfoPanel
+              view={view}
+              mode={mode}
+              onMode={setMode}
+              method={bundle.water.method}
+              climate={bundle.climate?.cases[view.info.case_id] ?? null}
+              model={bundle.model?.cases[view.info.case_id] ?? null}
+              modelMeta={bundle.model ? { algorithm: bundle.model.algorithm, generatedAt: bundle.model.generated_at } : null}
+              climateSource={bundle.climate ? { source: climateSourceLabel(bundle.climate.source), generatedAt: bundle.climate.generated_at } : null}
+              notes={bundle.notes ?? []}
+            />
+          )}
         </div>
       </aside>
       <main className="relative order-first h-[50vh] shrink-0 md:order-none md:h-auto md:flex-1">
-        <MapView layers={layers} mode={mode} />
+        <MapView layers={layers} mode={mode} overview={overview} onSelect={selectCase} />
       </main>
     </div>
   );

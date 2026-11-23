@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.git
+.gitignore
+docs/evidence
+data/raw
+scripts/.venv
+**/__pycache__
+*.pyc
+.env*

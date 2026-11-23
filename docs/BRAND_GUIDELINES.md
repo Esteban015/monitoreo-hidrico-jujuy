@@ -1,12 +1,12 @@
-# Monitoreo Hídrico Jujuy — Lineamientos de marca (v0.1)
+# AquaJuy — Lineamientos de marca (v0.2)
 
 > Identidad inicial para el prototipo. Implementada en `src/app/globals.css` (tokens), `src/components/brand/Logo.tsx` y la landing (`src/app/page.tsx`).
 
 ## 1. Nombre
-- **Nombre de marca:** Monitoreo Hídrico Jujuy. Se escribe completo, con tilde en "Hídrico" y sin abreviar en títulos.
+- **Nombre de marca:** **AquaJuy** (oficial desde la integración del PR #3). Se escribe en una palabra, con «A» y «J» mayúsculas. Antes se usaba «AquaJuy»; ese nombre ya no aparece en la interfaz.
 - **Descriptor:** «Agua superficial con datos trazables».
-- **Uso en la interfaz:** el nombre va en el logo. La demo se titula «Demo — Monitoreo Hídrico Jujuy».
-- **Nombre técnico del repositorio:** `monitoreo-hidrico-jujuy`. El nombre heredado «Monitoreo de Cuencas y Fuentes de Agua Natural» queda solo en la documentación técnica (`docs/PROJECT_SPEC.md`).
+- **Uso en la interfaz:** el nombre va en el logo. La demo se titula «Demo — AquaJuy». Isotipo, paleta y favicon no cambiaron con el nombre.
+- **Nombre técnico del repositorio y del proyecto Vercel:** `monitoreo-hidrico-jujuy` (no se renombran; las URL se conservan). El nombre heredado «Monitoreo de Cuencas y Fuentes de Agua Natural» queda solo en la documentación técnica (`docs/PROJECT_SPEC.md`).
 
 ## 2. Posicionamiento
 Herramienta de **monitoreo y apoyo a decisiones** sobre agua superficial de Jujuy, basada en datos satelitales reales y trazables, comprensible para personas no especialistas y explícita sobre sus límites.

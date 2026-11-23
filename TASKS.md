@@ -91,6 +91,7 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 - [x] 5.5 Prueba real del escenario A (servidor local con DNS bloqueado).
 - [ ] 5.6 Leyenda móvil superpuesta con la atribución (ajuste pendiente).
 - [ ] 5.7 Verificar la licencia de los geoservicios del IGN.
+- Nota de integración (PR #3): la «Fase 5 — Ficha de transparencia + modo offline» de la rama de Juli corresponde al plan original y ya está cubierta por las Fases 4 y 5.
 
 ---
 
@@ -119,12 +120,14 @@ Depende de: Fase 1 y Fase 3 (aprobada con restricciones científicas).
 
 ---
 
-## Fase 6 — Demo
+## Fase 6 — Demo y despliegue ✅
 Depende de: Fase 5.
-- [ ] 6.1 README con cómo correr, fuentes y limitaciones.
-- [ ] 6.2 Pitch de 30 s + recorrido de 2 min (según PROJECT.md §6).
-- [ ] 6.3 Prueba final: inicio + flujo feliz + error; registrar comandos y salidas.
-- [ ] 6.4 (Opcional, con aprobación) despliegue estático.
+- [x] 6.1 README con cómo correr, fuentes y limitaciones.
+- [x] 6.2 Pitch de 30 s + recorrido de 2 min (`docs/PITCH.md`).
+- [x] 6.3 Prueba final: inicio + flujo feliz + error; comandos y salidas en `docs/DEPLOY.md` y README §9.
+- [x] 6.4 Despliegue local front + back (`npm run start:api`) y configuración Docker/Render como camino **opcional** (D-36). La publicación oficial sigue siendo Vercel estático; `npm start` sirve el estático.
+
+**Aceptación:** `npm run build`, `npm test` (18), QA Python (43) y E2E desktop (12) pasan; frontend y API responden en `http://localhost:3000`.
 
 ---
 

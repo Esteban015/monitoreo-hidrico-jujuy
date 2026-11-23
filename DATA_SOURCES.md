@@ -92,3 +92,10 @@ Reemplazos si fallan: Dique La Ciénaga, Cuenca del Río Grande, Cuenca de Miraf
 | HydroBASINS no representa la cuenca de aporte | Otro nivel de HydroBASINS | Capas IGN / buffer documentado como aproximación explícita |
 | Sin datos reales a tiempo | Demo con `data/sample/` **etiquetada "DATOS SINTÉTICOS"** + explicación honesta del pipeline | — |
 | Sin Internet en la presentación | Build estático local; fondo de mapa vectorial local | Capturas de pantalla del recorrido |
+
+
+## Integración PR #3 (2026-11-23) — Open-Meteo como serie climática estimada
+- **Uso:** P3 (Open-Meteo Historical) pasa de «respaldo» a fuente de la serie mensual de lluvia y temperatura del historial y del simulador.
+- **Alcance:** un punto por caso (centro del AOI), modelo por defecto de Open-Meteo; **no** se verificó ERA5-Land. Licencia CC BY 4.0 con atribución.
+- **Rótulo:** «clima estimado». No reemplaza a CHIRPS (precipitación en la cuenca), que sigue siendo la fuente de las tarjetas de lluvia.
+- **No integradas:** SMN y evaporación (no hay datos ni código).

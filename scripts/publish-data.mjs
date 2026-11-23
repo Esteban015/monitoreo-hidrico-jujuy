@@ -16,6 +16,8 @@ const INCLUDE = [
   "cases.json",
   "water_metrics.json",
   "rainfall_metrics.json",
+  ...listDir("climate", (f) => f.endsWith(".json")),
+  ...listDir("model", (f) => f.endsWith(".json")),
   ...listDir("geometries", (f) => f.endsWith(".geojson")),
   ...listDir(join("qa", "quicklooks"), (f) => f.endsWith(".png")),
   ...listDir("basemap", (f) => f.endsWith(".geojson")), // límites IGN simplificados (D-22)

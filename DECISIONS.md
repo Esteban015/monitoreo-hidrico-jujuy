@@ -134,6 +134,36 @@ Formato: ID · fecha · estado (ADOPTADA / PROPUESTA / PENDIENTE) · decisión �
 - **Qué no se publica:** cachés, datos crudos, `http_log`, `geometries_report.json` ni scripts.
 - **Rutas:** relativas (`data/...`, sin "/" inicial), compatibles con la exportación estática servida en cualquier subruta. `dataUrl()` rechaza rutas absolutas, `..` y URLs externas.
 
+## D-34 · 2026-11-23 · ADOPTADA (integración PR #3) — Clima estimado y simulador: opcionales, separados y rotulados
+- **Contexto:** el PR #3 (Juli) agrega una serie mensual de lluvia y temperatura (Open-Meteo) y un simulador con `HistGradientBoostingRegressor`. En su rama ambos datasets eran obligatorios y la serie se rotulaba «clima real» «de la cuenca» y «ERA5-Land».
+- **Decisión:**
+  - **Opcionales:** `loadBundle` exige solo los 3 datasets observacionales. `climate/climate_series.json` y `model/water_model.json` se cargan aparte; si faltan o son inválidos la demo sigue y se informa en «Avisos de carga» (`data-notes`). El modelo se descarta si no trae `synthetic: true`.
+  - **Separación A/B/C en la interfaz:** A. Observaciones (Sentinel-2), B. Clima estimado (CHIRPS en la cuenca + Open-Meteo en un punto), C. Escenarios simulados. Cada bloque tiene título, letra y color propios.
+  - **Rótulos:** la serie Open-Meteo es «clima estimado» en **un punto** del área de interés (centro del AOI), no el promedio de la cuenca. No se muestra «ERA5-Land»: el script no fuerza `models=era5_land`, así que la afirmación no está verificada (`climateSourceLabel()`). El dataset de Juli no se reescribió.
+  - **Simulador:** «Simulador climático — demostración experimental» con el aviso fijo «Modelo demostrativo basado en datos sintéticos. No constituye un pronóstico validado ni reemplaza mediciones de campo.». La diferencia se muestra en color neutro y como «escenario simulado».
+- **Motivo:** el producto se basa en datos trazables. Mezclar observaciones, estimaciones y simulaciones sintéticas sin distinguirlas rompería esa promesa (D-12).
+- **Pruebas:** `tests/datasets.test.ts` (opcionales, sintético, unidades, rótulo), `tests/model.test.ts` (NaN/Infinity/extremos) y `e2e/simulator.spec.ts`.
+
+## D-35 · 2026-11-22 · ADOPTADA COMO OPCIONAL (PR #3; era «D-22» en la rama de Juli) — Backend mínimo de solo lectura
+- **Nota de integración (2026-11-23):** la API queda como **módulo opcional** (`npm run start:api`). **D-02 sigue vigente**: la publicación oficial es la exportación estática en Vercel y la demo no usa `/api`. `npm start` vuelve a servir el estático.
+- **Decisión:** agregar `server/index.js` (Node ≥ 20, sin dependencias) que sirve `out/` y expone `/api/*` sobre los mismos JSON de `data/derived/`. Un solo proceso despliega front + back.
+- **Justificación:** el pedido del equipo fue desplegar front y back y contar con una API. No hay cómputo en tiempo de ejecución ni base de datos: la API sólo lee y compone los datasets ya validados, por lo que no contradice el principio de datos precalculados ni el modo offline.
+- **Alcance:** `GET /api/health`, `/api/meta`, `/api/casos`, `/api/casos/{id}`, `/comparacion`, `/precipitacion`, `/geometrias`, `/api/fuentes`, `/api/openapi.json`. Sólo GET/HEAD, CORS abierto, errores JSON, protección de path traversal y caché por mtime.
+- **Alternativas:** mantener sólo el estático (D-02) y publicar la API como función serverless — descartada por más piezas y configuración; agregar Express — descartada por dependencia innecesaria.
+- **Compatibilidad:** el frontend no usa la API; lee `/data/*.json` (D-28). `/demo` y `/demo/` se resuelven a `demo.html` (corregido en la integración). `npm run start:static` conserva el modo estático puro.
+
+## D-36 · 2026-11-22 · OPCIONAL (PR #3; era «D-23» en la rama de Juli) — Despliegue en un contenedor
+- **Nota de integración:** Docker y Render son un camino alternativo, no configurado ni publicado. No reemplazan Vercel.
+- **Decisión:** `Dockerfile` multi-stage (build Next → runtime Node) + `render.yaml`. Variables `PORT`, `HOST`, `STATIC_DIR`, `DATA_DIR`, `LOG_REQUESTS`. Health check en `/api/health`.
+- **Estado:** despliegue local verificado en `http://localhost:3000` (frontend + API). La URL pública queda PENDIENTE de credenciales del proveedor; no se publicó nada.
+- **Justificación:** reproduce el entorno con un comando, no requiere secretos y permite demo local sin Internet.
+
+## D-37 · 2026-11-22 · ADOPTADA (PR #3; era «D-24» en la rama de Juli) — Versión fijada del simulador climático
+- **Nota de integración:** el frontend lee los datos desde `/data/` absoluto (D-28), no con rutas relativas. El simulador se rotula «Simulador climático — demostración experimental» (D-34).
+- **Decisión:** `scripts/requirements.txt` fija `scikit-learn==1.9.1` (la versión escrita en `water_model.json`), más `numpy==2.5.4` y `requests==2.34.2`. `build_climate_model.py` avisa si el entorno no coincide y omite hiperparámetros que esa versión de `HistGradientBoostingRegressor` no acepte, en lugar de abortar por `TypeError`. El `package.json` declara `"type": "module"` para que Node no reinterprete los `.js`/`.ts` con sintaxis ESM (aviso `MODULE_TYPELESS_PACKAGE_JSON`).
+- **Inferencia en el navegador:** sigue siendo la grilla exportada. La entrada numérica de precipitación y temperatura usa esa grilla; no se carga el estimador serializado (evita `InconsistentVersionWarning` al deserializar entre versiones).
+- **Historial:** al elegir una fuente se muestra la serie climática **estimada** (Open-Meteo, un punto) y las dos observaciones de superficie (D-34).
+
 ## D-21 · 2026-11-22 · ADOPTADA (Fase 4) — Presentación de resultados en el dashboard
 - **Valores:** todos se leen de los JSON publicados; ninguna métrica está escrita en `src/` (verificado por búsqueda).
 - **Rango de incertidumbre:** mínimo y máximo de variaciones **ya presentes** en `water_metrics.json`: sensibilidad MNDWI (−0,1/0/+0,1), NDWI umbral 0 y la variación de la clase SCL 6 (calculada con las áreas por fecha del mismo archivo). Resultado: Pozuelos de −26,3 % a −68,5 %; Las Maderas de −13,0 % a −18,9 %. Se muestra junto al valor principal MNDWI, con una barra y la lista de métodos.

@@ -106,7 +106,7 @@ await page.setContent(`<html><body style="margin:0;width:1200px;height:630px;bac
   <div style="flex:1;padding:64px 56px;display:flex;flex-direction:column;justify-content:space-between">
     <div style="display:flex;align-items:center;gap:18px">
       <div style="width:72px;height:72px">${FULL_MARK.replace("<svg ", '<svg width="72" height="72" ').replace(`fill="${C.primary}"`, 'fill="#ffffff" fill-opacity="0.12"')}</div>
-      <div style="font-size:34px;font-weight:600;letter-spacing:-0.5px">Monitoreo Hídrico Jujuy</div>
+      <div style="font-size:34px;font-weight:600;letter-spacing:-0.5px">AquaJuy</div>
     </div>
     <div style="font-size:50px;line-height:1.12;font-weight:600;letter-spacing:-1px">Ver cómo cambia el agua de Jujuy, con datos que se pueden verificar.</div>
     <div style="display:flex;gap:10px;font-size:20px;color:rgba(255,255,255,.85)">
@@ -123,7 +123,7 @@ await page.setContent(`<html><body style="margin:0;width:1200px;height:630px;bac
   </div></body></html>`);
 await page.waitForTimeout(200);
 const og = await page.screenshot({ clip: { x: 0, y: 0, width: 1200, height: 630 } });
-const alt = `Monitoreo Hídrico Jujuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales (${poz.map((s) => fmtDate(s.date)).join(" y ")}).`;
+const alt = `AquaJuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales (${poz.map((s) => fmtDate(s.date)).join(" y ")}).`;
 for (const n of ["opengraph-image", "twitter-image"]) {
   writeFileSync(out(`src/app/${n}.png`), og);
   writeFileSync(out(`src/app/${n}.alt.txt`), alt);

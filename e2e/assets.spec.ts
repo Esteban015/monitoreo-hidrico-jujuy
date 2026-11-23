@@ -61,3 +61,15 @@ test("imágenes de la landing: quicklooks y miniaturas reales disponibles, sin f
   const water = JSON.parse(readFileSync(join(process.cwd(), "out", "data", "water_metrics.json"), "utf-8"));
   for (const s of water.scenes) expect((await request.get(`/landing/quicklooks/${s.case_id}_${s.date}.webp`)).status()).toBe(200);
 });
+
+test("marca AquaJuy: título, og:site_name y textos alternativos; URL técnica conservada", async ({ page }) => {
+  await page.goto("/");
+  await expect(page).toHaveTitle(/AquaJuy/);
+  await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute("content", "AquaJuy");
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /AquaJuy/);
+  await expect(page.locator('meta[property="og:image:alt"]').first()).toHaveAttribute("content", /AquaJuy/);
+  await expect(page.getByRole("banner")).toContainText("AquaJuy");
+  await expect(page.locator("body")).not.toContainText("Monitoreo Hídrico Jujuy");
+  await page.goto("/demo");
+  await expect(page).toHaveTitle("Demo — AquaJuy");
+});

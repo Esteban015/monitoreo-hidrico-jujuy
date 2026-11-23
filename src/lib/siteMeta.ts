@@ -3,11 +3,11 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://monitoreo-hidrico-jujuy.vercel.app";
-export const SITE_NAME = "Monitoreo Hídrico Jujuy";
-export const SITE_TITLE = "Monitoreo Hídrico Jujuy — Agua superficial con datos trazables";
+export const SITE_NAME = "AquaJuy";
+export const SITE_TITLE = "AquaJuy — Agua superficial de Jujuy con datos trazables";
 export const SITE_DESCRIPTION =
   "Plataforma geoespacial para visualizar cambios en lagunas y embalses de Jujuy con imágenes satelitales reales, contexto de precipitación y advertencias metodológicas.";
-const OG_ALT = "Monitoreo Hídrico Jujuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales.";
+const OG_ALT = "AquaJuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales.";
 
 export function socialMeta({ title, description, path }: { title: string; description: string; path: string }): Pick<Metadata, "openGraph" | "twitter"> {
   return {

@@ -1,0 +1,105 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API AquaJuy — fuentes de agua de Jujuy (opcional, solo lectura)",
+    "version": "1.0.0",
+    "description": "API de solo lectura sobre los datasets precalculados (Sentinel-2 MNDWI, CHIRPS y HydroBASINS). No recalcula superficies ni precipitación en tiempo de ejecución.",
+    "license": { "name": "Prototipo de hackatón — datos de terceros con sus licencias" }
+  },
+  "servers": [{ "url": "/", "description": "Mismo origen que el frontend" }],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Estado del servicio y de los datasets",
+        "responses": {
+          "200": { "description": "Servicio operativo" },
+          "503": { "description": "Falta algún dataset" }
+        }
+      }
+    },
+    "/api/meta": {
+      "get": {
+        "summary": "Método, fuentes y limitaciones",
+        "responses": { "200": { "description": "Metadatos del procesamiento" } }
+      }
+    },
+    "/api/casos": {
+      "get": {
+        "summary": "Lista de casos testigo con comparación y precipitación",
+        "responses": { "200": { "description": "Casos publicados" } }
+      }
+    },
+    "/api/casos/{id}": {
+      "get": {
+        "summary": "Detalle de un caso: escenas, comparación, lluvia y advertencias",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "enum": ["laguna-pozuelos", "dique-las-maderas"] }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Caso encontrado" },
+          "404": { "description": "Caso inexistente" }
+        }
+      }
+    },
+    "/api/casos/{id}/comparacion": {
+      "get": {
+        "summary": "Comparación MNDWI/NDWI entre las dos fechas reales",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Comparación y sensibilidad al umbral" },
+          "404": { "description": "Caso sin comparación" }
+        }
+      }
+    },
+    "/api/casos/{id}/precipitacion": {
+      "get": {
+        "summary": "Precipitación mensual CHIRPS y anomalía por fecha de imagen",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Observaciones de lluvia" } }
+      }
+    },
+    "/api/casos/{id}/historial": {
+      "get": {
+        "summary": "Historial climático real de la cuenca y observaciones de superficie",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Serie mensual de lluvia y temperatura + 2 observaciones Sentinel-2" } }
+      }
+    },
+    "/api/casos/{id}/modelo": {
+      "get": {
+        "summary": "Modelo HistGradientBoostingRegressor demostrativo y grilla de inferencia",
+        "description": "Modelo entrenado con datos sintéticos calibrados a 2 observaciones reales. No es una predicción validada.",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Metadatos, supuestos, métricas sintéticas y grilla" } }
+      }
+    },
+    "/api/casos/{id}/geometrias": {
+      "get": {
+        "summary": "Rutas de los GeoJSON de cuenca, AOI y agua por fecha",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Metadatos y URLs relativas" } }
+      }
+    },
+    "/api/fuentes": {
+      "get": {
+        "summary": "Fuentes, proveedores, licencias y uso de cada dataset",
+        "responses": { "200": { "description": "Catálogo de fuentes" } }
+      }
+    }
+  }
+}

@@ -1,1 +1,1 @@
-Monitoreo Hídrico Jujuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales (04/05/2025 y 13/09/2025).
+AquaJuy: Laguna de los Pozuelos en dos imágenes Sentinel-2 reales (04/05/2025 y 13/09/2025).
